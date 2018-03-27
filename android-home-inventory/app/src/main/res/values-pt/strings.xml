@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_products_found">Nenhum produto encontrado</string>
+    <string name="msg_exception_product_details">Ocorreu um erro ao carregar os detalhes do produto</string>
+    <string name="title_product_details">Detalhes do Produto</string>
+</resources>
