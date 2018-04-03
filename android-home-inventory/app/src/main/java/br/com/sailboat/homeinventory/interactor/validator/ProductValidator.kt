@@ -10,7 +10,6 @@ class ProductValidator {
 
     companion object {
 
-        @Throws(Exception::class)
         fun validate(context: Context, product: Product) {
             if (StringHelper.isNullOrEmpty(product.name)) {
                 throw RequiredFieldNotFilledException(context.getString(R.string.exception_product_name))

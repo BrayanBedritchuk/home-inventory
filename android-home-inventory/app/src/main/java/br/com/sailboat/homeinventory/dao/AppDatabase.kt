@@ -10,6 +10,22 @@ import java.util.*
 
 class AppDatabase private constructor(private val context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
+    companion object {
+        private val DATABASE_VERSION = 1
+        private val DATABASE_NAME = "home-inventory.db"
+
+        private var instance: AppDatabase? = null
+
+        @Synchronized
+        fun getInstance(context: Context): AppDatabase {
+            if (instance == null) {
+                instance = AppDatabase(context.applicationContext)
+            }
+
+            return instance!!
+        }
+    }
+
     override fun onCreate(db: SQLiteDatabase) {
         try {
             CreateTablesHelper.createTables(db, getSqliteTables())
@@ -27,24 +43,11 @@ class AppDatabase private constructor(private val context: Context) : SQLiteOpen
         val tables = ArrayList<BaseSQLite>()
         tables.add(ProductDao.newInstance(context))
         tables.add(ProductQuantityDao.newInstance(context))
+        tables.add(CategoryDao.newInstance(context))
+        tables.add(ProductCategoryDao.newInstance(context))
 
         return tables
     }
 
-    companion object {
-        private val DATABASE_VERSION = 1
-        private val DATABASE_NAME = "home-inventory.db"
-
-        private var instance: AppDatabase? = null
-
-        @Synchronized
-        fun getInstance(context: Context): AppDatabase {
-            if (instance == null) {
-                instance = AppDatabase(context.applicationContext)
-            }
-
-            return instance!!
-        }
-    }
 
 }
