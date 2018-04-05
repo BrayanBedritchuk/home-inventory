@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@android:color/white">
 
     <include layout="@layout/appbar" />
 
-    <TextView
-        android:layout_gravity="center"
-        android:text="Shopping Screen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <include layout="@layout/recycler" />
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
