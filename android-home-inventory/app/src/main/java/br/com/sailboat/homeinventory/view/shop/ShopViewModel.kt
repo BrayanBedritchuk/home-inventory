@@ -1,16 +1,38 @@
 package br.com.sailboat.homeinventory.view.shop
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import br.com.sailboat.homeinventory.dao.filter.ProductFilter
+import br.com.sailboat.homeinventory.interactor.loader.ProductLoader
+import br.com.sailboat.homeinventory.model.Product
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
-class ShopViewModel : ViewModel() {
+
+
+class ShopViewModel(application: Application) : AndroidViewModel(application) {
 
     val name = MutableLiveData<String>()
-    val products = MutableLiveData<String>()
+    val products = MutableLiveData<List<Product>>()
+
+    fun getProducts() : List<Product> {
+        return if (products.value != null) {
+            products.value!!
+        } else {
+            ArrayList()
+        }
+    }
 
     fun loadProducts() {
-
+        Observable.fromCallable({
+            products.postValue(ProductLoader(getApplication()).loadProducts(ProductFilter()))
+        })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
     }
 
 }
