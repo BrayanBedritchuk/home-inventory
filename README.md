@@ -1,1 +1,1 @@
-![Home Inventory](art/Home Inventory.png)
+![Home Inventory](art/logo.png)
