@@ -18,11 +18,11 @@ class ShopPresenter(private val view: ShopPresenter.View, private val viewModel:
 
     fun onClickProduct(position: Int) {
         val product = viewModel.getProducts()[position]
-        view.showProductDetails(product.id)
+        view.showShopProduct(product.id, 0)
     }
 
     interface View {
-        fun showProductDetails(productId: Long)
+        fun showShopProduct(productId: Long, quantity: Int)
     }
 
 }

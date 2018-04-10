@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.view.product.list.ProductListActivity
 import br.com.sailboat.homeinventory.view.shop.ShopActivity
 import kotlinx.android.synthetic.main.act_dashboard.*
 
@@ -25,7 +26,10 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun initViews() {
         findViewById<Toolbar>(R.id.toolbar).setTitle(R.string.app_name)
+
+        // TODO: Use RecyclerView instead of buttons
         btShop.setOnClickListener { ShopActivity.start(this) }
+        btProducts.setOnClickListener { ProductListActivity.start(this) }
     }
 
 }

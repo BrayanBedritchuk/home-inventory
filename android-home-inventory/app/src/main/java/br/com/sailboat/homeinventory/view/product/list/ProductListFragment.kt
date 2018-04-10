@@ -27,7 +27,11 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
     }
 
     override fun onInitToolbar() {
-        toolbar.setTitle(R.string.app_name)
+        toolbar.setTitle(R.string.title_products)
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+        toolbar.setNavigationOnClickListener {
+            activity.onBackPressed()
+        }
     }
 
     override fun onInitRecycler() {

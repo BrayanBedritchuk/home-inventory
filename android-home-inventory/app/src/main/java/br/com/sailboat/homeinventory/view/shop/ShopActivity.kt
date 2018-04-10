@@ -36,8 +36,8 @@ class ShopActivity : AppCompatActivity(), ShopPresenter.View, ProductListAdapter
         presenter.onCreate(savedInstanceState)
     }
 
-    override fun showProductDetails(productId: Long) {
-
+    override fun showShopProduct(productId: Long, quantity: Int) {
+        ShopProductDialog.show(supportFragmentManager, productId, quantity)
     }
 
     override fun getProducts() = viewModel.getProducts()
