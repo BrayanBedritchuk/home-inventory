@@ -18,6 +18,8 @@
         android:id="@+id/etQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Qtd" />
+        android:hint="Qtd"
+        android:inputType="number"
+        android:selectAllOnFocus="true" />
 
 </LinearLayout>

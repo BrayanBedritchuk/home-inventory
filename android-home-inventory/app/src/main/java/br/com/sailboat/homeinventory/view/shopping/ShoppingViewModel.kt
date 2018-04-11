@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.view.shop
+package br.com.sailboat.homeinventory.view.shopping
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
@@ -13,10 +13,11 @@ import io.reactivex.schedulers.Schedulers
 
 
 
-class ShopViewModel(application: Application) : AndroidViewModel(application) {
+class ShoppingViewModel(application: Application) : AndroidViewModel(application) {
 
     val name = MutableLiveData<String>()
     val products = MutableLiveData<List<Product>>()
+    val shoppingCart = HashMap<Long, Int>()
 
     fun getProducts() : List<Product> {
         return if (products.value != null) {

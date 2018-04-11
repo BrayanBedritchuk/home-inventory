@@ -18,7 +18,7 @@
 
         <activity android:name=".view.dashboard.DashboardActivity" />
 
-        <activity android:name=".view.shop.ShopActivity" />
+        <activity android:name=".view.shopping.ShoppingActivity" />
 
         <activity android:name=".view.product.list.ProductListActivity" />
 
