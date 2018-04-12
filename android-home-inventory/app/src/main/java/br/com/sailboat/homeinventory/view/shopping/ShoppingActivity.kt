@@ -13,10 +13,8 @@ import android.view.Menu
 import android.view.MenuItem
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.model.Product
-import br.com.sailboat.homeinventory.view.product.list.ProductListAdapter
 
-
-class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ProductListAdapter.Callback {
+class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAdapter.Callback {
 
     private lateinit var viewModel: ShoppingViewModel
     private lateinit var presenter: ShoppingPresenter
@@ -56,8 +54,15 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ProductLis
                 return super.onOptionsItemSelected(item)
             }
         }
-
     }
+
+    override fun onClickShoppingProduct(position: Int) {
+        presenter.onClickShoppingProduct(position)
+    }
+
+    override fun wasPurchased(productId: Long) = presenter.wasPurchased(productId)
+
+    override fun getShoppingQuantity(productId: Long) = presenter.getShoppingQuantity(productId)
 
     override fun showShopProduct(product: Product, quantity: Int) {
         ShoppingProductDialog.show(supportFragmentManager, product, quantity,
@@ -70,23 +75,32 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ProductLis
 
     override fun getProducts() = viewModel.getProducts()
 
-    override fun onClickProduct(position: Int) {
-        presenter.onClickProduct(position)
-    }
-
     override fun finishActivity() {
         setResult(Activity.RESULT_OK)
         finish()
     }
 
-    private fun initViews() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setTitle(R.string.title_shop)
-        setSupportActionBar(toolbar)
+    override fun updateRecycler() {
+        recycler.adapter.notifyDataSetChanged()
+    }
 
+    private fun initViews() {
+        initToolbar()
+        initRecycler()
+    }
+
+    private fun initToolbar() {
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setTitle(R.string.title_shopping)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+    }
+
+    private fun initRecycler() {
         recycler = findViewById<RecyclerView>(R.id.recycler)
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = ProductListAdapter(this)
+        recycler.adapter = ShoppingAdapter(this)
     }
 
     private fun initViewModel() {

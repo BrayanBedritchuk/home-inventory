@@ -19,7 +19,7 @@ class ShoppingPresenter(private val view: ShoppingPresenter.View, private val vi
 
     }
 
-    fun onClickProduct(position: Int) {
+    fun onClickShoppingProduct(position: Int) {
         val product = viewModel.getProducts()[position]
 
         val quantity: Int = if (viewModel.shoppingCart.containsKey(product.id)) {
@@ -31,6 +31,10 @@ class ShoppingPresenter(private val view: ShoppingPresenter.View, private val vi
         view.showShopProduct(product, quantity)
     }
 
+    fun wasPurchased(productId: Long) = viewModel.shoppingCart.containsKey(productId)
+
+    fun getShoppingQuantity(productId: Long) = viewModel.shoppingCart[productId].toString()
+
     fun onClickOkProductDialog(productId: Long, quantity: Int?) {
         if (viewModel.shoppingCart.containsKey(productId)) {
             viewModel.shoppingCart.remove(productId)
@@ -39,6 +43,8 @@ class ShoppingPresenter(private val view: ShoppingPresenter.View, private val vi
         if (quantity != null && quantity > 0) {
             viewModel.shoppingCart.put(productId, quantity)
         }
+
+        view.updateRecycler()
     }
 
     fun onClickMenuSave() {
@@ -54,6 +60,7 @@ class ShoppingPresenter(private val view: ShoppingPresenter.View, private val vi
     interface View {
         fun showShopProduct(productId: Product, quantity: Int)
         fun finishActivity()
+        fun updateRecycler()
     }
 
 

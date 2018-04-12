@@ -18,13 +18,13 @@
             android:id="@+id/btProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Products" />
+            android:text="@string/title_products" />
 
         <Button
             android:id="@+id/btShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shop" />
+            android:text="@string/title_shopping" />
 
     </LinearLayout>
 
