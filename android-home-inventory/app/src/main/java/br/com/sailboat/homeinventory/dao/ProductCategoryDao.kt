@@ -15,7 +15,7 @@ class ProductCategoryDao(database: SQLiteOpenHelper) : BaseSQLite(database) {
         sb.append(" CREATE TABLE ProductCategory ( ")
         sb.append(" productId INTEGER NOT NULL, ")
         sb.append(" categoryId INTEGER NOT NULL, ")
-        sb.append(" created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, ")
+        sb.append(" created DATETIME DEFAULT (datetime('now', 'localtime')), ")
         sb.append(" PRIMARY KEY(productId, categoryId), ")
         sb.append(" FOREIGN KEY(productId) REFERENCES Product(id), ")
         sb.append(" FOREIGN KEY(categoryId) REFERENCES Category(id) ")

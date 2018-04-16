@@ -1,9 +1,10 @@
 package br.com.sailboat.homeinventory.model
 
 import br.com.sailboat.canoe.helper.EntityHelper
+import java.util.*
 
-data class Product(
+data class Shopping(
     var id: Long = EntityHelper.NO_ID,
-    val name: String,
-    var quantity: Int = 0
+    var establishmentId: Long = EntityHelper.NO_ID,
+    val dateTime: Calendar
 )

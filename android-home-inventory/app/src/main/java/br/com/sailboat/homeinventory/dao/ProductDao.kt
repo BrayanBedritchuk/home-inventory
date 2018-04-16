@@ -22,10 +22,8 @@ class ProductDao(database: SQLiteOpenHelper) : BaseSQLite(database) {
         sb.append(" CREATE TABLE Product ( ")
         sb.append(" id INTEGER PRIMARY KEY AUTOINCREMENT, ")
         sb.append(" name TEXT NOT NULL, ")
-        sb.append(" mainCategory INTEGER, ")
-        sb.append(" created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, ")
-        sb.append(" lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP, ")
-        sb.append(" FOREIGN KEY(mainCategory) REFERENCES Category(id) ")
+        sb.append(" created DATETIME DEFAULT (datetime('now', 'localtime')), ")
+        sb.append(" lastModified DATETIME DEFAULT (datetime('now', 'localtime')) ")
         sb.append(" ); ")
 
         return sb.toString()
@@ -94,9 +92,8 @@ class ProductDao(database: SQLiteOpenHelper) : BaseSQLite(database) {
     private fun buildFromCursor(cursor: Cursor): Product {
         val id = getLong(cursor, "id")
         val name = getString(cursor, "name")
-        val mainCategory = getLong(cursor, "mainCategory")
 
-        return Product(id, name, mainCategory = mainCategory)
+        return Product(id, name)
     }
 
     @Throws(Exception::class)

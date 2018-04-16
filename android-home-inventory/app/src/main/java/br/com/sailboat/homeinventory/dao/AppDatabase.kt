@@ -45,6 +45,9 @@ class AppDatabase private constructor(private val context: Context) : SQLiteOpen
         tables.add(ProductQuantityDao.newInstance(context))
         tables.add(CategoryDao.newInstance(context))
         tables.add(ProductCategoryDao.newInstance(context))
+        tables.add(EstablishmentDao.newInstance(context))
+        tables.add(ShoppingDao.newInstance(context))
+        tables.add(ShoppingProductDao.newInstance(context))
 
         return tables
     }

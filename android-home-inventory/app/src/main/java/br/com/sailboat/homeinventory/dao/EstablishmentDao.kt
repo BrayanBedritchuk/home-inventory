@@ -4,15 +4,15 @@ import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
 import br.com.sailboat.canoe.base.BaseSQLite
 
-class CategoryDao(database: SQLiteOpenHelper) : BaseSQLite(database) {
+class EstablishmentDao(database: SQLiteOpenHelper) : BaseSQLite(database) {
 
     companion object {
-        fun newInstance(context: Context) = CategoryDao(AppDatabase.getInstance(context))
+        fun newInstance(context: Context) = EstablishmentDao(AppDatabase.getInstance(context))
     }
 
     override fun getCreateTableStatement(): String {
         val sb = StringBuilder()
-        sb.append(" CREATE TABLE Category ( ")
+        sb.append(" CREATE TABLE Establishment ( ")
         sb.append(" id INTEGER PRIMARY KEY AUTOINCREMENT, ")
         sb.append(" name TEXT NOT NULL, ")
         sb.append(" created DATETIME DEFAULT (datetime('now', 'localtime')), ")
@@ -21,5 +21,4 @@ class CategoryDao(database: SQLiteOpenHelper) : BaseSQLite(database) {
 
         return sb.toString()
     }
-
 }

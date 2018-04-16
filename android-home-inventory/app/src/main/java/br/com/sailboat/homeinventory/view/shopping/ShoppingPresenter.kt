@@ -1,8 +1,7 @@
 package br.com.sailboat.homeinventory.view.shopping
 
 import android.os.Bundle
-import br.com.sailboat.homeinventory.interactor.loader.ProductLoader
-import br.com.sailboat.homeinventory.interactor.save.ProductSave
+import br.com.sailboat.homeinventory.interactor.save.ShoppingSave
 import br.com.sailboat.homeinventory.model.Product
 
 class ShoppingPresenter(private val view: ShoppingPresenter.View, private val viewModel: ShoppingViewModel) {
@@ -48,12 +47,14 @@ class ShoppingPresenter(private val view: ShoppingPresenter.View, private val vi
     }
 
     fun onClickMenuSave() {
-        viewModel.shoppingCart.keys.forEach {
-            val product = ProductLoader(viewModel.getApplication()).loadProduct(it)
-            product.quantity = viewModel.shoppingCart.get(it)!!
-
-            ProductSave(viewModel.getApplication()).save(product)
-        }
+//        viewModel.shoppingCart.keys.forEach {
+//            val product = ProductLoader(viewModel.getApplication()).loadProduct(it)
+//            product.quantity = viewModel.shoppingCart.get(it)!!
+//
+//            ProductSave(viewModel.getApplication()).createAndSaveShopping(product)
+//        }
+        // validate first
+        ShoppingSave(viewModel.getApplication()).createAndSaveShopping(-1, viewModel.shoppingCart)
         view.finishActivity()
     }
 

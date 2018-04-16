@@ -16,7 +16,7 @@ class ProductQuantityDao(database: SQLiteOpenHelper) : BaseSQLite(database) {
         sb.append(" id INTEGER PRIMARY KEY AUTOINCREMENT, ")
         sb.append(" productId INTEGER NOT NULL, ")
         sb.append(" quantity INTEGER NOT NULL, ")
-        sb.append(" created TIMESTAMP DEFAULT CURRENT_TIMESTAMP, ")
+        sb.append(" created DATETIME DEFAULT (datetime('now', 'localtime')), ")
         sb.append(" FOREIGN KEY(productId) REFERENCES Product(id) ")
         sb.append(" ); ")
 
