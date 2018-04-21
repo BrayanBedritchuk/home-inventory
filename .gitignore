@@ -1,1 +1,6 @@
 android/.idea/
+java-home-inventory-core/.idea/
+java-home-inventory-core/bin/
+java-home-inventory-core/.settings/
+*.iml
+android-home-inventory-app/.idea/
