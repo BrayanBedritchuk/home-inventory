@@ -1,2 +1,0 @@
-include ':app', ':canoe'
-project(':canoe').projectDir = new File(settingsDir, '../../android-canoe/canoe')

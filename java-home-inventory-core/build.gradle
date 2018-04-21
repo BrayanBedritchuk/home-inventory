@@ -1,0 +1,16 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceSets{ main.java.srcDirs += 'src' }
+
+sourceSets {
+    main.java.srcDirs += 'src'
+    main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
+    test.java.srcDirs += 'test'
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
