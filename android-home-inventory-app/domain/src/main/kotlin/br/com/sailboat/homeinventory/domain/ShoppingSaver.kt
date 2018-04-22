@@ -1,4 +1,4 @@
-package br.com.sailboat.domain
+package br.com.sailboat.homeinventory.domain
 
 import android.content.Context
 import br.com.sailboat.homeinventory.core.repository.ProductRepository

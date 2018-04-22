@@ -4,8 +4,8 @@ import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
 import br.com.sailboat.canoe.base.BaseViewHolder
-import br.com.sailboat.homeinventory.core.entity.Product
 import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.core.entity.Product
 import kotlinx.android.synthetic.main.vh_product.view.*
 
 class ProductViewHolder(itemView: View, callback: Callback) : BaseViewHolder(itemView) {

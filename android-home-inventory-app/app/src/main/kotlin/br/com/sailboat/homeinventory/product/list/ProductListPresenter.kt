@@ -3,11 +3,11 @@ package br.com.sailboat.homeinventory.view.product.list
 import android.content.Intent
 import android.support.design.widget.Snackbar
 import br.com.sailboat.canoe.base.BasePresenter
+import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.entity.Product
 import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse
-import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
-import br.com.sailboat.domain.GetProductsAsync
+import br.com.sailboat.homeinventory.domain.GetProductsAsync
 
 
 class ProductListPresenter(view: View) : BasePresenter<ProductListPresenter.View>(view) {

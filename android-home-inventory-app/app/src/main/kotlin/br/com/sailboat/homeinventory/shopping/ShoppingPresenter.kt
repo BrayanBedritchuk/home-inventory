@@ -5,7 +5,7 @@ import android.util.Log
 import br.com.sailboat.homeinventory.core.entity.Product
 import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse
 import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
-import br.com.sailboat.domain.GetProductsAsync
+import br.com.sailboat.homeinventory.domain.GetProductsAsync
 import br.com.sailboat.homeinventory.presentation.model.ProductModel
 import br.com.sailboat.homeinventory.presentation.product.ProductModelMapper
 import br.com.sailboat.homeinventory.view.shopping.ShoppingViewModel

@@ -1,4 +1,4 @@
-package br.com.sailboat.data;
+package br.com.sailboat.homeinventory.domain;
 
 import org.junit.Test;
 

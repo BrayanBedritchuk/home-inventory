@@ -1,4 +1,4 @@
-package br.com.sailboat.domain
+package br.com.sailboat.homeinventory.domain
 
 import br.com.sailboat.homeinventory.core.Filter
 import br.com.sailboat.homeinventory.core.entity.Product

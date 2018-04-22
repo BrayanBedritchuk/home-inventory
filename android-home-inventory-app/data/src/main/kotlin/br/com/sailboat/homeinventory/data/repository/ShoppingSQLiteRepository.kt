@@ -3,7 +3,7 @@ package br.com.sailboat.homeinventory.data.repository
 import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
 import br.com.sailboat.canoe.base.BaseSQLite
-import br.com.sailboat.data.AppDatabase
+import br.com.sailboat.homeinventory.data.AppDatabase
 import br.com.sailboat.homeinventory.data.model.ShoppingData
 
 class ShoppingSQLiteRepository(database: SQLiteOpenHelper) : BaseSQLite(database) {

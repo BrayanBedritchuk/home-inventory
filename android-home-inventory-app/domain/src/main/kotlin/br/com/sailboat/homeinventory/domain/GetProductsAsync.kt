@@ -1,4 +1,4 @@
-package br.com.sailboat.domain
+package br.com.sailboat.homeinventory.domain
 
 import br.com.sailboat.canoe.helper.AsyncHelper
 import br.com.sailboat.homeinventory.core.Filter
@@ -19,8 +19,6 @@ class GetProductsAsync(val productRepository: ProductRepository, val filter: Fil
             @Throws(Exception::class)
             override fun doInBackground() {
 
-                Thread.sleep(5000)
-                
                 GetProducts(productRepository, filter).execute(object :
                     UseCaseWithResponse.Response<List<Product>> {
 

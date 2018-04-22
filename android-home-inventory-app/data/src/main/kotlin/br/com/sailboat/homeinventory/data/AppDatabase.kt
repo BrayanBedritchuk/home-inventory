@@ -1,4 +1,4 @@
-package br.com.sailboat.data
+package br.com.sailboat.homeinventory.data
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
