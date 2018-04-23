@@ -8,6 +8,7 @@ import br.com.sailboat.homeinventory.presentation.model.ProductModel
 
 class ShoppingViewModel(application: Application) : AndroidViewModel(application) {
 
+    var firstSession = true
     val name = MutableLiveData<String>()
     val products = MutableLiveData<List<ProductModel>>()
     val shoppingCart = HashMap<Long, Int>()

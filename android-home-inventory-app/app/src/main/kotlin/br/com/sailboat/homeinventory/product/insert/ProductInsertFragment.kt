@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import br.com.sailboat.canoe.base.BaseFragment
 import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
 import br.com.sailboat.homeinventory.presentation.helper.Extras
 import kotlinx.android.synthetic.main.frg_product_insert.*
 
@@ -29,7 +30,11 @@ class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductIns
 
     override fun getLayoutId() = R.layout.frg_product_insert
 
-    override fun newPresenterInstance() = ProductInsertPresenter(this)
+    override fun newPresenterInstance() =
+        ProductInsertPresenter(
+            this,
+            SQLiteRepositoryFactory(activity.applicationContext)
+        )
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_save, menu)

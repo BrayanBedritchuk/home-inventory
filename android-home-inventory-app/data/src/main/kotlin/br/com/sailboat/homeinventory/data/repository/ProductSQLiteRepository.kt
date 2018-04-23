@@ -6,33 +6,33 @@ import br.com.sailboat.homeinventory.core.repository.ProductRepository
 import br.com.sailboat.homeinventory.data.mapper.ProducDataMapper
 
 // Inject the productSqlite
-class ProductSQLiteRepository(val produtSqlite: ProductSQLite) : ProductRepository {
+class ProductSQLiteRepository(val productSqlite: ProductSQLite) : ProductRepository {
 
     override fun add(product: Product) {
         val productData = ProducDataMapper().transform(product)
 
         // TODO: CHECK AND INSERT THE QUANTITY
-        produtSqlite.insert(productData)
+        productSqlite.insert(productData)
     }
 
     override fun edit(product: Product) {
         val productData = ProducDataMapper().transform(product)
 
         // TODO: CHECK AND UPDATE THE QUANTITY
-        produtSqlite.update(productData)
+        productSqlite.update(productData)
     }
 
     override fun remove(product: Product) {
-        produtSqlite.delete(product.id)
+        productSqlite.delete(product.id)
     }
 
-    override fun getAll(filter: Filter): MutableList<Product> {
-        val productsData = produtSqlite.getAllProducts(filter)
+    override fun getAll(filter: Filter): List<Product> {
+        val productsData = productSqlite.getAllProducts(filter)
         val products = ArrayList<Product>()
 
         productsData.forEach {
-            val product = ProducDataMapper().transform(it)
-            // TODO: LOAD THE QUANTITY
+            val quantity = productSqlite.getCurrentQuantity(it.id)
+            val product = ProducDataMapper().transform(it, quantity)
             products.add(product)
         }
 
@@ -40,8 +40,9 @@ class ProductSQLiteRepository(val produtSqlite: ProductSQLite) : ProductReposito
     }
 
     override fun findById(productId: Long): Product {
-        val productData = produtSqlite.getProductById(productId)
-        return ProducDataMapper().transform(productData)
+        val productData = productSqlite.getProductById(productId)
+        val quantity = productSqlite.getCurrentQuantity(productId)
+        return ProducDataMapper().transform(productData, quantity)
     }
 
 }

@@ -8,13 +8,13 @@ import br.com.sailboat.canoe.helper.EntityHelper
 import br.com.sailboat.canoe.helper.LogHelper
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
+import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
 import br.com.sailboat.homeinventory.domain.ProductLoader
 import br.com.sailboat.homeinventory.domain.ProductValidator
 import br.com.sailboat.homeinventory.presentation.helper.Extras
 
 
-class ProductInsertPresenter(view: View) : BasePresenter<ProductInsertPresenter.View>(view) {
+class ProductInsertPresenter(view: View, val repositoryFactory: RepositoryFactory) : BasePresenter<ProductInsertPresenter.View>(view) {
 
     val viewModel = ProductInsertViewModel()
 
@@ -75,7 +75,7 @@ class ProductInsertPresenter(view: View) : BasePresenter<ProductInsertPresenter.
             @Throws(Exception::class)
             override fun doInBackground() {
                 val product = ProductLoader(
-                    SQLiteRepositoryFactory(context).productRepository
+                    repositoryFactory.productRepository
                 )
                     .loadProduct(viewModel.productId)
                 viewModel.name = product.name

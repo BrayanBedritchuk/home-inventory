@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
+import br.com.sailboat.homeinventory.domain.LogcatLogger
 import br.com.sailboat.homeinventory.presentation.model.ProductModel
 import br.com.sailboat.homeinventory.presentation.shopping.ShoppingPresenter
 import javax.inject.Inject
@@ -19,7 +21,8 @@ import javax.inject.Inject
 class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAdapter.Callback {
 
     private lateinit var viewModel: ShoppingViewModel
-    @Inject lateinit var presenter: ShoppingPresenter
+    @Inject
+    lateinit var presenter: ShoppingPresenter
     private lateinit var recycler: RecyclerView
 
     companion object {
@@ -36,7 +39,7 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAd
         initPresenter()
         initViews()
         initObservers()
-        presenter.onCreate(savedInstanceState)
+        presenter.onCreate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -47,7 +50,7 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAd
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.menu_save -> {
-                presenter.onClickMenuSave()
+                presenter.onClickCheckout()
                 return true
             }
             else -> {
@@ -68,7 +71,7 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAd
         ShoppingProductDialog.show(supportFragmentManager, product, quantity,
             object : ShoppingProductDialog.Callback {
                 override fun onClickOk(productId: Long, quantity: Int?) {
-                    presenter.onClickOkProductDialog(productId, quantity)
+                    presenter.onAddProduct(productId, quantity)
                 }
             })
     }
@@ -77,10 +80,10 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAd
 
     override fun finishWithSuccess() {
         setResult(Activity.RESULT_OK)
-        finishWithSuccess()
+        finish()
     }
 
-    override fun refreshShoppingList() {
+    override fun updateShoppingList() {
         recycler.adapter.notifyDataSetChanged()
     }
 
@@ -110,7 +113,9 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAd
     private fun initPresenter() {
         presenter = ShoppingPresenter(
             this,
-            viewModel
+            viewModel,
+            SQLiteRepositoryFactory(applicationContext),
+            LogcatLogger()
         )
     }
 

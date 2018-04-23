@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import br.com.sailboat.canoe.base.BaseFragment
 import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
 import br.com.sailboat.homeinventory.presentation.helper.RequestCode
 import br.com.sailboat.homeinventory.view.product.details.ProductDetailsActivity
 import br.com.sailboat.homeinventory.view.product.insert.ProductInsertActivity
@@ -14,7 +15,7 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
 
     override fun getLayoutId() = R.layout.frg_list
 
-    override fun newPresenterInstance() = ProductListPresenter(this)
+    override fun newPresenterInstance() = ProductListPresenter(this, SQLiteRepositoryFactory(activity.applicationContext))
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater!!.inflate(R.menu.menu_search, menu)

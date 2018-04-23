@@ -3,14 +3,16 @@ package br.com.sailboat.homeinventory.view.product.list
 import android.content.Intent
 import android.support.design.widget.Snackbar
 import br.com.sailboat.canoe.base.BasePresenter
+import br.com.sailboat.canoe.helper.AsyncHelper
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.entity.Product
+import br.com.sailboat.homeinventory.core.interactor.GetProducts
 import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse
-import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
-import br.com.sailboat.homeinventory.domain.GetProductsAsync
+import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
 
 
-class ProductListPresenter(view: View) : BasePresenter<ProductListPresenter.View>(view) {
+class ProductListPresenter(view: View, val repositoryFactory: RepositoryFactory) :
+    BasePresenter<ProductListPresenter.View>(view) {
 
     val viewModel = ProductListViewModel()
 
@@ -42,22 +44,39 @@ class ProductListPresenter(view: View) : BasePresenter<ProductListPresenter.View
 
     private fun loadProducts() {
 
-        GetProductsAsync(
-            SQLiteRepositoryFactory(context).productRepository,
-            viewModel.filter
-        ).execute(
-            object : UseCaseWithResponse.Response<List<Product>> {
-                override fun onSuccess(products: List<Product>) {
-                    viewModel.products.clear()
-                    viewModel.products.addAll(products)
-                    updateContentViews()
-                }
+        AsyncHelper.execute(object : AsyncHelper.Callback {
 
-                override fun onFail(exception: Exception) {
-                    printLogAndShowDialog(exception)
-                    updateContentViews()
-                }
-            })
+            lateinit var products: List<Product>
+
+            @Throws(Exception::class)
+            override fun doInBackground() {
+
+                GetProducts(repositoryFactory.productRepository, viewModel.filter).execute(
+                    object : UseCaseWithResponse.Response<List<Product>> {
+
+                        override fun onSuccess(responseProducts: List<Product>) {
+                            products = responseProducts
+                        }
+
+                        override fun onFail(exception: Exception) {
+                            throw exception
+                        }
+                    })
+
+            }
+
+            override fun onSuccess() {
+                viewModel.products.clear()
+                viewModel.products.addAll(products)
+                updateContentViews()
+            }
+
+            override fun onFail(e: Exception) {
+                printLogAndShowDialog(e)
+                updateContentViews()
+            }
+
+        })
 
     }
 

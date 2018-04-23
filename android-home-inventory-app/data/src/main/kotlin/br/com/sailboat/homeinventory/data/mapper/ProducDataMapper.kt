@@ -5,11 +5,11 @@ import br.com.sailboat.homeinventory.data.model.ProductData
 
 class ProducDataMapper {
 
-    fun transform(productData: ProductData): Product {
+    fun transform(productData: ProductData, quantity: Int): Product {
         val product = Product()
         product.id = productData.id
         product.name = productData.name
-        product.quantity = 100 // TODO: LOAD QUANTITY
+        product.quantity = quantity
 
         return product
     }
