@@ -7,6 +7,7 @@ import android.view.MenuItem
 import br.com.sailboat.canoe.base.BaseFragment
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
+import br.com.sailboat.homeinventory.domain.LogcatLogger
 import br.com.sailboat.homeinventory.presentation.helper.Extras
 import kotlinx.android.synthetic.main.frg_product_insert.*
 
@@ -33,7 +34,8 @@ class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductIns
     override fun newPresenterInstance() =
         ProductInsertPresenter(
             this,
-            SQLiteRepositoryFactory(activity.applicationContext)
+            SQLiteRepositoryFactory(activity.applicationContext),
+            LogcatLogger()
         )
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

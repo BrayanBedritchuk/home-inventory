@@ -4,5 +4,6 @@ import br.com.sailboat.canoe.helper.EntityHelper
 
 class ProductData(
     var id: Long = EntityHelper.NO_ID,
-    val name: String
+    val name: String,
+    var quantity: Int = 0
 )

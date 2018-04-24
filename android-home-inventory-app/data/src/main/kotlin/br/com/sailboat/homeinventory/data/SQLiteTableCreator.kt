@@ -7,7 +7,7 @@ class SQLiteTableCreator {
 
     private val tables = listOf(
         ProductSQLiteTable(),
-        ProductQuantitySQLiteTable(),
+//        ProductQuantitySQLiteTable(),
         CategorySQLiteTable(),
         ProductCategorySQLiteTable(),
         EstablishmentSQLiteTable(),

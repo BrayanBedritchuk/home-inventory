@@ -32,24 +32,7 @@ class ProductSQLite(database: SQLiteOpenHelper) : BaseSQLite(database) {
             sb.append(" AND Product.name LIKE ? ")
         }
 
-        return ArrayList(getProductsFromQuery(sb.toString(), filter))
-    }
-
-    fun getCurrentQuantity(productId: Long): Int {
-        val sb = StringBuilder()
-        sb.append(" SELECT quantity FROM ProductQuantity ")
-        sb.append(" WHERE productId = $productId ")
-        sb.append(" ORDER BY created DESC ")
-
-        val cursor = executeQuery(sb.toString())
-
-        if (cursor.moveToNext()) {
-            val quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity"))
-            cursor.close()
-            return quantity
-        }
-
-        return 0
+        return getProductsFromQuery(sb.toString(), filter)
     }
 
     fun insert(product: ProductData) {
@@ -90,8 +73,9 @@ class ProductSQLite(database: SQLiteOpenHelper) : BaseSQLite(database) {
     private fun buildFromCursor(cursor: Cursor): ProductData {
         val id = cursor.getLong(cursor.getColumnIndexOrThrow("id"))
         val name = cursor.getString(cursor.getColumnIndexOrThrow("name"))
+        val quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity"))
 
-        return ProductData(id, name)
+        return ProductData(id, name, quantity)
     }
 
     @Throws(Exception::class)
