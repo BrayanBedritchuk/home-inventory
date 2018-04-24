@@ -5,7 +5,7 @@ import br.com.sailboat.canoe.recycler.RecyclerItem
 
 class ProductDetailsViewModel {
 
-    var productId: Long = EntityHelper.NO_ID.toLong()
-    val productDetails = ArrayList<RecyclerItem>()
+    var productId: Long = EntityHelper.NO_ID
+    val productDetails = mutableListOf<RecyclerItem>()
 
 }

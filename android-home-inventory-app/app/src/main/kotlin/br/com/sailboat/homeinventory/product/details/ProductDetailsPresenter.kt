@@ -7,7 +7,6 @@ import br.com.sailboat.canoe.helper.LogHelper
 import br.com.sailboat.canoe.recycler.RecyclerItem
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.presentation.helper.Extras
-import java.util.*
 
 
 class ProductDetailsPresenter(view: View) : BasePresenter<ProductDetailsPresenter.View>(view) {
@@ -36,7 +35,7 @@ class ProductDetailsPresenter(view: View) : BasePresenter<ProductDetailsPresente
     private fun loadProductDetails() {
         AsyncHelper.execute(object : AsyncHelper.Callback {
 
-            internal var details: List<RecyclerItem> = ArrayList<RecyclerItem>()
+            internal var details = mutableListOf<RecyclerItem>()
 
             @Throws(Exception::class)
             override fun doInBackground() {

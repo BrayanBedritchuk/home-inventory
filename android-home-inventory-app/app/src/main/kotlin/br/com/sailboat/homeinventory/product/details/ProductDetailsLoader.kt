@@ -17,7 +17,7 @@ class ProductDetailsLoader(
     fun loadProductDetailsViews(productId: Long): List<RecyclerViewItem> {
         val product = ProductLoader(productRepository).loadProduct(productId)
 
-        val productDetails = ArrayList<RecyclerViewItem>()
+        val productDetails = mutableListOf<RecyclerViewItem>()
 
         var title = TitleModel(ViewType.TITLE.ordinal, product.name)
 

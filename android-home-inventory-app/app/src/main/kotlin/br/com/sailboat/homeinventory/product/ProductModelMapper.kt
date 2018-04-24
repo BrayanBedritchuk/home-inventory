@@ -6,7 +6,7 @@ import br.com.sailboat.homeinventory.presentation.model.ProductModel
 class ProductModelMapper {
 
     fun transform(products: List<Product>): List<ProductModel> {
-        val productsModel = ArrayList<ProductModel>()
+        val productsModel = mutableListOf<ProductModel>()
 
         products.forEach {
             productsModel.add(transform(it))

@@ -5,7 +5,7 @@ import br.com.sailboat.homeinventory.dao.filter.ProductFilter
 
 class ProductListViewModel {
 
-    val products = ArrayList<Product>()
+    val products = mutableListOf<Product>()
     var filter = ProductFilter()
 
 }

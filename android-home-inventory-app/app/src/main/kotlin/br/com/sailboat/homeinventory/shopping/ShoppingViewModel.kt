@@ -18,7 +18,7 @@ class ShoppingViewModel(application: Application) : AndroidViewModel(application
         return if (products.value != null) {
             products.value!!
         } else {
-            ArrayList()
+            mutableListOf()
         }
     }
 
