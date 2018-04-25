@@ -7,7 +7,6 @@ class SQLiteTableCreator {
 
     private val tables = listOf(
         ProductSQLiteTable(),
-//        ProductQuantitySQLiteTable(),
         CategorySQLiteTable(),
         ProductCategorySQLiteTable(),
         EstablishmentSQLiteTable(),
@@ -16,9 +15,7 @@ class SQLiteTableCreator {
     )
 
     fun createTables(db: SQLiteDatabase) {
-        tables.forEach {
-            db.execSQL(it.createTableStatement)
-        }
+        tables.forEach { db.execSQL(it.createTableStatement) }
     }
 
 }

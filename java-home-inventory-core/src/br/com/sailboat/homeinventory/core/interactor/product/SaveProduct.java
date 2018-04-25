@@ -1,10 +1,10 @@
-package br.com.sailboat.homeinventory.core.interactor;
+package br.com.sailboat.homeinventory.core.interactor.product;
 
 import br.com.sailboat.homeinventory.core.entity.Product;
-import br.com.sailboat.homeinventory.core.interactor.validator.ProductValidator;
+import br.com.sailboat.homeinventory.core.interactor.UseCase;
 import br.com.sailboat.homeinventory.core.repository.ProductRepository;
 
-public class SaveProduct implements UseCase {
+public class SaveProduct {
 
     private Product product;
     private ProductRepository productRepository;
@@ -14,12 +14,10 @@ public class SaveProduct implements UseCase {
         this.productRepository = productRepository;
     }
 
-    @Override
-    public void execute(Response response) {
+    public void execute(UseCase.OnFail response) {
         try {
-            ProductValidator.validate(product);
+            new ProductValidator(product).validate();
             productRepository.save(product);
-            response.onSuccess();
         } catch (Exception e) {
             response.onFail(e);
         }

@@ -24,6 +24,6 @@ class ProductDataMapper {
         return products
     }
 
-    fun transform(product: Product) = ProductData(product.id, product.name)
+    fun transform(product: Product) = ProductData(product.id, product.name, product.quantity)
 
 }

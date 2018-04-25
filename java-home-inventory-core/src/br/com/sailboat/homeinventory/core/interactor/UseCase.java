@@ -8,4 +8,8 @@ public interface UseCase {
         void onSuccess();
         void onFail(Exception exception);
     }
+
+    interface OnFail {
+        void onFail(Exception exception);
+    }
 }

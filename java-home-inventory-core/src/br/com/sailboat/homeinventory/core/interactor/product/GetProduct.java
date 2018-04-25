@@ -1,6 +1,7 @@
-package br.com.sailboat.homeinventory.core.interactor;
+package br.com.sailboat.homeinventory.core.interactor.product;
 
 import br.com.sailboat.homeinventory.core.entity.Product;
+import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse;
 import br.com.sailboat.homeinventory.core.repository.ProductRepository;
 
 public class GetProduct implements UseCaseWithResponse<Product> {
@@ -21,6 +22,10 @@ public class GetProduct implements UseCaseWithResponse<Product> {
         } catch (Exception e) {
             response.onFail(e);
         }
+    }
+
+    public Product execute() {
+        return productRepository.findById(productId);
     }
 
 }

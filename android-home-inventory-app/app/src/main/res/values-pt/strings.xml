@@ -3,4 +3,6 @@
     <string name="no_products_found">Nenhum produto encontrado</string>
     <string name="msg_exception_product_details">Ocorreu um erro ao carregar os detalhes do produto</string>
     <string name="title_product_details">Detalhes do Produto</string>
+    <string name="product_name_not_filled">É necessário preencher o nome do produto</string>
+    <string name="product_quantity_cant_be_negative">Quantidade não pode ser negativa</string>
 </resources>

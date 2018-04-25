@@ -39,11 +39,12 @@ class ProductSQLite(database: SQLiteOpenHelper) : BaseSQLite(database) {
         val sql = StringBuilder()
 
         sql.append(" INSERT INTO Product ")
-        sql.append(" (name) ")
-        sql.append(" VALUES (?); ")
+        sql.append(" (name, quantity) ")
+        sql.append(" VALUES (?, ?); ")
 
         val stmt = compileStatement(sql.toString())
         stmt.bindString(1, product.name)
+        stmt.bindLong(2, product.quantity.toLong())
 
         val id = insert(stmt)
         product.id = id

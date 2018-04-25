@@ -1,10 +1,11 @@
-package br.com.sailboat.homeinventory.core.interactor;
+package br.com.sailboat.homeinventory.core.interactor.product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sailboat.homeinventory.core.Filter;
 import br.com.sailboat.homeinventory.core.entity.Product;
+import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse;
 import br.com.sailboat.homeinventory.core.repository.ProductRepository;
 
 public class GetProducts implements UseCaseWithResponse<List<Product>> {

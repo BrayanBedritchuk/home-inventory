@@ -12,9 +12,7 @@ import br.com.sailboat.homeinventory.presentation.helper.Extras
 import kotlinx.android.synthetic.main.frg_product_insert.*
 
 class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductInsertPresenter.View {
-
-
-    companion object {
+companion object {
 
         fun newInstance() = ProductInsertFragment()
 
@@ -45,7 +43,7 @@ class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductIns
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.getItemId()) {
             R.id.menu_save -> {
-                presenter.onClickMenuSave()
+                presenter.onClickSave()
                 return true
             }
             else -> {
@@ -70,6 +68,14 @@ class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductIns
 
     override fun setQuantity(quantity: String) {
         etQuantity.setText(quantity)
+    }
+
+    override fun showMessageNameNotFilled() {
+        showMessageDialog(getString(R.string.product_name_not_filled))
+    }
+
+    override fun showMessageQuantityNegative() {
+        showMessageDialog(getString(R.string.product_quantity_cant_be_negative))
     }
 
 }

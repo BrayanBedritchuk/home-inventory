@@ -6,7 +6,7 @@ import br.com.sailboat.canoe.base.BasePresenter
 import br.com.sailboat.canoe.helper.AsyncHelper
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.core.interactor.GetProducts
+import br.com.sailboat.homeinventory.core.interactor.product.GetProducts
 import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
 
@@ -51,7 +51,10 @@ class ProductListPresenter(view: View, val repositoryFactory: RepositoryFactory)
             @Throws(Exception::class)
             override fun doInBackground() {
 
-                GetProducts(repositoryFactory.productRepository, viewModel.filter).execute(
+                GetProducts(
+                    repositoryFactory.productRepository,
+                    viewModel.filter
+                ).execute(
                     object : UseCaseWithResponse.Response<List<Product>> {
 
                         override fun onSuccess(responseProducts: List<Product>) {

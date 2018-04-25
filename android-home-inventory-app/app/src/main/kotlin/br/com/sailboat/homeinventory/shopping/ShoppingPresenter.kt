@@ -4,7 +4,7 @@ import android.util.Log
 import br.com.sailboat.canoe.helper.AsyncHelper
 import br.com.sailboat.homeinventory.core.Logger
 import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.core.interactor.GetProducts
+import br.com.sailboat.homeinventory.core.interactor.product.GetProducts
 import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
 import br.com.sailboat.homeinventory.presentation.model.ProductModel
@@ -37,7 +37,10 @@ class ShoppingPresenter(
             @Throws(Exception::class)
             override fun doInBackground() {
 
-                GetProducts(repositoryFactory.productRepository, viewModel.productFilter).execute(
+                GetProducts(
+                    repositoryFactory.productRepository,
+                    viewModel.productFilter
+                ).execute(
                     object : UseCaseWithResponse.Response<List<Product>> {
 
                         override fun onSuccess(responseProducts: List<Product>) {

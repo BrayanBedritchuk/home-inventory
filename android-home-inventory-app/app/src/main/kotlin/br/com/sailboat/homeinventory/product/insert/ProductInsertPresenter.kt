@@ -2,18 +2,18 @@ package br.com.sailboat.homeinventory.view.product.insert
 
 import android.os.Bundle
 import br.com.sailboat.canoe.base.BasePresenter
-import br.com.sailboat.canoe.exception.RequiredFieldNotFilledException
+import br.com.sailboat.canoe.helper.AsyncHelper
 import br.com.sailboat.canoe.helper.EntityHelper
+import br.com.sailboat.canoe.helper.LogHelper
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.Logger
 import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.core.exception.FieldNotFilledException
-import br.com.sailboat.homeinventory.core.interactor.GetProduct
-import br.com.sailboat.homeinventory.core.interactor.SaveProduct
-import br.com.sailboat.homeinventory.core.interactor.UseCase
+import br.com.sailboat.homeinventory.core.exception.InvalidFieldException
 import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse
+import br.com.sailboat.homeinventory.core.interactor.product.GetProduct
+import br.com.sailboat.homeinventory.core.interactor.product.ProductValidator
+import br.com.sailboat.homeinventory.core.interactor.product.SaveProduct
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
-import br.com.sailboat.homeinventory.domain.ProductValidator
 import br.com.sailboat.homeinventory.presentation.helper.Extras
 
 
@@ -46,21 +46,30 @@ class ProductInsertPresenter(
         updateContentViews()
     }
 
-    fun onClickMenuSave() {
+    fun onClickSave() {
         try {
             closeKeyboard()
             extractInfoFromViews()
             val product = buildProductFromViewModel()
-            ProductValidator.validate(context, product)
             save(product)
-
-        } catch (e: RequiredFieldNotFilledException) {
-            showMessage(e.message)
-
         } catch (e: Exception) {
-            printLogAndShowDialog(e)
+            logger.error(TAG, e)
+            showMessage(getString(R.string.msg_error))
         }
 
+    }
+
+    private fun handleInvalidProducFields(e: InvalidFieldException) {
+        e.rules?.forEach {
+            when (it) {
+                ProductValidator.InvalidProductFields.NAME_NOT_FILLED -> {
+                    view.showMessageNameNotFilled();
+                }
+                ProductValidator.InvalidProductFields.QUANTITY_NEGATIVE -> {
+                    view.showMessageQuantityNegative();
+                }
+            }
+        }
     }
 
     private fun extractInfoFromViews() {
@@ -79,86 +88,67 @@ class ProductInsertPresenter(
     }
 
     private fun startEditingProduct() {
-//        executeAsyncWithProgress(object : AsyncHelper.Callback {
-//
-//            @Throws(Exception::class)
-//            override fun doInBackground() {
-//                val product = ProductLoader(
-//                    repositoryFactory.productRepository
-//                )
-//                    .loadProduct(viewModel.productId)
-//                viewModel.name = product.name
-//                viewModel.quantity = product.quantity
-//            }
-//
-//            override fun onSuccess() {
-//                getView().setActivityToHideKeyboard()
-//                updateEditTexts()
-//                updateContentViews()
-//            }
-//
-//            override fun onFail(e: Exception) {
-//                LogHelper.logException(e)
-//                view.showToast(getString(R.string.msg_exception_start_editing))
-//                closeActivityWithResultCanceled()
-//            }
-//
-//        })
+        executeAsyncWithProgress(object : AsyncHelper.Callback {
 
+            @Throws(Exception::class)
+            override fun doInBackground() {
+                loadProduct()
+            }
 
-        GetProduct(repositoryFactory.productRepository, viewModel.productId).execute(object :
-            UseCaseWithResponse.Response<Product> {
-
-            override fun onSuccess(response: Product) {
-                viewModel.name = response.name
-                viewModel.quantity = response.quantity
-
+            override fun onSuccess() {
                 getView().setActivityToHideKeyboard()
-                updateEditTexts()
+                updateInputTexts()
                 updateContentViews()
             }
 
-            override fun onFail(exception: Exception) {
-                logger.error(TAG, exception)
+            override fun onFail(e: Exception) {
+                LogHelper.logException(e)
+                view.showToast(getString(R.string.msg_exception_start_editing))
+                closeActivityWithResultCanceled()
             }
-        })
 
+            private fun loadProduct() {
+                GetProduct(
+                    repositoryFactory.productRepository,
+                    viewModel.productId
+                ).execute(object :
+                    UseCaseWithResponse.Response<Product> {
+
+                    override fun onSuccess(response: Product) {
+                        viewModel.name = response.name
+                        viewModel.quantity = response.quantity
+                    }
+
+                    override fun onFail(exception: Exception) {
+                        throw exception
+                    }
+                })
+            }
+
+        })
     }
 
     private fun save(product: Product) {
-//        executeAsyncWithProgress(object : AsyncHelper.Callback {
-//
-//            override fun doInBackground() {
-//                ProductSaver(context).save(product)
-//            }
-//
-//            override fun onSuccess() {
-//                closeActivityWithResultOk()
-//            }
-//
-//            override fun onFail(e: java.lang.Exception?) {
-//                LogHelper.logException(e)
-//                showMessage(getString(R.string.msg_exception_saving))
-//            }
-//
-//        })
+        showProgress()
+        AsyncHelper.execute(object : AsyncHelper.Callback {
 
-        // TODO: Do Async
-
-        SaveProduct(product, repositoryFactory.productRepository).execute(object :
-            UseCase.Response {
+            override fun doInBackground() {
+                SaveProduct(product, repositoryFactory.productRepository).execute { exception -> throw exception }
+            }
 
             override fun onSuccess() {
+                dismissProgress()
                 closeActivityWithResultOk()
             }
 
-            override fun onFail(exception: Exception) {
-                if (exception is FieldNotFilledException) {
-
+            override fun onFail(e: Exception) {
+                dismissProgress()
+                if (e is InvalidFieldException) {
+                    handleInvalidProducFields(e)
+                } else {
+                    logger.error(TAG, e)
+                    showMessage(getString(R.string.msg_error))
                 }
-
-                logger.error(TAG, exception)
-                showMessage(getString(R.string.msg_exception_saving))
             }
         })
 
@@ -178,7 +168,7 @@ class ProductInsertPresenter(
 
     private fun hasProductToEdit() = viewModel.productId != EntityHelper.NO_ID
 
-    private fun updateEditTexts() {
+    private fun updateInputTexts() {
         view.setName(viewModel.name)
         view.setQuantity(viewModel.quantity.toString())
     }
@@ -189,6 +179,8 @@ class ProductInsertPresenter(
         fun getQuantity(): String
         fun setName(name: String)
         fun setQuantity(quantity: String)
+        fun showMessageNameNotFilled()
+        fun showMessageQuantityNegative()
     }
 
 }
