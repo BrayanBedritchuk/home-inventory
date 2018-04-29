@@ -4,10 +4,10 @@ import android.content.Context
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.interactor.product.GetProduct
 import br.com.sailboat.homeinventory.core.repository.ProductRepository
-import br.com.sailboat.homeinventory.presentation.helper.ViewType
-import br.com.sailboat.homeinventory.presentation.model.LabelAndValueModel
-import br.com.sailboat.homeinventory.presentation.model.RecyclerViewItem
-import br.com.sailboat.homeinventory.presentation.model.TitleModel
+import br.com.sailboat.homeinventory.helper.ViewType
+import br.com.sailboat.homeinventory.model.LabelAndValueModel
+import br.com.sailboat.homeinventory.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.model.TitleModel
 
 class ProductDetailsLoader(
     private val context: Context,

@@ -3,8 +3,8 @@ package br.com.sailboat.homeinventory.view.product.details
 import android.content.Intent
 import android.support.v4.app.Fragment
 import br.com.sailboat.canoe.base.BaseActivitySingleFragment
-import br.com.sailboat.homeinventory.presentation.helper.Extras
-import br.com.sailboat.homeinventory.presentation.helper.RequestCode
+import br.com.sailboat.homeinventory.helper.Extras
+import br.com.sailboat.homeinventory.helper.RequestCode
 
 class ProductDetailsActivity : BaseActivitySingleFragment<ProductDetailsFragment>() {
 

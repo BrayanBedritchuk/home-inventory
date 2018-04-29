@@ -8,13 +8,13 @@
     android:paddingBottom="28dp">
 
     <TextView
-        android:id="@+id/vh_label_value__tv__label"
+        android:id="@+id/tvLabel"
         style="@style/TextViewLabel"
         android:layout_marginLeft="16dp"
         tools:text="Label"/>
 
     <TextView
-        android:id="@+id/vh_label_value__tv__value"
+        android:id="@+id/tvValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"

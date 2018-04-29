@@ -2,21 +2,21 @@ package br.com.sailboat.homeinventory.view.product.details
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import br.com.sailboat.canoe.recycler.RecyclerItem
-import br.com.sailboat.canoe.recycler.item.LabelValueRecyclerItem
-import br.com.sailboat.canoe.recycler.item.TitleRecyclerItem
-import br.com.sailboat.canoe.recycler.view_holder.LabelValueViewHolder
-import br.com.sailboat.canoe.recycler.view_holder.TitleViewHolder
-import br.com.sailboat.homeinventory.presentation.helper.ViewType
+import br.com.sailboat.homeinventory.helper.ViewType
+import br.com.sailboat.homeinventory.model.LabelAndValueModel
+import br.com.sailboat.homeinventory.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.model.TitleModel
+import br.com.sailboat.homeinventory.presentation.view_holder.LabelAndValueViewHolder
+import br.com.sailboat.homeinventory.presentation.view_holder.TitleViewHolder
 
 
 class ProductDetailsAdapter(var callback: Callback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         when (viewType) {
-            ViewType.TITLE.ordinal -> return TitleViewHolder.newInstance(parent)
-            ViewType.LABEL_VALUE.ordinal -> return LabelValueViewHolder.newInstance(parent)
+            ViewType.TITLE.ordinal -> return TitleViewHolder(parent)
+            ViewType.LABEL_VALUE.ordinal -> return LabelAndValueViewHolder(parent)
             else -> throw RuntimeException("ViewHolder not found")
         }
 
@@ -28,8 +28,8 @@ class ProductDetailsAdapter(var callback: Callback) : RecyclerView.Adapter<Recyc
         val item = callback.getProductDetails()[position]
 
         when (holder) {
-            is TitleViewHolder -> holder.bindItem(item as TitleRecyclerItem)
-            is LabelValueViewHolder -> holder.bindItem(item as LabelValueRecyclerItem)
+            is TitleViewHolder -> holder.bindItem(item as TitleModel)
+            is LabelAndValueViewHolder -> holder.bindItem(item as LabelAndValueModel)
             else -> throw RuntimeException("ViewHolder not found")
         }
     }
@@ -37,7 +37,7 @@ class ProductDetailsAdapter(var callback: Callback) : RecyclerView.Adapter<Recyc
     override fun getItemViewType(position: Int) = callback.getProductDetails()[position].viewType
 
     interface Callback {
-        fun getProductDetails(): List<RecyclerItem>
+        fun getProductDetails(): List<RecyclerViewItem>
     }
 
 }

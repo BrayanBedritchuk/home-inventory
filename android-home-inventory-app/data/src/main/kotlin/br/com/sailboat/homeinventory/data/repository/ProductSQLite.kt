@@ -53,12 +53,13 @@ class ProductSQLite(database: SQLiteOpenHelper) : BaseSQLite(database) {
     fun update(product: ProductData) {
         val sql = StringBuilder()
         sql.append(" UPDATE Product SET ")
-        sql.append(" name = ?, lastModified = datetime('now') ")
+        sql.append(" name = ?, quantity = ?, lastModified = datetime('now') ")
         sql.append(" WHERE id = ? ")
 
         val statement = compileStatement(sql.toString())
         statement.bindString(1, product.name)
-        statement.bindLong(2, product.id)
+        statement.bindLong(2, product.quantity.toLong())
+        statement.bindLong(3, product.id)
 
         update(statement)
     }

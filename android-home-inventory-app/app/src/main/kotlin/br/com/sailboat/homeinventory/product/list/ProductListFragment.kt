@@ -6,7 +6,7 @@ import android.view.MenuInflater
 import br.com.sailboat.canoe.base.BaseFragment
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
-import br.com.sailboat.homeinventory.presentation.helper.RequestCode
+import br.com.sailboat.homeinventory.helper.RequestCode
 import br.com.sailboat.homeinventory.view.product.details.ProductDetailsActivity
 import br.com.sailboat.homeinventory.view.product.insert.ProductInsertActivity
 

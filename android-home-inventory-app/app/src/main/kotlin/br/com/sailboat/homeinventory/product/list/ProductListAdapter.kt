@@ -3,7 +3,7 @@ package br.com.sailboat.homeinventory.view.product.list
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.presentation.helper.ViewType
+import br.com.sailboat.homeinventory.helper.ViewType
 
 
 class ProductListAdapter(var callback: Callback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

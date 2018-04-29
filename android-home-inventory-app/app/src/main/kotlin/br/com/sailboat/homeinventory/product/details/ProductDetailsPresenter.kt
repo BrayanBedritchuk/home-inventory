@@ -4,12 +4,13 @@ import android.os.Bundle
 import br.com.sailboat.canoe.base.BasePresenter
 import br.com.sailboat.canoe.helper.AsyncHelper
 import br.com.sailboat.canoe.helper.LogHelper
-import br.com.sailboat.canoe.recycler.RecyclerItem
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.presentation.helper.Extras
+import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
+import br.com.sailboat.homeinventory.helper.Extras
+import br.com.sailboat.homeinventory.model.RecyclerViewItem
 
 
-class ProductDetailsPresenter(view: View) : BasePresenter<ProductDetailsPresenter.View>(view) {
+class ProductDetailsPresenter(view: View, val repositoryFactory: RepositoryFactory) : BasePresenter<ProductDetailsPresenter.View>(view) {
 
     val viewModel = ProductDetailsViewModel()
 
@@ -35,14 +36,14 @@ class ProductDetailsPresenter(view: View) : BasePresenter<ProductDetailsPresente
     private fun loadProductDetails() {
         AsyncHelper.execute(object : AsyncHelper.Callback {
 
-            internal var details = mutableListOf<RecyclerItem>()
+            internal var details = listOf<RecyclerViewItem>()
 
             @Throws(Exception::class)
             override fun doInBackground() {
 
-//                details = ProductDetailsLoader(
-//                    context, SQLiteRepositoryFactory(context).productRepository
-//                ).loadProductDetailsViews(viewModel.productId)
+                details = ProductDetailsLoader(
+                    context, repositoryFactory.productRepository
+                ).loadProductDetailsViews(viewModel.productId)
             }
 
             override fun onSuccess() {

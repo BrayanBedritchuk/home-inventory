@@ -1,9 +1,9 @@
-package br.com.sailboat.homeinventory.presentation.model
+package br.com.sailboat.homeinventory.model
 
-import br.com.sailboat.homeinventory.presentation.helper.ViewType
+import br.com.sailboat.homeinventory.helper.ViewType
 
 data class LabelAndValueModel(
-    override val viewType: Int = ViewType.TITLE.ordinal,
+    override val viewType: Int = ViewType.LABEL_VALUE.ordinal,
     val label: String,
     val value: String
 ) : RecyclerViewItem

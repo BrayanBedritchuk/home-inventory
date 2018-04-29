@@ -2,8 +2,9 @@ package br.com.sailboat.homeinventory.view.shopping
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import br.com.sailboat.homeinventory.presentation.helper.ViewType
+import br.com.sailboat.homeinventory.helper.ViewType
 import br.com.sailboat.homeinventory.presentation.model.ProductModel
+import java.lang.RuntimeException
 
 
 class ShoppingAdapter(var callback: Callback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

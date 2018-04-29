@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import br.com.sailboat.canoe.base.BaseFragment
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.presentation.helper.Extras
+import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
+import br.com.sailboat.homeinventory.helper.Extras
 import br.com.sailboat.homeinventory.view.product.insert.ProductInsertActivity
 
-class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductDetailsPresenter.View,
+class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(),
+    ProductDetailsPresenter.View,
     ProductDetailsAdapter.Callback {
 
 
@@ -28,7 +30,10 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductD
 
     override fun getLayoutId() = R.layout.frg_details
 
-    override fun newPresenterInstance() = ProductDetailsPresenter(this)
+    override fun newPresenterInstance() = ProductDetailsPresenter(
+        this,
+        SQLiteRepositoryFactory(activity.applicationContext)
+    )
 
     override fun onInitToolbar() {
         toolbar.setTitle(R.string.title_product_details)

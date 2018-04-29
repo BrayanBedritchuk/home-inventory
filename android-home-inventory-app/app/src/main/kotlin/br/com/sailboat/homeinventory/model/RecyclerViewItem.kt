@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.presentation.model
+package br.com.sailboat.homeinventory.model
 
 interface RecyclerViewItem {
     val viewType: Int

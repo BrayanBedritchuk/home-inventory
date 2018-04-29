@@ -1,11 +1,11 @@
 package br.com.sailboat.homeinventory.view.product.details
 
 import br.com.sailboat.canoe.helper.EntityHelper
-import br.com.sailboat.canoe.recycler.RecyclerItem
+import br.com.sailboat.homeinventory.model.RecyclerViewItem
 
 class ProductDetailsViewModel {
 
     var productId: Long = EntityHelper.NO_ID
-    val productDetails = mutableListOf<RecyclerItem>()
+    val productDetails = ArrayList<RecyclerViewItem>()
 
 }
