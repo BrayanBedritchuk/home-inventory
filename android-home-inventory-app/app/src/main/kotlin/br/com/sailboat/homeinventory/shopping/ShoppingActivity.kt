@@ -11,8 +11,9 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.data.repository.SQLiteRepositoryFactory
+import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
 import br.com.sailboat.homeinventory.domain.LogcatLogger
 import br.com.sailboat.homeinventory.presentation.model.ProductModel
 import br.com.sailboat.homeinventory.presentation.shopping.ShoppingPresenter
@@ -20,9 +21,10 @@ import javax.inject.Inject
 
 class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAdapter.Callback {
 
-    private lateinit var viewModel: ShoppingViewModel
     @Inject
+    lateinit var repositoryFactory: RepositoryFactory
     lateinit var presenter: ShoppingPresenter
+    private lateinit var viewModel: ShoppingViewModel
     private lateinit var recycler: RecyclerView
 
     companion object {
@@ -34,11 +36,14 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.act_shop)
+        setContentView(R.layout.act_shopping)
+        (application as App).appComponent.inject(this)
+
         initViewModel()
         initPresenter()
         initViews()
         initObservers()
+
         presenter.onCreate()
     }
 
@@ -47,14 +52,14 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAd
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.menu_save -> {
                 presenter.onClickCheckout()
-                return true
+                true
             }
             else -> {
-                return super.onOptionsItemSelected(item)
+                super.onOptionsItemSelected(item)
             }
         }
     }
@@ -114,7 +119,7 @@ class ShoppingActivity : AppCompatActivity(), ShoppingPresenter.View, ShoppingAd
         presenter = ShoppingPresenter(
             this,
             viewModel,
-            SQLiteRepositoryFactory(applicationContext),
+            repositoryFactory,
             LogcatLogger()
         )
     }
