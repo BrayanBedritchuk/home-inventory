@@ -7,7 +7,7 @@ import br.com.sailboat.canoe.helper.LogHelper
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
 import br.com.sailboat.homeinventory.helper.Extras
-import br.com.sailboat.homeinventory.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.helper.model.RecyclerViewItem
 
 
 class ProductDetailsPresenter(view: View, val repositoryFactory: RepositoryFactory) : BasePresenter<ProductDetailsPresenter.View>(view) {
@@ -54,7 +54,7 @@ class ProductDetailsPresenter(view: View, val repositoryFactory: RepositoryFacto
 
             override fun onFail(e: Exception) {
                 LogHelper.logException(e)
-                view.showToast(getString(R.string.msg_exception_product_details))
+                view.showToast(getString(R.string.error_msg_product_details))
                 view.closeActivityWithResultCanceled()
             }
 

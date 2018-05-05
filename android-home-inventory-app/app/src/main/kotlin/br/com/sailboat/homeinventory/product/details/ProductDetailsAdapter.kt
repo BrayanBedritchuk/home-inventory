@@ -3,11 +3,11 @@ package br.com.sailboat.homeinventory.view.product.details
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import br.com.sailboat.homeinventory.helper.ViewType
-import br.com.sailboat.homeinventory.model.LabelAndValueModel
-import br.com.sailboat.homeinventory.model.RecyclerViewItem
-import br.com.sailboat.homeinventory.model.TitleModel
-import br.com.sailboat.homeinventory.presentation.view_holder.LabelAndValueViewHolder
-import br.com.sailboat.homeinventory.presentation.view_holder.TitleViewHolder
+import br.com.sailboat.homeinventory.helper.model.LabelAndValueModel
+import br.com.sailboat.homeinventory.helper.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.helper.model.TitleModel
+import br.com.sailboat.homeinventory.helper.viewholder.LabelAndValueViewHolder
+import br.com.sailboat.homeinventory.helper.viewholder.TitleViewHolder
 
 
 class ProductDetailsAdapter(var callback: Callback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -15,8 +15,12 @@ class ProductDetailsAdapter(var callback: Callback) : RecyclerView.Adapter<Recyc
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         when (viewType) {
-            ViewType.TITLE.ordinal -> return TitleViewHolder(parent)
-            ViewType.LABEL_VALUE.ordinal -> return LabelAndValueViewHolder(parent)
+            ViewType.TITLE.ordinal -> return TitleViewHolder(
+                parent
+            )
+            ViewType.LABEL_VALUE.ordinal -> return LabelAndValueViewHolder(
+                parent
+            )
             else -> throw RuntimeException("ViewHolder not found")
         }
 
@@ -24,7 +28,7 @@ class ProductDetailsAdapter(var callback: Callback) : RecyclerView.Adapter<Recyc
 
     override fun getItemCount() = callback.getProductDetails().size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = callback.getProductDetails()[position]
 
         when (holder) {

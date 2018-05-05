@@ -4,7 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import br.com.sailboat.homeinventory.dao.filter.ProductFilter
-import br.com.sailboat.homeinventory.presentation.model.ProductModel
+import br.com.sailboat.homeinventory.product.ProductModel
 
 class ShoppingViewModel(application: Application) : AndroidViewModel(application) {
 

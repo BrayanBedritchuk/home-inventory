@@ -15,7 +15,7 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
 
     override fun getLayoutId() = R.layout.frg_list
 
-    override fun newPresenterInstance() = ProductListPresenter(this, SQLiteRepositoryFactory(activity.applicationContext))
+    override fun newPresenterInstance() = ProductListPresenter(this, SQLiteRepositoryFactory(activity!!.applicationContext))
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater!!.inflate(R.menu.menu_search, menu)
@@ -23,7 +23,7 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
     }
 
     override fun initEmptyViewMessages() {
-        emptyViewMessage1 = getString(R.string.no_products_found)
+        emptyViewMessage1 = getString(R.string.empty_view_msg_no_products_found)
         emptyViewMessage2 = getString(R.string.ept_click_to_add)
     }
 
@@ -31,7 +31,7 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
         toolbar.setTitle(R.string.title_products)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
         toolbar.setNavigationOnClickListener {
-            activity.onBackPressed()
+            activity?.onBackPressed()
         }
     }
 

@@ -15,7 +15,7 @@ import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
 import br.com.sailboat.homeinventory.domain.LogcatLogger
-import br.com.sailboat.homeinventory.presentation.model.ProductModel
+import br.com.sailboat.homeinventory.product.ProductModel
 import br.com.sailboat.homeinventory.presentation.shopping.ShoppingPresenter
 import javax.inject.Inject
 

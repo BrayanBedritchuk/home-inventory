@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import br.com.sailboat.canoe.base.BaseDialogFragment
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.presentation.model.ProductModel
+import br.com.sailboat.homeinventory.product.ProductModel
 
 class ShoppingProductDialog : BaseDialogFragment() {
 
@@ -54,7 +54,7 @@ class ShoppingProductDialog : BaseDialogFragment() {
     }
 
     private fun buildDialog(view: View): Dialog {
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(activity!!)
         builder.setView(view)
         builder.setPositiveButton(android.R.string.ok, { dialog, which ->
             val quantity = etQuantity.text.trim().toString().toIntOrNull()

@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.di
+package br.com.sailboat.homeinventory.injection
 
 import br.com.sailboat.homeinventory.view.shopping.ShoppingActivity
 import dagger.Component

@@ -8,7 +8,7 @@ import br.com.sailboat.homeinventory.helper.ViewType
 
 class ProductListAdapter(var callback: Callback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ViewType.PRODUCT.ordinal -> ProductViewHolder.newInstance(parent, callback)
             else -> throw RuntimeException("ViewHolder not found")
@@ -17,7 +17,7 @@ class ProductListAdapter(var callback: Callback) : RecyclerView.Adapter<Recycler
 
     override fun getItemCount() = callback.getProducts().size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ProductViewHolder -> holder.bindItem(item = callback.getProducts()[position])
         }

@@ -5,9 +5,9 @@ import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.interactor.product.GetProduct
 import br.com.sailboat.homeinventory.core.repository.ProductRepository
 import br.com.sailboat.homeinventory.helper.ViewType
-import br.com.sailboat.homeinventory.model.LabelAndValueModel
-import br.com.sailboat.homeinventory.model.RecyclerViewItem
-import br.com.sailboat.homeinventory.model.TitleModel
+import br.com.sailboat.homeinventory.helper.model.LabelAndValueModel
+import br.com.sailboat.homeinventory.helper.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.helper.model.TitleModel
 
 class ProductDetailsLoader(
     private val context: Context,
@@ -19,7 +19,10 @@ class ProductDetailsLoader(
 
         val productDetails = mutableListOf<RecyclerViewItem>()
 
-        var title = TitleModel(ViewType.TITLE.ordinal, product.name)
+        var title = TitleModel(
+            ViewType.TITLE.ordinal,
+            product.name
+        )
 
         var label = LabelAndValueModel(
             ViewType.LABEL_VALUE.ordinal,

@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.presentation.model
+package br.com.sailboat.homeinventory.product
 
 import br.com.sailboat.canoe.helper.EntityHelper
 

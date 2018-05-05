@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.model
+package br.com.sailboat.homeinventory.helper.model
 
 import br.com.sailboat.homeinventory.helper.ViewType
 

@@ -1,9 +1,9 @@
 package br.com.sailboat.homeinventory
 
 import android.app.Application
-import br.com.sailboat.homeinventory.di.AppComponent
-import br.com.sailboat.homeinventory.di.AppModule
-import br.com.sailboat.homeinventory.di.DaggerAppComponent
+import br.com.sailboat.homeinventory.injection.AppComponent
+import br.com.sailboat.homeinventory.injection.AppModule
+import br.com.sailboat.homeinventory.injection.DaggerAppComponent
 
 class App : Application() {
 
@@ -15,5 +15,8 @@ class App : Application() {
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this))
             .build()
+
+
+        // add LeakCanary
     }
 }

@@ -7,7 +7,7 @@ import br.com.sailboat.homeinventory.core.entity.Product
 import br.com.sailboat.homeinventory.core.interactor.product.GetProducts
 import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
-import br.com.sailboat.homeinventory.presentation.model.ProductModel
+import br.com.sailboat.homeinventory.product.ProductModel
 import br.com.sailboat.homeinventory.presentation.product.ProductModelMapper
 import br.com.sailboat.homeinventory.view.shopping.ShoppingViewModel
 

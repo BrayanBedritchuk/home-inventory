@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.presentation.view_holder
+package br.com.sailboat.homeinventory.helper.base
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ abstract class BaseViewHolder<in T>(itemView: View) : RecyclerView.ViewHolder(it
     abstract fun bindItem(item: T)
 
     companion object {
-        fun inflate(parent: ViewGroup, layoutId: Int): View {
+        fun inflate(parent: ViewGroup, layoutId: Int) : View {
             return LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
         }
     }

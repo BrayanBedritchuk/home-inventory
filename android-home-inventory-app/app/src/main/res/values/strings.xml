@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">Home Inventory</string>
-    <string name="no_products_found">No products found</string>
-    <string name="msg_exception_product_details">An error occurred while loading the product details</string>
+    <string name="app_name" translatable="false">Home Inventory</string>
+
     <string name="title_product_details">Product Details</string>
-    <string name="product_name_not_filled">It\'s necessary to fill in the name of the product</string>
+
     <string name="product_quantity_cant_be_negative">Quantity can\'t be negative</string>
+
+    <string name="empty_view_msg_no_products_found">No products found</string>
+
+    <string name="error_msg_product_name_not_filled">It\'s necessary to fill in the name of the product</string>
+    <string name="error_msg_product_details">An error occurred while loading the product details</string>
 </resources>

@@ -32,7 +32,7 @@ companion object {
     override fun newPresenterInstance() =
         ProductInsertPresenter(
             this,
-            SQLiteRepositoryFactory(activity.applicationContext),
+            SQLiteRepositoryFactory(activity!!.applicationContext!!),
             LogcatLogger()
         )
 
@@ -54,7 +54,7 @@ companion object {
 
     override fun onInitToolbar() {
         toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp)
-        toolbar.setNavigationOnClickListener { activity.onBackPressed() }
+        toolbar.setNavigationOnClickListener { activity!!.onBackPressed() }
     }
 
     override fun getName() = etName.text.toString()
@@ -71,7 +71,7 @@ companion object {
     }
 
     override fun showMessageNameNotFilled() {
-        showMessageDialog(getString(R.string.product_name_not_filled))
+        showMessageDialog(getString(R.string.error_msg_product_name_not_filled))
     }
 
     override fun showMessageQuantityNegative() {

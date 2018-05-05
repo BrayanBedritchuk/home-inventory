@@ -32,14 +32,14 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(),
 
     override fun newPresenterInstance() = ProductDetailsPresenter(
         this,
-        SQLiteRepositoryFactory(activity.applicationContext)
+        SQLiteRepositoryFactory(activity!!.applicationContext)
     )
 
     override fun onInitToolbar() {
         toolbar.setTitle(R.string.title_product_details)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
         toolbar.setNavigationOnClickListener {
-            activity.onBackPressed()
+            activity!!.onBackPressed()
         }
     }
 

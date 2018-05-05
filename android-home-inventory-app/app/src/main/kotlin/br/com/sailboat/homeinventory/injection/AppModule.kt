@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.di
+package br.com.sailboat.homeinventory.injection
 
 import android.app.Application
 import android.content.Context
@@ -13,7 +13,7 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun prodividesApplicationContext(): Context = application
+    fun providesApplicationContext(): Context = application
 
     @Provides
     @Singleton
