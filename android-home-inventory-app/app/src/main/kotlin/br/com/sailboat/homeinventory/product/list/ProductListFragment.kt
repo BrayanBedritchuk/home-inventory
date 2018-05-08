@@ -46,11 +46,11 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
     override fun getProducts() = presenter.viewModel.products
 
     override fun showProductDetails(productId: Long) {
-        ProductDetailsActivity.start(this, productId)
+        ProductDetailsActivity.startFrom(this, productId)
     }
 
     override fun showProductInsert() {
-        ProductInsertActivity.start(this)
+        ProductInsertActivity.startFrom(this)
     }
 
     override fun onActivityResultOk(requestCode: Int, data: Intent?) {

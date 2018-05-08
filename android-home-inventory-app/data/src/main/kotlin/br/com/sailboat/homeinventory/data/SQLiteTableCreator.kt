@@ -3,7 +3,7 @@ package br.com.sailboat.homeinventory.data
 import android.database.sqlite.SQLiteDatabase
 import br.com.sailboat.homeinventory.data.table.*
 
-class SQLiteTableCreator {
+object SQLiteTableCreator {
 
     private val tables = listOf(
         ProductSQLiteTable(),

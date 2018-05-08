@@ -1,9 +1,9 @@
 package br.com.sailboat.homeinventory
 
 import android.app.Application
-import br.com.sailboat.homeinventory.injection.AppComponent
-import br.com.sailboat.homeinventory.injection.AppModule
-import br.com.sailboat.homeinventory.injection.DaggerAppComponent
+import br.com.sailboat.homeinventory.helper.injection.AppComponent
+import br.com.sailboat.homeinventory.helper.injection.AppModule
+import br.com.sailboat.homeinventory.helper.injection.DaggerAppComponent
 
 class App : Application() {
 

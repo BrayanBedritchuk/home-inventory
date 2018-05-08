@@ -8,7 +8,7 @@ import br.com.sailboat.homeinventory.helper.RequestCode
 class ProductListActivity : BaseActivitySingleFragment<ProductListFragment>() {
 
     companion object {
-        fun start(activity: AppCompatActivity) {
+        fun startFrom(activity: AppCompatActivity) {
             val intent = Intent(activity, ProductListActivity::class.java)
             activity.startActivityForResult(intent, RequestCode.PRODUCT_LIST.ordinal)
         }

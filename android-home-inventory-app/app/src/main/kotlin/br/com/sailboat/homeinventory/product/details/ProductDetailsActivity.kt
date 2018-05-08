@@ -9,7 +9,7 @@ import br.com.sailboat.homeinventory.helper.RequestCode
 class ProductDetailsActivity : BaseActivitySingleFragment<ProductDetailsFragment>() {
 
     companion object {
-        fun start(fragment: Fragment, productId: Long) {
+        fun startFrom(fragment: Fragment, productId: Long) {
             val intent = Intent(fragment.activity, ProductDetailsActivity::class.java)
             Extras.putProductId(intent, productId)
             fragment.startActivityForResult(intent, RequestCode.PRODUCT_DETAILS.ordinal)

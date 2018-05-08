@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.act_dashboard.*
 class DashboardActivity : AppCompatActivity() {
 
     companion object {
-        fun start(activity: AppCompatActivity) {
+        fun startFrom(activity: AppCompatActivity) {
             val intent = Intent(activity, DashboardActivity::class.java)
             activity.startActivity(intent)
         }
@@ -28,8 +28,8 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<Toolbar>(R.id.toolbar).setTitle(R.string.app_name)
 
         // TODO: Use RecyclerView instead of buttons
-        btShop.setOnClickListener { ShoppingActivity.start(this) }
-        btProducts.setOnClickListener { ProductListActivity.start(this) }
+        btShop.setOnClickListener { ShoppingActivity.startFrom(this) }
+        btProducts.setOnClickListener { ProductListActivity.startFrom(this) }
     }
 
 }

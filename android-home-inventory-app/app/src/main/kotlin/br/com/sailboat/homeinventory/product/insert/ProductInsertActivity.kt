@@ -9,12 +9,12 @@ import br.com.sailboat.homeinventory.helper.RequestCode
 class ProductInsertActivity : BaseActivitySingleFragment<ProductInsertFragment>() {
 
     companion object {
-        fun start(fragment: Fragment) {
+        fun startFrom(fragment: Fragment) {
             val intent = Intent(fragment.activity, ProductInsertActivity::class.java)
             fragment.startActivityForResult(intent, RequestCode.PRODUCT_INSERT.ordinal)
         }
 
-        fun startToEdit(fragment: Fragment, productId: Long) {
+        fun startToEditFrom(fragment: Fragment, productId: Long) {
             val intent = Intent(fragment.activity, ProductInsertActivity::class.java)
             Extras.putProductId(intent, productId)
             fragment.startActivityForResult(intent, RequestCode.PRODUCT_INSERT.ordinal)

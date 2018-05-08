@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import br.com.sailboat.homeinventory.core.entity.Product
 import br.com.sailboat.homeinventory.helper.ViewType
+import br.com.sailboat.homeinventory.model.viewholder.ProductViewHolder
 
 
 class ProductListAdapter(var callback: Callback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

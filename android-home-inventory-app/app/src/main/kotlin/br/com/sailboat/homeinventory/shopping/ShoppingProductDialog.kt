@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import br.com.sailboat.canoe.base.BaseDialogFragment
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.product.ProductModel
+import br.com.sailboat.homeinventory.model.ProductModel
 
 class ShoppingProductDialog : BaseDialogFragment() {
 

@@ -1,7 +1,7 @@
-package br.com.sailboat.homeinventory.presentation.product
+package br.com.sailboat.homeinventory.model.mapper
 
 import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.product.ProductModel
+import br.com.sailboat.homeinventory.model.ProductModel
 
 class ProductModelMapper {
 

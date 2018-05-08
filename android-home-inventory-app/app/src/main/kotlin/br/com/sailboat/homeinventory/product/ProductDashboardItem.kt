@@ -10,7 +10,7 @@ class ProductDashboardItem : DashboardItem.Callback {
     override val iconId = R.drawable.ic_edit_white_24dp
 
     override fun onClickItem(activity: AppCompatActivity) {
-        ProductListActivity.start(activity)
+        ProductListActivity.startFrom(activity)
     }
 
 }

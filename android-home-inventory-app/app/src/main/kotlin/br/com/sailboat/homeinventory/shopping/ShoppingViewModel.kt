@@ -4,11 +4,10 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import br.com.sailboat.homeinventory.dao.filter.ProductFilter
-import br.com.sailboat.homeinventory.product.ProductModel
+import br.com.sailboat.homeinventory.model.ProductModel
 
 class ShoppingViewModel(application: Application) : AndroidViewModel(application) {
 
-    var firstSession = true
     val name = MutableLiveData<String>()
     val products = MutableLiveData<List<ProductModel>>()
     val shoppingCart = HashMap<Long, Int>()

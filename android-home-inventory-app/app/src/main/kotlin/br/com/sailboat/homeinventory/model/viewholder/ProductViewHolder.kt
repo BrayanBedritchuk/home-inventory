@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.view.product.list
+package br.com.sailboat.homeinventory.model.viewholder
 
 import android.support.v4.content.ContextCompat
 import android.view.View

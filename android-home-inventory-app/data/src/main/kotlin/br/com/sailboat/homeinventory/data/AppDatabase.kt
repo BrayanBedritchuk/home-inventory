@@ -18,8 +18,7 @@ class AppDatabase private constructor(private val context: Context) : SQLiteOpen
         @Synchronized
         fun getInstance(context: Context): AppDatabase {
             if (instance == null) {
-                instance =
-                        AppDatabase(context.applicationContext)
+                instance = AppDatabase(context.applicationContext)
             }
 
             return instance!!
@@ -27,10 +26,9 @@ class AppDatabase private constructor(private val context: Context) : SQLiteOpen
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        SQLiteTableCreator().createTables(db)
+        SQLiteTableCreator.createTables(db)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-    }
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
 
 }

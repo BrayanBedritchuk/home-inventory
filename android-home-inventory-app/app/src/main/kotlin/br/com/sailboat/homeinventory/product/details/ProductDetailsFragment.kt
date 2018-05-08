@@ -58,7 +58,7 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(),
     override fun getProductDetails() = presenter.viewModel.productDetails
 
     override fun startEditingProduct(productId: Long) {
-        ProductInsertActivity.startToEdit(this, productId)
+        ProductInsertActivity.startToEditFrom(this, productId)
     }
 
 

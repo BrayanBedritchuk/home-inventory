@@ -4,32 +4,38 @@ import android.util.Log
 import br.com.sailboat.canoe.helper.AsyncHelper
 import br.com.sailboat.homeinventory.core.Logger
 import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.core.interactor.product.GetProducts
 import br.com.sailboat.homeinventory.core.interactor.UseCaseWithResponse
+import br.com.sailboat.homeinventory.core.interactor.product.GetProducts
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
-import br.com.sailboat.homeinventory.product.ProductModel
-import br.com.sailboat.homeinventory.presentation.product.ProductModelMapper
+import br.com.sailboat.homeinventory.helper.base.BasePresenter
+import br.com.sailboat.homeinventory.model.mapper.ProductModelMapper
+import br.com.sailboat.homeinventory.model.ProductModel
 import br.com.sailboat.homeinventory.view.shopping.ShoppingViewModel
+import javax.inject.Inject
 
-class ShoppingPresenter(
-    private val view: ShoppingPresenter.View,
-    private val viewModel: ShoppingViewModel,
+class ShoppingPresenter @Inject constructor(
     private val repositoryFactory: RepositoryFactory,
     private val logger: Logger
-) {
+) : BasePresenter() {
 
     private val TAG = "ShoppingPresenter"
 
-    fun onCreate() {
+    lateinit var view: ShoppingPresenter.View
+    lateinit var viewModel: ShoppingViewModel
+
+    override fun onCreateView() {
         logger.debug(TAG, "onCreate")
-        if (viewModel.firstSession) {
-            loadProducts()
-        }
-        viewModel.firstSession = false
+        loadProducts()
+    }
+
+    override fun onRestartView() {
+        logger.debug(TAG, "onRestart")
+        view.updateShoppingList()
     }
 
     private fun loadProducts() {
         logger.debug(TAG, "loadProducts")
+        view.showProgress()
         AsyncHelper.execute(object : AsyncHelper.Callback {
 
             lateinit var products: List<Product>
@@ -55,11 +61,14 @@ class ShoppingPresenter(
             }
 
             override fun onSuccess() {
-                viewModel.products.postValue(ProductModelMapper().transform(products))
+                viewModel.products.value = (ProductModelMapper().transform(products))
+                view?.updateShoppingList()
+                view?.hideProgress()
             }
 
             override fun onFail(e: Exception) {
                 Log.e("ERROR", "Error", e);
+                view?.hideProgress()
             }
 
         })
@@ -75,8 +84,10 @@ class ShoppingPresenter(
             0
         }
 
-        view.showShoppingProduct(product, quantity)
+        view?.showShoppingProduct(product, quantity)
     }
+
+    fun getProducts() = viewModel.getProducts()
 
     fun wasPurchased(productId: Long) = viewModel.shoppingCart.containsKey(productId)
 
@@ -92,7 +103,7 @@ class ShoppingPresenter(
             viewModel.shoppingCart.put(productId, quantity)
         }
 
-        view.updateShoppingList()
+        view?.updateShoppingList()
     }
 
     fun onClickCheckout() {
@@ -105,10 +116,10 @@ class ShoppingPresenter(
 //        // validate first
 //        ShoppingSaver(viewModel.getApplication())
 //            .createAndSaveShopping(-1, viewModel.shoppingCart)
-        view.finishWithSuccess()
+        view?.finishWithSuccess()
     }
 
-    interface View {
+    interface View : BasePresenter.View {
         fun showShoppingProduct(productId: ProductModel, quantity: Int)
         fun finishWithSuccess()
         fun updateShoppingList()

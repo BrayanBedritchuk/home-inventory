@@ -3,7 +3,7 @@ package br.com.sailboat.homeinventory.view.shopping
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import br.com.sailboat.homeinventory.helper.ViewType
-import br.com.sailboat.homeinventory.product.ProductModel
+import br.com.sailboat.homeinventory.model.ProductModel
 import java.lang.RuntimeException
 
 

@@ -8,7 +8,7 @@ class LaunchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DashboardActivity.start(this)
+        DashboardActivity.startFrom(this)
         finish()
     }
 
