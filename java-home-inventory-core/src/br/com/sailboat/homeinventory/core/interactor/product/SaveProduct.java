@@ -4,7 +4,7 @@ import br.com.sailboat.homeinventory.core.entity.Product;
 import br.com.sailboat.homeinventory.core.interactor.UseCase;
 import br.com.sailboat.homeinventory.core.repository.ProductRepository;
 
-public class SaveProduct {
+public class SaveProduct implements UseCase<Boolean> {
 
     private Product product;
     private ProductRepository productRepository;
@@ -14,13 +14,11 @@ public class SaveProduct {
         this.productRepository = productRepository;
     }
 
-    public void execute(UseCase.OnFail response) {
-        try {
-            new ProductValidator(product).validate();
-            productRepository.save(product);
-        } catch (Exception e) {
-            response.onFail(e);
-        }
+    @Override
+    public Boolean execute() throws Exception {
+        new ProductValidator(product).execute();
+        productRepository.save(product);
+        return true;
     }
 
 }

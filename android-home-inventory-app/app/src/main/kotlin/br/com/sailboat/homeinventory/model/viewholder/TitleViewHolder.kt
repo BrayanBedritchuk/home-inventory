@@ -2,7 +2,7 @@ package br.com.sailboat.homeinventory.model.viewholder
 
 import android.view.ViewGroup
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.helper.base.BaseViewHolder
+import br.com.sailboat.homeinventory.ui.base.BaseViewHolder
 import br.com.sailboat.homeinventory.model.TitleModel
 import kotlinx.android.synthetic.main.vh_title.view.*
 

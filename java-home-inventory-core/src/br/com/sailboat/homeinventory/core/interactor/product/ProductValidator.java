@@ -6,8 +6,9 @@ import java.util.List;
 import br.com.sailboat.homeinventory.core.entity.Product;
 import br.com.sailboat.homeinventory.core.exception.InvalidFieldException;
 import br.com.sailboat.homeinventory.core.interactor.InvalidFieldRule;
+import br.com.sailboat.homeinventory.core.interactor.UseCase;
 
-public class ProductValidator {
+public class ProductValidator implements UseCase<Boolean> {
 
     private Product product;
     private List<InvalidFieldRule> rules;
@@ -17,13 +18,16 @@ public class ProductValidator {
         this.rules = new ArrayList<>();
     }
 
-    public void validate() throws InvalidFieldException {
+    @Override
+    public Boolean execute() throws Exception {
         validateName();
         validateQuantity();
 
         if (!rules.isEmpty()) {
             throw new InvalidFieldException(rules);
         }
+
+        return true;
     }
 
     private void validateName() throws InvalidFieldException {

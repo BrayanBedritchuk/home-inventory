@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".LaunchActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,16 +19,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.dashboard.DashboardActivity" />
+        <activity android:name=".ui.dashboard.DashboardActivity" />
 
-        <activity android:name=".view.shopping.ShoppingActivity" />
+        <activity android:name=".ui.shopping.ShoppingActivity" />
 
-        <activity android:name=".view.product.list.ProductListActivity" />
+        <activity android:name=".ui.product.list.ProductListActivity" />
 
-        <activity android:name=".view.product.details.ProductDetailsActivity" />
+        <activity android:name=".ui.product.details.ProductDetailsActivity" />
 
         <activity
-            android:name=".view.product.insert.ProductInsertActivity"
+            android:name=".ui.product.insert.ProductInsertActivity"
             android:windowSoftInputMode="stateVisible" />
 
     </application>

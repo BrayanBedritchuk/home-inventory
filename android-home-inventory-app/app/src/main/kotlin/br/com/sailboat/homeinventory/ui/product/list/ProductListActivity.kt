@@ -1,0 +1,21 @@
+package br.com.sailboat.homeinventory.ui.product.list
+
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
+import br.com.sailboat.canoe.base.BaseActivitySingleFragment
+import br.com.sailboat.homeinventory.helper.RequestCode
+
+class ProductListActivity : BaseActivitySingleFragment<ProductListFragment>() {
+
+    companion object {
+        fun startFrom(activity: AppCompatActivity) {
+            val intent = Intent(activity, ProductListActivity::class.java)
+            activity.startActivityForResult(intent, RequestCode.PRODUCT_LIST.ordinal)
+        }
+    }
+
+    override fun newFragmentInstance() =
+        ProductListFragment()
+
+}
+
