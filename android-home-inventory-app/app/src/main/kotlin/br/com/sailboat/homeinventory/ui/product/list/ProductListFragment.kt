@@ -1,71 +1,59 @@
 package br.com.sailboat.homeinventory.ui.product.list
 
-import android.content.Intent
-import android.view.Menu
-import android.view.MenuInflater
-import br.com.sailboat.canoe.base.BaseFragment
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.helper.RequestCode
-import br.com.sailboat.homeinventory.ui.product.details.ProductDetailsActivity
-import br.com.sailboat.homeinventory.ui.product.insert.ProductInsertActivity
+import br.com.sailboat.homeinventory.ui.base.BaseFragment
 
-class ProductListFragment : BaseFragment<ProductListPresenter>(),
-    ProductListPresenter.View,
-    ProductListAdapter.Callback {
+class ProductListFragment : BaseFragment<ProductListViewModel>() {
 
-    override fun getLayoutId() = R.layout.frg_list
+    override val layoutId = R.layout.frg_list
 
-    override fun newPresenterInstance() =
-        ProductListPresenter(
-            this,
-            null
-        )
+    private val recycler by bind<RecyclerView>(R.id.recycler)
+    private val toolbar by bind<Toolbar>(R.id.toolbar)
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.menu_search, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        appComponent.inject(this)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(ProductListViewModel::class.java)
     }
 
-    override fun initEmptyViewMessages() {
-        emptyViewMessage1 = getString(R.string.empty_view_msg_no_products_found)
-        emptyViewMessage2 = getString(R.string.ept_click_to_add)
+    override fun initViews() {
+        initToolbar()
+        initRecyclerView()
     }
 
-    override fun onInitToolbar() {
-        toolbar.setTitle(R.string.title_products)
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
-        toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
+    override fun subscribeToViewModelEvents() {
+        viewModel.products.observe(this, Observer { product ->
+            (recycler.adapter as ProductListAdapter).collection = product.orEmpty()
+        })
+    }
+
+    private fun initToolbar() {
+        toolbar.run {
+            (activity as AppCompatActivity).setSupportActionBar(this)
+            setTitle(R.string.title_products)
         }
     }
 
-    override fun onInitRecycler() {
-        recycler.adapter = ProductListAdapter(this)
-    }
+    private fun initRecyclerView() {
+        recycler.run {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ProductListAdapter()
+        }
 
-    override fun onClickProduct(position: Int) {
-        presenter.onClickProduct(position)
-    }
-
-    override fun getProducts() = presenter.viewModel.products
-
-    override fun showProductDetails(productId: Long) {
-        ProductDetailsActivity.startFrom(this, productId)
-    }
-
-    override fun showProductInsert() {
-        ProductInsertActivity.startFrom(this)
-    }
-
-    override fun onActivityResultOk(requestCode: Int, data: Intent?) {
-        when (requestCode) {
-            RequestCode.PRODUCT_INSERT.ordinal -> presenter.onResultOkFromProductInsert(data)
+        (recycler.adapter as ProductListAdapter).onClickProduct = {
+            viewModel.products?.value?.get(it)?.id?.let {
+                // ProductDetails.start(this, it)
+            }
         }
     }
-
-    override fun postActivityResult(requestCode: Int, data: Intent?) {
-        presenter.postResult()
-    }
-
 
 }

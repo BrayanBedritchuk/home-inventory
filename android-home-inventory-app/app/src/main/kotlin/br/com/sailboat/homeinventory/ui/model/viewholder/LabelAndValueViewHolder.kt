@@ -1,9 +1,9 @@
-package br.com.sailboat.homeinventory.model.viewholder
+package br.com.sailboat.homeinventory.ui.model.viewholder
 
 import android.view.ViewGroup
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.ui.base.BaseViewHolder
-import br.com.sailboat.homeinventory.model.LabelAndValueModel
+import br.com.sailboat.homeinventory.ui.model.LabelAndValueModel
 import kotlinx.android.synthetic.main.vh_label_value.view.*
 
 class LabelAndValueViewHolder(parent: ViewGroup) :

@@ -15,7 +15,7 @@ import br.com.sailboat.homeinventory.data.ProductData
 class ShoppingProductDialog : BaseDialogFragment() {
 
     lateinit var product: ProductData
-    lateinit var callback: Callback
+    lateinit var onClickOk: (productId: Long, quantity: Int?) -> Unit
     var quantity: Int = 0
     lateinit var etQuantity: EditText
 
@@ -24,12 +24,12 @@ class ShoppingProductDialog : BaseDialogFragment() {
             manager: FragmentManager,
             product: ProductData,
             quantity: Int,
-            callback: Callback
+            onClickOk: (productId: Long, quantity: Int?) -> Unit
         ) {
             val dialog = ShoppingProductDialog()
             dialog.product = product
             dialog.quantity = quantity
-            dialog.callback = callback
+            dialog.onClickOk = onClickOk
             dialog.show(manager, ShoppingProductDialog::class.java.name)
         }
     }
@@ -49,7 +49,7 @@ class ShoppingProductDialog : BaseDialogFragment() {
         val tvProductName = view.findViewById<TextView>(R.id.tvProductName)
         tvProductName.text = product.name
 
-        etQuantity = view.findViewById<EditText>(R.id.etQuantity)
+        etQuantity = view.findViewById(R.id.etQuantity)
         etQuantity.setText(quantity.toString())
     }
 
@@ -58,16 +58,12 @@ class ShoppingProductDialog : BaseDialogFragment() {
         builder.setView(view)
         builder.setPositiveButton(android.R.string.ok, { _, _ ->
             val quantity = etQuantity.text.trim().toString().toIntOrNull()
-            callback.onClickOk(product.id, quantity)
+            onClickOk.invoke(product.id, quantity)
         })
 
         builder.setNegativeButton(R.string.cancel, null)
 
         return builder.create()
-    }
-
-    interface Callback {
-        fun onClickOk(productId: Long, quantity: Int?)
     }
 
 }

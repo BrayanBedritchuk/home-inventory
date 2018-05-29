@@ -1,7 +1,7 @@
-package br.com.sailboat.homeinventory.model.viewholder
+package br.com.sailboat.homeinventory.ui.model.viewholder
 
 import br.com.sailboat.canoe.helper.EntityHelper
-import br.com.sailboat.homeinventory.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.ui.model.RecyclerViewItem
 
 class ProductDetailsViewModel {
 

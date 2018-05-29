@@ -12,7 +12,7 @@ import br.com.sailboat.homeinventory.core.interactor.product.GetProduct
 import br.com.sailboat.homeinventory.core.interactor.product.ProductValidator
 import br.com.sailboat.homeinventory.core.interactor.product.SaveProduct
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
-import br.com.sailboat.homeinventory.helper.Extras
+import br.com.sailboat.homeinventory.ui.Extras
 
 
 class ProductInsertPresenter(

@@ -4,6 +4,7 @@ import android.app.Application
 import br.com.sailboat.homeinventory.di.AppComponent
 import br.com.sailboat.homeinventory.di.AppModule
 import br.com.sailboat.homeinventory.di.DaggerAppComponent
+import br.com.sailboat.homeinventory.di.RepositoryModule
 
 class App : Application() {
 
@@ -14,6 +15,7 @@ class App : Application() {
 
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this))
+            .repositoryModule(RepositoryModule())
             .build()
 
 

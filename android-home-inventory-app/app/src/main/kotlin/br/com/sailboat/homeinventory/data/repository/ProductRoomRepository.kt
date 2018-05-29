@@ -1,26 +1,31 @@
 package br.com.sailboat.homeinventory.data.repository
 
-import android.app.Application
 import android.arch.paging.DataSource
 import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.data.AppDatabase
 import br.com.sailboat.homeinventory.data.ProductData
 import br.com.sailboat.homeinventory.data.ProductDataMapper
 import br.com.sailboat.homeinventory.data.dao.ProductDAO
+import br.com.sailboat.homeinventory.domain.Either
+import br.com.sailboat.homeinventory.domain.failure.Failure
+import br.com.sailboat.homeinventory.domain.failure.ProductFailure
+import br.com.sailboat.homeinventory.domain.repository.ProductRepository
 
-class ProductRoomRepository(application: Application) {
+class ProductRoomRepository(var productDAO: ProductDAO) : ProductRepository {
 
-    var productDAO: ProductDAO
+
     val mapper = ProductDataMapper()
-
-    init {
-        val db: AppDatabase =
-            AppDatabase.getInstance(application)
-        productDAO = db.productDao()
-    }
 
     fun getAllProducts(): DataSource.Factory<Int, ProductData> {
         return productDAO.getAll()
+    }
+
+    override fun getProducts(): Either<Failure, List<Product>> {
+        return try {
+            val products = productDAO.getProducts()
+            Either.Right(mapper.transform(products))
+        } catch (e: Exception) {
+            Either.Left(ProductFailure.ListNotAvailable())
+        }
     }
 
     fun save(product: ProductData) {

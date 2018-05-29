@@ -2,12 +2,12 @@ package br.com.sailboat.homeinventory.ui.product.details
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import br.com.sailboat.homeinventory.helper.ViewType
-import br.com.sailboat.homeinventory.model.LabelAndValueModel
-import br.com.sailboat.homeinventory.model.RecyclerViewItem
-import br.com.sailboat.homeinventory.model.TitleModel
-import br.com.sailboat.homeinventory.model.viewholder.LabelAndValueViewHolder
-import br.com.sailboat.homeinventory.model.viewholder.TitleViewHolder
+import br.com.sailboat.homeinventory.ui.model.ViewType
+import br.com.sailboat.homeinventory.ui.model.LabelAndValueModel
+import br.com.sailboat.homeinventory.ui.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.ui.model.TitleModel
+import br.com.sailboat.homeinventory.ui.model.viewholder.LabelAndValueViewHolder
+import br.com.sailboat.homeinventory.ui.model.viewholder.TitleViewHolder
 
 
 class ProductDetailsAdapter(var callback: Callback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

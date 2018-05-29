@@ -6,7 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import br.com.sailboat.canoe.base.BaseFragment
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.helper.Extras
+import br.com.sailboat.homeinventory.ui.Extras
 import kotlinx.android.synthetic.main.frg_product_insert.*
 
 class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(),

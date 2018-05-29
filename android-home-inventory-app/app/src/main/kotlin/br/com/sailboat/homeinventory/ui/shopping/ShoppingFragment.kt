@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,13 +16,14 @@ import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.data.ProductData
 import br.com.sailboat.homeinventory.helper.EventObserver
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
-import br.com.sailboat.homeinventory.view.shopping.ShoppingItemViewHolder
-import kotlinx.android.synthetic.main.frg_shopping.*
+import br.com.sailboat.homeinventory.ui.model.viewholder.ShoppingItemViewHolder
 
 class ShoppingFragment : BaseFragment<ShoppingViewModel>(), ShoppingItemViewHolder.Callback {
 
     override val layoutId = R.layout.frg_shopping
-    override lateinit var viewModel: ShoppingViewModel
+
+    private val recycler by bind<RecyclerView>(R.id.recycler)
+    private val toolbar by bind<Toolbar>(R.id.toolbar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,16 +62,16 @@ class ShoppingFragment : BaseFragment<ShoppingViewModel>(), ShoppingItemViewHold
         })
 
         viewModel.errorMessage.observe(this, EventObserver {
-            Toast.makeText(activity, "Aeee", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Error", Toast.LENGTH_LONG).show()
         })
 
     }
 
     override fun onClickShoppingProduct(position: Int) {
-        var product: ProductData? = viewModel?.products?.value?.get(position)
-        val quantity = viewModel?.shoppingCart[product?.id] ?: 0
+        val product: ProductData? = viewModel.products.value?.get(position)
+        val quantity = viewModel.shoppingCart[product?.id] ?: 0
 
-        product?.let { showShoppingProduct(product, quantity) }
+        product?.let { showShoppingProduct(it, quantity) }
     }
 
     override fun wasPurchased(productId: Long) = viewModel.shoppingCart.containsKey(productId)
@@ -76,12 +79,9 @@ class ShoppingFragment : BaseFragment<ShoppingViewModel>(), ShoppingItemViewHold
     override fun getShoppingQuantity(productId: Long) = viewModel.shoppingCart[productId].toString()
 
     fun showShoppingProduct(product: ProductData, quantity: Int) {
-        ShoppingProductDialog.show(fragmentManager!!, product, quantity,
-            object : ShoppingProductDialog.Callback {
-                override fun onClickOk(productId: Long, quantity: Int?) {
-                    onAddProduct(productId, quantity)
-                }
-            })
+        ShoppingProductDialog.show(fragmentManager!!, product, quantity) { productId: Long, quantity: Int? ->
+            onAddProduct(productId, quantity)
+        }
     }
 
     private fun onAddProduct(productId: Long, quantity: Int?) {
@@ -108,17 +108,19 @@ class ShoppingFragment : BaseFragment<ShoppingViewModel>(), ShoppingItemViewHold
     }
 
     private fun initToolbar() {
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        toolbar.setTitle(R.string.title_shopping)
-        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp)
-        toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
+        toolbar.run {
+            (activity as AppCompatActivity).setSupportActionBar(this)
+            setTitle(R.string.title_shopping)
+            setNavigationIcon(R.drawable.ic_close_white_24dp)
+            setNavigationOnClickListener { activity?.onBackPressed() }
         }
     }
 
     private fun initRecyclerView() {
-        recycler.layoutManager = LinearLayoutManager(activity)
-        recycler.adapter = ShoppingAdapter(this)
+        recycler.run {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ShoppingAdapter(this@ShoppingFragment)
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.helper
+package br.com.sailboat.homeinventory.ui.model
 
 enum class ViewType {
 

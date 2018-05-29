@@ -19,4 +19,7 @@ interface ProductDAO {
     @Query("SELECT * FROM Product ORDER BY quantity")
     fun getAll(): DataSource.Factory<Int, ProductData>
 
+    @Query("SELECT * FROM Product ORDER BY quantity")
+    fun getProducts(): List<ProductData>
+
 }

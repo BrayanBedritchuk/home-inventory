@@ -6,9 +6,9 @@ import br.com.sailboat.canoe.helper.AsyncHelper
 import br.com.sailboat.canoe.helper.LogHelper
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
-import br.com.sailboat.homeinventory.helper.Extras
-import br.com.sailboat.homeinventory.model.RecyclerViewItem
-import br.com.sailboat.homeinventory.model.viewholder.ProductDetailsViewModel
+import br.com.sailboat.homeinventory.ui.Extras
+import br.com.sailboat.homeinventory.ui.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.ui.model.viewholder.ProductDetailsViewModel
 
 
 class ProductDetailsPresenter(view: View, val repositoryFactory: RepositoryFactory?) : BasePresenter<ProductDetailsPresenter.View>(view) {

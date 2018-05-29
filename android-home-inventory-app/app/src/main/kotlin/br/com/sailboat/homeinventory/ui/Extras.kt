@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.helper
+package br.com.sailboat.homeinventory.ui
 
 import android.content.Intent
 import android.os.Bundle

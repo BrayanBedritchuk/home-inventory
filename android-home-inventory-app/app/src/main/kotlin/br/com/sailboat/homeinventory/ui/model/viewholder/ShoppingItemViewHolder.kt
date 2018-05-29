@@ -1,4 +1,4 @@
-package br.com.sailboat.homeinventory.view.shopping
+package br.com.sailboat.homeinventory.ui.model.viewholder
 
 import android.support.v4.content.ContextCompat
 import android.view.View
@@ -12,9 +12,12 @@ import kotlinx.android.synthetic.main.vh_shopping_product.view.*
 class ShoppingItemViewHolder(itemView: View, val callback: Callback) : BaseViewHolder(itemView) {
 
     companion object {
-        fun newInstance(parent: ViewGroup?, callback: ShoppingItemViewHolder.Callback): ShoppingItemViewHolder {
+        fun newInstance(parent: ViewGroup?, callback: Callback): ShoppingItemViewHolder {
             val view = inflateLayout(parent, R.layout.vh_shopping_product)
-            return ShoppingItemViewHolder(view, callback)
+            return ShoppingItemViewHolder(
+                view,
+                callback
+            )
         }
     }
 

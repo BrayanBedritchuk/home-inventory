@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import br.com.sailboat.canoe.base.BaseFragment
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.helper.Extras
+import br.com.sailboat.homeinventory.ui.Extras
 import br.com.sailboat.homeinventory.ui.product.insert.ProductInsertActivity
 
 class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(),

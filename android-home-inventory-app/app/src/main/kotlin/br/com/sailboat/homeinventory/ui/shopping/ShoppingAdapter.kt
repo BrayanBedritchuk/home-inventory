@@ -4,7 +4,7 @@ import android.arch.paging.PagedListAdapter
 import android.support.v7.util.DiffUtil
 import android.view.ViewGroup
 import br.com.sailboat.homeinventory.data.ProductData
-import br.com.sailboat.homeinventory.view.shopping.ShoppingItemViewHolder
+import br.com.sailboat.homeinventory.ui.model.viewholder.ShoppingItemViewHolder
 
 
 class ShoppingAdapter(val callback: ShoppingItemViewHolder.Callback) :

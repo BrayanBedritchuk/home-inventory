@@ -1,35 +1,35 @@
-package br.com.sailboat.homeinventory.model.viewholder
+package br.com.sailboat.homeinventory.ui.model.viewholder
 
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
 import br.com.sailboat.canoe.base.BaseViewHolder
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.core.entity.Product
+import br.com.sailboat.homeinventory.ui.model.ProductView
 import kotlinx.android.synthetic.main.vh_product.view.*
 
-class ProductViewHolder(itemView: View, callback: Callback) : BaseViewHolder(itemView) {
+class ProductViewHolder(itemView: View, onClickProduct: (position: Int) -> Unit) : BaseViewHolder(itemView) {
 
     companion object {
-        fun newInstance(parent: ViewGroup?, callback: Callback): ProductViewHolder {
+        fun newInstance(parent: ViewGroup?, onClickProduct: (position: Int) -> Unit): ProductViewHolder {
             val view = inflateLayout(parent, R.layout.vh_product)
-            return ProductViewHolder(view, callback)
+            return ProductViewHolder(view, onClickProduct)
         }
     }
 
     init {
         itemView.setOnClickListener {
-            callback.onClickProduct(adapterPosition)
+            onClickProduct(adapterPosition)
         }
     }
 
-    fun bindItem(item: Product) {
+    fun bindItem(item: ProductView) {
         itemView.tvName.text = item.name
         itemView.tvQuantity.text = item.quantity.toString()
         initColorOfQuantity(item)
     }
 
-    private fun initColorOfQuantity(item: Product) {
+    private fun initColorOfQuantity(item: ProductView) {
         val color = if (item.quantity == 0) {
             R.color.grey_40
         } else {
@@ -39,9 +39,5 @@ class ProductViewHolder(itemView: View, callback: Callback) : BaseViewHolder(ite
         itemView.tvQuantity.setTextColor(ContextCompat.getColor(itemView.context, color))
     }
 
-
-    interface Callback {
-        fun onClickProduct(position: Int)
-    }
 
 }
