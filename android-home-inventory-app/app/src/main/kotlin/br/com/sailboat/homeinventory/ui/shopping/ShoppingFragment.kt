@@ -2,7 +2,6 @@ package br.com.sailboat.homeinventory.ui.shopping
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -18,9 +17,13 @@ import br.com.sailboat.homeinventory.helper.EventObserver
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
 import br.com.sailboat.homeinventory.ui.model.viewholder.ShoppingItemViewHolder
 
-class ShoppingFragment : BaseFragment<ShoppingViewModel>(), ShoppingItemViewHolder.Callback {
+class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingItemViewHolder.Callback {
 
     override val layoutId = R.layout.frg_shopping
+
+    override lateinit var presenter: ShoppingPresenter
+
+    private val viewModel = ShoppingViewModel()
 
     private val recycler by bind<RecyclerView>(R.id.recycler)
     private val toolbar by bind<Toolbar>(R.id.toolbar)
@@ -28,9 +31,7 @@ class ShoppingFragment : BaseFragment<ShoppingViewModel>(), ShoppingItemViewHold
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
-
-        // TODO: Inject ViewModel and productRepository with Dagger
-        viewModel = ViewModelProviders.of(this).get(ShoppingViewModel::class.java)
+        presenter.viewModel = viewModel
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -54,8 +55,8 @@ class ShoppingFragment : BaseFragment<ShoppingViewModel>(), ShoppingItemViewHold
         initRecyclerView()
     }
 
-    override fun subscribeToViewModelEvents() {
-        super.subscribeToViewModelEvents()
+    override fun observeLiveData() {
+        super.observeLiveData()
 
         viewModel.products.observe(this, Observer {
             (recycler.adapter as ShoppingAdapter).submitList(it)
@@ -79,7 +80,11 @@ class ShoppingFragment : BaseFragment<ShoppingViewModel>(), ShoppingItemViewHold
     override fun getShoppingQuantity(productId: Long) = viewModel.shoppingCart[productId].toString()
 
     fun showShoppingProduct(product: ProductData, quantity: Int) {
-        ShoppingProductDialog.show(fragmentManager!!, product, quantity) { productId: Long, quantity: Int? ->
+        ShoppingProductDialog.show(
+            fragmentManager!!,
+            product,
+            quantity
+        ) { productId: Long, quantity: Int? ->
             onAddProduct(productId, quantity)
         }
     }

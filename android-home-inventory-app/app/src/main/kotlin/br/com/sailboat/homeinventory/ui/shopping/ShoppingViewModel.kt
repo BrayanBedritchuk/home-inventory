@@ -13,7 +13,6 @@ class ShoppingViewModel() : BaseViewModel() {
     // TODO: INJECT
 //    val productRepository: ProductRoomRepository =
 //        ProductRoomRepository(application)
-    var firstSession = true
     val name = MutableLiveData<String>()
     val products = MutableLiveData<PagedList<ProductData>>()
     val shoppingCart = HashMap<Long, Int>()

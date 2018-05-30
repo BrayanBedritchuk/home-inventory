@@ -47,7 +47,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$appCompat_version"
     implementation "com.android.support:design:$appCompat_version"
     implementation "joda-time:joda-time:$joda_version"
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:livedata:$lifecycle_version"
     implementation "android.arch.persistence.room:runtime:$room_version"
     implementation "android.arch.paging:runtime:$paging_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"

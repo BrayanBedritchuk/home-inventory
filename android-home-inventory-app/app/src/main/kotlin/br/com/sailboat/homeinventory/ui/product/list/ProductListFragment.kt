@@ -1,28 +1,32 @@
 package br.com.sailboat.homeinventory.ui.product.list
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import android.util.Log
+import android.widget.Toast
 import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.helper.EventObserver
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.recycler.*
+import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
-class ProductListFragment : BaseFragment<ProductListViewModel>() {
+class ProductListFragment : BaseFragment<ProductListPresenter>() {
 
     override val layoutId = R.layout.frg_list
 
-    private val recycler by bind<RecyclerView>(R.id.recycler)
-    private val toolbar by bind<Toolbar>(R.id.toolbar)
+    @Inject
+    override lateinit var presenter: ProductListPresenter
+    private val events = ProductListEvents()
+    private val viewModel = ProductListViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-            .get(ProductListViewModel::class.java)
+        presenter.viewModel = viewModel
+        presenter.events = events
     }
 
     override fun initViews() {
@@ -30,10 +34,35 @@ class ProductListFragment : BaseFragment<ProductListViewModel>() {
         initRecyclerView()
     }
 
-    override fun subscribeToViewModelEvents() {
+    override fun observeLiveData() {
+        if (viewModel.products.hasObservers()) {
+            Log.d("ProductListFragment", "product hasObservers")
+        }
+
         viewModel.products.observe(this, Observer { product ->
             (recycler.adapter as ProductListAdapter).collection = product.orEmpty()
         })
+
+        viewModel.error.observe(this, EventObserver { msg ->
+            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show()
+        })
+
+        viewModel.startAsync.observe(this, EventObserver {
+            showProgress()
+        })
+
+        viewModel.finishAsync.observe(this, EventObserver {
+            hideProgress()
+        })
+
+        if (events.productDetails.hasObservers()) {
+            Log.d("ProductListFragment", "events.productDetails hasObservers")
+        }
+
+        events.productDetails.observe(this, EventObserver {
+            Toast.makeText(activity, "Show Product Details $it", Toast.LENGTH_LONG).show()
+        })
+
     }
 
     private fun initToolbar() {
@@ -49,10 +78,8 @@ class ProductListFragment : BaseFragment<ProductListViewModel>() {
             adapter = ProductListAdapter()
         }
 
-        (recycler.adapter as ProductListAdapter).onClickProduct = {
-            viewModel.products?.value?.get(it)?.id?.let {
-                // ProductDetails.start(this, it)
-            }
+        (recycler.adapter as ProductListAdapter).onClickProduct = { position ->
+            presenter.onClickProduct(position)
         }
     }
 

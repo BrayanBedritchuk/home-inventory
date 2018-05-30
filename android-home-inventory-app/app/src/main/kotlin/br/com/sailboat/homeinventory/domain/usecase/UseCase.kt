@@ -11,10 +11,9 @@ abstract class UseCase<out Type, in Params> where Type : Any {
 
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
-    fun execute(params: Params, onResult: (Either<Failure, Type>) -> Unit) {
+    fun execute(onResult: (Either<Failure, Type>) -> Unit, params: Params) {
         val job = async(CommonPool) { run(params) }
         launch(UI) { onResult.invoke(job.await()) }
     }
 
-    class None
 }

@@ -12,7 +12,6 @@ import br.com.sailboat.homeinventory.domain.repository.ProductRepository
 
 class ProductRoomRepository(var productDAO: ProductDAO) : ProductRepository {
 
-
     val mapper = ProductDataMapper()
 
     fun getAllProducts(): DataSource.Factory<Int, ProductData> {
@@ -27,6 +26,8 @@ class ProductRoomRepository(var productDAO: ProductDAO) : ProductRepository {
             Either.Left(ProductFailure.ListNotAvailable())
         }
     }
+
+    override fun getProductList() = mapper.transform(productDAO.getProducts())
 
     fun save(product: ProductData) {
         productDAO.insert(product)

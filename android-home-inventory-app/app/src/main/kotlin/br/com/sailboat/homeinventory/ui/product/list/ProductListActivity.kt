@@ -13,7 +13,6 @@ class ProductListActivity : BaseActivity() {
         }
     }
 
-    override fun newFragmentInstance() =
-        ProductListFragment()
+    override fun newFragmentInstance() = ProductListFragment()
 
 }

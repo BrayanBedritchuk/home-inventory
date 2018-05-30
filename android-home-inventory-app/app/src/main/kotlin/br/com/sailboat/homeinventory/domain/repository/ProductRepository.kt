@@ -7,5 +7,6 @@ import br.com.sailboat.homeinventory.domain.failure.Failure
 interface ProductRepository {
 
     fun getProducts(): Either<Failure, List<Product>>
+    fun getProductList(): List<Product>
 
 }
