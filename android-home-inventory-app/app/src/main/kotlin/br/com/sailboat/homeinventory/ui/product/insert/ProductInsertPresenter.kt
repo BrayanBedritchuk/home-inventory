@@ -1,37 +1,43 @@
 package br.com.sailboat.homeinventory.ui.product.insert
 
-import android.os.Bundle
-import br.com.sailboat.canoe.base.BasePresenter
-import br.com.sailboat.canoe.helper.AsyncHelper
-import br.com.sailboat.canoe.helper.EntityHelper
-import br.com.sailboat.canoe.helper.LogHelper
+import android.content.Intent
+import android.util.Log
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.core.entity.Product
-import br.com.sailboat.homeinventory.core.exception.InvalidFieldException
-import br.com.sailboat.homeinventory.core.interactor.product.GetProduct
 import br.com.sailboat.homeinventory.core.interactor.product.ProductValidator
-import br.com.sailboat.homeinventory.core.interactor.product.SaveProduct
-import br.com.sailboat.homeinventory.core.repository.RepositoryFactory
-import br.com.sailboat.homeinventory.ui.Extras
+import br.com.sailboat.homeinventory.domain.entity.EntityHelper
+import br.com.sailboat.homeinventory.domain.entity.Product
+import br.com.sailboat.homeinventory.domain.usecase.GetProduct
+import br.com.sailboat.homeinventory.domain.usecase.SaveProduct
+import br.com.sailboat.homeinventory.domain.usecase.ValidateProduct
+import br.com.sailboat.homeinventory.ui.helper.Extras
+import br.com.sailboat.homeinventory.ui.base.BasePresenter
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
+import javax.inject.Inject
 
 
-class ProductInsertPresenter(
-    view: View,
-    val repositoryFactory: RepositoryFactory?
-) : BasePresenter<ProductInsertPresenter.View>(view) {
+class ProductInsertPresenter @Inject constructor(
+    val getProduct: GetProduct,
+    val saveProduct: SaveProduct,
+    val validateProduct: ValidateProduct
+) : BasePresenter<ProductInsertPresenter.View>() {
 
     val viewModel = ProductInsertViewModel()
 
     private val TAG = "ProductInsertPresenter"
 
-    override fun extractExtrasFromArguments(arguments: Bundle?) {
-        arguments?.let {
-            val cardId = Extras.getProductId(it)
-            viewModel.productId = cardId
+    override fun extractArgs(intent: Intent?) {
+        intent?.let {
+            if (Extras.hasProductId(it)) {
+                val cardId = Extras.getProductId(it)
+                viewModel.productId = cardId
+            }
         }
     }
 
-    override fun onResumeFirstSession() {
+    override fun create() {
         if (hasProductToEdit()) {
             startEditingProduct()
         } else {
@@ -39,108 +45,80 @@ class ProductInsertPresenter(
         }
     }
 
-    override fun onResumeAfterRestart() {
+    override fun restart() {
         updateContentViews()
     }
 
     fun onClickSave() {
         try {
-            closeKeyboard()
+            view?.closeKeyboard()
             extractInfoFromViews()
             val product = buildProductFromViewModel()
             save(product)
         } catch (e: Exception) {
-            showMessage(getString(R.string.msg_error))
-        }
-
-    }
-
-    private fun handleInvalidProducFields(e: InvalidFieldException) {
-        e.rules?.forEach {
-            when (it) {
-                ProductValidator.InvalidProductFields.NAME_NOT_FILLED -> {
-                    view.showMessageNameNotFilled();
-                }
-                ProductValidator.InvalidProductFields.QUANTITY_NEGATIVE -> {
-                    view.showMessageQuantityNegative();
-                }
-            }
+            Log.e(TAG, "Error onClickSave()", e)
+            view?.showErrorMessage(R.string.msg_error)
         }
     }
 
     private fun extractInfoFromViews() {
-        viewModel.name = view.getName()
-        viewModel.quantity = getIntFromString(view.getQuantity())
+        viewModel.name = view?.getName() ?: ""
+        viewModel.quantity = view?.getQuantity()?.toIntOrNull() ?: 0
     }
 
     private fun buildProductFromViewModel(): Product {
-        val product = Product()
-
-        product.id = viewModel.productId
-        product.name = viewModel.name
-        product.quantity = viewModel.quantity
-
-        return product
+        return Product(viewModel.productId, viewModel.name, viewModel.quantity)
     }
 
     private fun startEditingProduct() {
-        executeAsyncWithProgress(object : AsyncHelper.Callback {
-
-            @Throws(Exception::class)
-            override fun doInBackground() {
-                loadProduct()
-            }
-
-            override fun onSuccess() {
-                getView().setActivityToHideKeyboard()
-                updateInputTexts()
-                updateContentViews()
-            }
-
-            override fun onFail(e: Exception) {
-                LogHelper.logException(e)
-                view.showToast(getString(R.string.msg_exception_start_editing))
-                closeActivityWithResultCanceled()
-            }
-
-            private fun loadProduct() {
-                val product = GetProduct(
-                    repositoryFactory?.productRepository,
-                    viewModel.productId
-                ).execute()
-
+        launch(UI) {
+            try {
+                view?.showProgress()
+                val product = async(CommonPool) { getProduct.execute(viewModel.productId) }.await()
                 viewModel.name = product.name
                 viewModel.quantity = product.quantity
-            }
 
-        })
+                view?.disableKeyboardOnStart()
+                updateInputTexts()
+                updateContentViews()
+
+            } catch (e: Exception) {
+                Log.e("LOG", "Error on startEditingProduct", e)
+                view?.showErrorMessage(R.string.msg_error)
+            } finally {
+                view?.hideProgress()
+            }
+        }
     }
 
     private fun save(product: Product) {
-        showProgress()
-        AsyncHelper.execute(object : AsyncHelper.Callback {
+        launch(UI) {
+            try {
+                view?.showProgress()
 
-            override fun doInBackground() {
-                SaveProduct(
-                    product,
-                    repositoryFactory?.productRepository
-                ).execute()
-            }
-
-            override fun onSuccess() {
-                dismissProgress()
-                closeActivityWithResultOk()
-            }
-
-            override fun onFail(e: Exception) {
-                dismissProgress()
-                if (e is InvalidFieldException) {
-                    handleInvalidProducFields(e)
-                } else {
-                    showMessage(getString(R.string.msg_error))
+                val invalidFields = validateProduct.execute(product)
+                if (invalidFields.isNotEmpty()) {
+                    handleInvalidProducFields(invalidFields)
+                    return@launch
                 }
+
+                async(CommonPool) { saveProduct.execute(product) }.await()
+
+                val msg = if (hasProductToEdit()) {
+                    R.string.msg_feedback_product_edited_successfully
+                } else {
+                    R.string.msg_feedback_product_inserted_successfully
+                }
+
+                view?.closeWithSuccess(msg)
+            } catch (e: Exception) {
+                Log.e("LOG", "Error on startEditingProduct", e)
+                view?.showErrorMessage(R.string.msg_error)
+                view?.closeWithFailure()
+            } finally {
+                view?.hideProgress()
             }
-        })
+        }
 
     }
 
@@ -150,27 +128,43 @@ class ProductInsertPresenter(
 
     private fun updateTitle() {
         if (hasProductToEdit()) {
-            view.setTitle(getString(R.string.title_edit_product))
+            view?.setTitle(R.string.title_edit_product)
         } else {
-            view.setTitle(getString(R.string.title_new_product))
+            view?.setTitle(R.string.title_new_product)
         }
     }
 
     private fun hasProductToEdit() = viewModel.productId != EntityHelper.NO_ID
 
     private fun updateInputTexts() {
-        view.setName(viewModel.name)
-        view.setQuantity(viewModel.quantity.toString())
+        view?.setName(viewModel.name)
+        view?.setQuantity(viewModel.quantity.toString())
+    }
+
+    private fun handleInvalidProducFields(invalidFields: List<ValidateProduct.InvalidFields>) {
+        invalidFields?.run() {
+            if (size > 0) {
+
+                when (get(0)) {
+                    ProductValidator.InvalidProductFields.NAME_NOT_FILLED -> {
+                        view?.showErrorMessage(R.string.error_msg_product_name_not_filled)
+                    }
+                    ProductValidator.InvalidProductFields.QUANTITY_NEGATIVE -> {
+                        view?.showErrorMessage(R.string.product_quantity_cant_be_negative)
+                    }
+                }
+
+            }
+        }
     }
 
 
     interface View : BasePresenter.View {
+        fun setTitle(title: Int)
         fun getName(): String
         fun getQuantity(): String
         fun setName(name: String)
         fun setQuantity(quantity: String)
-        fun showMessageNameNotFilled()
-        fun showMessageQuantityNegative()
     }
 
 }

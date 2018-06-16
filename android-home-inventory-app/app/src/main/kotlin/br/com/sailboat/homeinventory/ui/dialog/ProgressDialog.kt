@@ -4,22 +4,21 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.view.WindowManager
 import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.ui.base.BaseDialogFragment
 
-class ProgressDialog : DialogFragment() {
+class ProgressDialog : BaseDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = false
-        retainInstance = true
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = View.inflate(activity, R.layout.dlg_progress, null)
+        val view = View.inflate(activity!!, R.layout.dlg_progress, null)
         return buildDialog(view)
     }
 
@@ -29,17 +28,10 @@ class ProgressDialog : DialogFragment() {
 
         val dialog = builder.create()
         dialog.setCanceledOnTouchOutside(false)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
         return dialog
-    }
-
-    override fun onDestroyView() {
-        if (dialog != null && retainInstance) {
-            dialog.setDismissMessage(null)
-        }
-        super.onDestroyView()
     }
 
 }

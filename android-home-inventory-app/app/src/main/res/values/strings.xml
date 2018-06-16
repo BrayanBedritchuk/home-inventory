@@ -12,5 +12,9 @@
 
 
     <string name="loading">Loading...</string>
+    <string name="msg_feedback_product_edited_successfully">Product edited successfully!</string>
+    <string name="msg_feedback_product_inserted_successfully">Product inserted successfully!</string>
+    <string name="oops">Oops</string>
+    <string name="delete">Delete</string>
 
 </resources>

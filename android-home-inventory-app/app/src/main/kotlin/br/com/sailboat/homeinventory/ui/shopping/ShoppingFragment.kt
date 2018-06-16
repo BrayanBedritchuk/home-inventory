@@ -1,37 +1,31 @@
 package br.com.sailboat.homeinventory.ui.shopping
 
-import android.app.Activity
-import android.arch.lifecycle.Observer
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
+import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.data.ProductData
-import br.com.sailboat.homeinventory.helper.EventObserver
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
-import br.com.sailboat.homeinventory.ui.model.viewholder.ShoppingItemViewHolder
+import br.com.sailboat.homeinventory.ui.model.ProductView
+import kotlinx.android.synthetic.main.ept_view.*
+import kotlinx.android.synthetic.main.recycler.*
+import kotlinx.android.synthetic.main.toolbar.*
 
-class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingItemViewHolder.Callback {
+class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingPresenter.View, ShoppingAdapter.Callback {
 
-    override val layoutId = R.layout.frg_shopping
 
-    override lateinit var presenter: ShoppingPresenter
+    override fun inject() {
+        (activity?.application as App).appComponent.inject(this)
+    }
 
-    private val viewModel = ShoppingViewModel()
+    override fun getLayoutId() = R.layout.frg_shopping
 
-    private val recycler by bind<RecyclerView>(R.id.recycler)
-    private val toolbar by bind<Toolbar>(R.id.toolbar)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        appComponent.inject(this)
-        presenter.viewModel = viewModel
+    override fun initViews() {
+        initToolbar()
+        initRecyclerView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -41,7 +35,7 @@ class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingItemViewHold
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.menu_save -> {
-                onClickCheckout()
+                presenter.onClickCheckout()
                 true
             }
             else -> {
@@ -50,66 +44,44 @@ class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingItemViewHold
         }
     }
 
-    override fun initViews() {
-        initToolbar()
-        initRecyclerView()
-    }
-
-    override fun observeLiveData() {
-        super.observeLiveData()
-
-        viewModel.products.observe(this, Observer {
-            (recycler.adapter as ShoppingAdapter).submitList(it)
-        })
-
-        viewModel.errorMessage.observe(this, EventObserver {
-            Toast.makeText(activity, "Error", Toast.LENGTH_LONG).show()
-        })
-
-    }
-
     override fun onClickShoppingProduct(position: Int) {
-        val product: ProductData? = viewModel.products.value?.get(position)
-        val quantity = viewModel.shoppingCart[product?.id] ?: 0
-
-        product?.let { showShoppingProduct(it, quantity) }
+        presenter.onClickProduct(position)
     }
 
-    override fun wasPurchased(productId: Long) = viewModel.shoppingCart.containsKey(productId)
-
-    override fun getShoppingQuantity(productId: Long) = viewModel.shoppingCart[productId].toString()
-
-    fun showShoppingProduct(product: ProductData, quantity: Int) {
+    override fun showShoppingProduct(product: ProductView, quantity: Int) {
         ShoppingProductDialog.show(
             fragmentManager!!,
             product,
             quantity
-        ) { productId: Long, quantity: Int? ->
-            onAddProduct(productId, quantity)
+        ) { productId: Long, quantity: Int ->
+            presenter.onAddProduct(productId, quantity)
         }
     }
 
-    private fun onAddProduct(productId: Long, quantity: Int?) {
-        if (viewModel.shoppingCart.containsKey(productId)) {
-            viewModel.shoppingCart.remove(productId)
-        }
+    override fun wasPurchased(productId: Long) = presenter.wasPurchased(productId)
 
-        quantity?.let {
-            if (it > 0) {
-                viewModel.shoppingCart[productId] = it
-            }
-        }
+    override fun getShoppingQuantity(productId: Long) = presenter.getShoppingQuantity(productId)
 
+    override fun getShoppingItems() = presenter.getShoppingItems()
+
+    override fun updateShoppingItems() {
         (recycler.adapter as ShoppingAdapter).notifyDataSetChanged()
     }
 
-    fun finishWithSuccess() {
-        activity?.setResult(Activity.RESULT_OK)
-        activity?.finish()
+    override fun showShoppingItems() {
+        recycler.visibility = View.VISIBLE
     }
 
-    private fun onClickCheckout() {
-        finishWithSuccess()
+    override fun hideShoppingItems() {
+        recycler.visibility = View.GONE
+    }
+
+    override fun showEmptyView() {
+        llEptView.visibility = View.VISIBLE
+    }
+
+    override fun hideEmptyView() {
+        llEptView.visibility = View.GONE
     }
 
     private fun initToolbar() {

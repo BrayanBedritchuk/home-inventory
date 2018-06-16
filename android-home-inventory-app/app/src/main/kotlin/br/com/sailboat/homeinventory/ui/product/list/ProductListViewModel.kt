@@ -1,13 +1,12 @@
 package br.com.sailboat.homeinventory.ui.product.list
 
-import android.arch.lifecycle.MutableLiveData
 import br.com.sailboat.homeinventory.dao.filter.ProductFilter
-import br.com.sailboat.homeinventory.ui.base.BaseViewModel
 import br.com.sailboat.homeinventory.ui.model.ProductView
+import javax.inject.Inject
 
-class ProductListViewModel : BaseViewModel() {
+class ProductListViewModel @Inject constructor() {
 
-    var products: MutableLiveData<List<ProductView>> = MutableLiveData()
+    var products = mutableListOf<ProductView>()
     var filter = ProductFilter()
 
 }

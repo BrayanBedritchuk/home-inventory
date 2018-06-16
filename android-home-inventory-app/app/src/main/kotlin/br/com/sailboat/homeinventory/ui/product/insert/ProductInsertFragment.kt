@@ -1,38 +1,23 @@
 package br.com.sailboat.homeinventory.ui.product.insert
 
-import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import br.com.sailboat.canoe.base.BaseFragment
+import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.ui.Extras
+import br.com.sailboat.homeinventory.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.frg_product_insert.*
+import kotlinx.android.synthetic.main.toolbar.*
 
-class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(),
-    ProductInsertPresenter.View {
-companion object {
+class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductInsertPresenter.View {
 
-        fun newInstance() = ProductInsertFragment()
 
-        fun newInstanceWithProductToEdit(productId: Long): ProductInsertFragment {
-            val args = Bundle()
-            Extras.putProductId(args, productId)
-            val fragment = ProductInsertFragment()
-            fragment.arguments = args
-
-            return fragment
-        }
-
+    override fun inject() {
+        (activity?.application as App).appComponent.inject(this)
     }
 
     override fun getLayoutId() = R.layout.frg_product_insert
-
-    override fun newPresenterInstance() =
-        ProductInsertPresenter(
-            this,
-            null
-        )
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_save, menu)
@@ -50,9 +35,8 @@ companion object {
         }
     }
 
-    override fun onInitToolbar() {
-        toolbar.setNavigationIcon(R.drawable.ic_close_white_24dp)
-        toolbar.setNavigationOnClickListener { activity!!.onBackPressed() }
+    override fun initViews() {
+        initToolbar()
     }
 
     override fun getName() = etName.text.toString()
@@ -68,12 +52,16 @@ companion object {
         etQuantity.setText(quantity)
     }
 
-    override fun showMessageNameNotFilled() {
-        showMessageDialog(getString(R.string.error_msg_product_name_not_filled))
+    override fun setTitle(title: Int) {
+        toolbar.setTitle(title)
     }
 
-    override fun showMessageQuantityNegative() {
-        showMessageDialog(getString(R.string.product_quantity_cant_be_negative))
+    private fun initToolbar() {
+        toolbar.run {
+            (activity as AppCompatActivity).setSupportActionBar(this)
+            setNavigationIcon(R.drawable.ic_close_white_24dp)
+            setNavigationOnClickListener { activity?.onBackPressed() }
+        }
     }
 
 }

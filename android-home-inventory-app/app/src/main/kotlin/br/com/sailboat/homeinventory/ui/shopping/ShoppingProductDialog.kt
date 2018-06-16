@@ -8,23 +8,23 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
-import br.com.sailboat.canoe.base.BaseDialogFragment
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.data.ProductData
+import br.com.sailboat.homeinventory.ui.base.BaseDialogFragment
+import br.com.sailboat.homeinventory.ui.model.ProductView
 
 class ShoppingProductDialog : BaseDialogFragment() {
 
-    lateinit var product: ProductData
-    lateinit var onClickOk: (productId: Long, quantity: Int?) -> Unit
+    lateinit var product: ProductView
+    lateinit var onClickOk: (productId: Long, quantity: Int) -> Unit
     var quantity: Int = 0
     lateinit var etQuantity: EditText
 
     companion object {
         fun show(
             manager: FragmentManager,
-            product: ProductData,
+            product: ProductView,
             quantity: Int,
-            onClickOk: (productId: Long, quantity: Int?) -> Unit
+            onClickOk: (productId: Long, quantity: Int) -> Unit
         ) {
             val dialog = ShoppingProductDialog()
             dialog.product = product
@@ -39,8 +39,7 @@ class ShoppingProductDialog : BaseDialogFragment() {
         initViews(view)
 
         val alert = buildDialog(view)
-
-        alert.getWindow()!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        alert.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         return alert
     }
@@ -58,7 +57,7 @@ class ShoppingProductDialog : BaseDialogFragment() {
         builder.setView(view)
         builder.setPositiveButton(android.R.string.ok, { _, _ ->
             val quantity = etQuantity.text.trim().toString().toIntOrNull()
-            onClickOk.invoke(product.id, quantity)
+            onClickOk.invoke(product.id, quantity ?: 0)
         })
 
         builder.setNegativeButton(R.string.cancel, null)

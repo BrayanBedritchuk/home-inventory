@@ -1,16 +1,12 @@
 package br.com.sailboat.homeinventory.data
 
-import br.com.sailboat.homeinventory.core.entity.Product
+import br.com.sailboat.homeinventory.domain.entity.Product
+
 
 class ProductDataMapper {
 
     fun transform(productData: ProductData): Product {
-        val product = Product()
-        product.id = productData.id
-        product.name = productData.name
-        product.quantity = productData.quantity
-
-        return product
+        return Product(productData.id, productData.name, productData.quantity)
     }
 
     fun transform(productsData: List<ProductData>): List<Product> {

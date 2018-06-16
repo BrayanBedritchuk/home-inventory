@@ -2,20 +2,21 @@ package br.com.sailboat.homeinventory.ui.product.details
 
 import android.content.Context
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.core.interactor.product.GetProduct
-import br.com.sailboat.homeinventory.core.repository.ProductRepository
-import br.com.sailboat.homeinventory.ui.model.ViewType
+import br.com.sailboat.homeinventory.domain.usecase.GetProduct
+import br.com.sailboat.homeinventory.domain.usecase.UseCase2
 import br.com.sailboat.homeinventory.ui.model.LabelAndValueModel
 import br.com.sailboat.homeinventory.ui.model.RecyclerViewItem
 import br.com.sailboat.homeinventory.ui.model.TitleModel
+import br.com.sailboat.homeinventory.ui.model.ViewType
+import javax.inject.Inject
 
-class ProductDetailsLoader(
-    private val context: Context,
-    private val productRepository: ProductRepository
-) {
+class GetProductDetails @Inject constructor(
+    private val getProduct: GetProduct,
+    private val context: Context
+) : UseCase2<Long, List<RecyclerViewItem>>() {
 
-    fun loadProductDetailsViews(productId: Long): List<RecyclerViewItem> {
-        val product = GetProduct(productRepository, productId).execute()
+    override fun execute(productId: Long): List<RecyclerViewItem> {
+        val product = getProduct.execute(productId)
 
         val productDetails = mutableListOf<RecyclerViewItem>()
 

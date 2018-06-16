@@ -8,4 +8,7 @@
 
     <string name="error_msg_product_details">Ocorreu um erro ao carregar os detalhes do produto</string>
     <string name="error_msg_product_name_not_filled">É necessário preencher o nome do produto</string>
+    <string name="msg_feedback_product_edited_successfully">Produto editado com sucesso!</string>
+    <string name="msg_feedback_product_inserted_successfully">Produto inserido com sucesso!</string>
+    <string name="delete">Excluir</string>
 </resources>

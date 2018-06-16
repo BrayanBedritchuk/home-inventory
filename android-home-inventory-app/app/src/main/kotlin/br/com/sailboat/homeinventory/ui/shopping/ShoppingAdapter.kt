@@ -1,32 +1,35 @@
 package br.com.sailboat.homeinventory.ui.shopping
 
-import android.arch.paging.PagedListAdapter
-import android.support.v7.util.DiffUtil
+import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import br.com.sailboat.homeinventory.data.ProductData
+import br.com.sailboat.homeinventory.ui.model.ProductView
+import br.com.sailboat.homeinventory.ui.model.RecyclerViewItem
+import br.com.sailboat.homeinventory.ui.model.ViewType
 import br.com.sailboat.homeinventory.ui.model.viewholder.ShoppingItemViewHolder
 
 
-class ShoppingAdapter(val callback: ShoppingItemViewHolder.Callback) :
-    PagedListAdapter<ProductData, ShoppingItemViewHolder>(
-        object : DiffUtil.ItemCallback<ProductData>() {
+class ShoppingAdapter(val callback: ShoppingAdapter.Callback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-            override fun areItemsTheSame(oldItem: ProductData, newItem: ProductData) =
-                oldItem.id == newItem.id
-
-
-            override fun areContentsTheSame(oldItem: ProductData?, newItem: ProductData?) =
-                oldItem == newItem
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            ViewType.PRODUCT.ordinal -> ShoppingItemViewHolder.newInstance(parent, callback)
+            else -> throw RuntimeException("ViewHolder not found")
         }
-
-    ) {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingItemViewHolder {
-        return ShoppingItemViewHolder.newInstance(parent, callback)
     }
 
-    override fun onBindViewHolder(holder: ShoppingItemViewHolder, position: Int) {
-        getItem(position)?.let { holder.bindItem(it) }
+    override fun getItemCount() = callback.getShoppingItems().size
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is ShoppingItemViewHolder -> holder.bindItem(callback.getShoppingItems()[position] as ProductView)
+        }
+    }
+
+    override fun getItemViewType(position: Int) = callback.getShoppingItems()[position].viewType
+
+
+    interface Callback : ShoppingItemViewHolder.Callback {
+        fun getShoppingItems(): List<RecyclerViewItem>
     }
 
 }

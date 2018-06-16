@@ -6,7 +6,8 @@ import android.support.annotation.NonNull
 
 @Entity(tableName = "Product")
 data class ProductData(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long,
     @NonNull val name: String,
     @NonNull var quantity: Int
 )

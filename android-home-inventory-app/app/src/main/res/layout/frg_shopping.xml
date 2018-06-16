@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
+    <include layout="@layout/ept_view" />
+
     <include layout="@layout/appbar" />
 
     <include layout="@layout/recycler" />
-
-    <include layout="@layout/progress" />
 
 </android.support.design.widget.CoordinatorLayout>

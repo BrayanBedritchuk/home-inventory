@@ -8,18 +8,18 @@ import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.ui.model.ProductView
 import kotlinx.android.synthetic.main.vh_product.view.*
 
-class ProductViewHolder(itemView: View, onClickProduct: (position: Int) -> Unit) : BaseViewHolder(itemView) {
+class ProductViewHolder(itemView: View, callback: ProductViewHolder.Callback) : BaseViewHolder(itemView) {
 
     companion object {
-        fun newInstance(parent: ViewGroup?, onClickProduct: (position: Int) -> Unit): ProductViewHolder {
+        fun newInstance(parent: ViewGroup?, callback: ProductViewHolder.Callback): ProductViewHolder {
             val view = inflateLayout(parent, R.layout.vh_product)
-            return ProductViewHolder(view, onClickProduct)
+            return ProductViewHolder(view, callback)
         }
     }
 
     init {
         itemView.setOnClickListener {
-            onClickProduct(adapterPosition)
+            callback.onClickProduct(adapterPosition)
         }
     }
 
@@ -37,6 +37,11 @@ class ProductViewHolder(itemView: View, onClickProduct: (position: Int) -> Unit)
         }
 
         itemView.tvQuantity.setTextColor(ContextCompat.getColor(itemView.context, color))
+    }
+
+
+    interface Callback {
+        fun onClickProduct(position: Int)
     }
 
 

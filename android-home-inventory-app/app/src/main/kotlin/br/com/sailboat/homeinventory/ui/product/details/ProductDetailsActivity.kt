@@ -2,11 +2,11 @@ package br.com.sailboat.homeinventory.ui.product.details
 
 import android.content.Intent
 import android.support.v4.app.Fragment
-import br.com.sailboat.canoe.base.BaseActivitySingleFragment
-import br.com.sailboat.homeinventory.ui.Extras
-import br.com.sailboat.homeinventory.ui.RequestCode
+import br.com.sailboat.homeinventory.ui.helper.Extras
+import br.com.sailboat.homeinventory.ui.helper.RequestCode
+import br.com.sailboat.homeinventory.ui.base.BaseActivity
 
-class ProductDetailsActivity : BaseActivitySingleFragment<ProductDetailsFragment>() {
+class ProductDetailsActivity : BaseActivity() {
 
     companion object {
         fun startFrom(fragment: Fragment, productId: Long) {
@@ -16,12 +16,6 @@ class ProductDetailsActivity : BaseActivitySingleFragment<ProductDetailsFragment
         }
     }
 
-    override fun newFragmentInstance() : ProductDetailsFragment {
-        val productId = Extras.getProductId(intent)
-        return ProductDetailsFragment.newInstance(
-            productId
-        )
-    }
+    override fun newFragmentInstance() = ProductDetailsFragment()
 
 }
-

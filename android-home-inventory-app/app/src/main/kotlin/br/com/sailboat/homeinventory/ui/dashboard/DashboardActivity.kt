@@ -30,30 +30,6 @@ class DashboardActivity : AppCompatActivity() {
         // TODO: Use RecyclerView instead of buttons
         btShop.setOnClickListener { ShoppingActivity.startFrom(this) }
         btProducts.setOnClickListener { ProductListActivity.startFrom(this) }
-
-//        AsyncHelper.execute(object : AsyncHelper.Callback {
-//
-//            override fun doInBackground() {
-//
-//                val productRepo = ProductRoomRepository(application)
-//
-//                for (i in 1..100) {
-//                    productRepo.insert(ProductData(name = "Product $i", quantity = i))
-//                }
-//
-//
-//            }
-//
-//            override fun onSuccess() {
-//
-//            }
-//
-//            override fun onFail(throwable: Throwable) {
-//
-//            }
-//        })
-
-
     }
 
 }

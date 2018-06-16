@@ -1,11 +1,11 @@
 package br.com.sailboat.homeinventory.data.repository
 
 import android.arch.paging.DataSource
-import br.com.sailboat.homeinventory.core.entity.Product
 import br.com.sailboat.homeinventory.data.ProductData
 import br.com.sailboat.homeinventory.data.ProductDataMapper
 import br.com.sailboat.homeinventory.data.dao.ProductDAO
 import br.com.sailboat.homeinventory.domain.Either
+import br.com.sailboat.homeinventory.domain.entity.Product
 import br.com.sailboat.homeinventory.domain.failure.Failure
 import br.com.sailboat.homeinventory.domain.failure.ProductFailure
 import br.com.sailboat.homeinventory.domain.repository.ProductRepository
@@ -27,14 +27,26 @@ class ProductRoomRepository(var productDAO: ProductDAO) : ProductRepository {
         }
     }
 
-    override fun getProductList() = mapper.transform(productDAO.getProducts())
-
-    fun save(product: ProductData) {
-        productDAO.insert(product)
+    override fun getProductList(): List<Product> {
+        val products = productDAO.getProducts()
+        return mapper.transform(products)
     }
 
-    fun remove(product: Product) {
+    override fun getProduct(productId: Long): Product {
+        val product = productDAO.getProduct(productId)
+        return mapper.transform(product)
+    }
+
+    override fun remove(product: Product) {
         productDAO.delete(mapper.transform(product))
+    }
+
+    override fun insert(product: Product) {
+        productDAO.insert(mapper.transform(product))
+    }
+
+    override fun update(product: Product) {
+        productDAO.update(mapper.transform(product))
     }
 
 
