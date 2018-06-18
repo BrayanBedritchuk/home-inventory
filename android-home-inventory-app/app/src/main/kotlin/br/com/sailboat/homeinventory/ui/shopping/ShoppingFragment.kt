@@ -14,8 +14,7 @@ import kotlinx.android.synthetic.main.ept_view.*
 import kotlinx.android.synthetic.main.recycler.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingPresenter.View, ShoppingAdapter.Callback {
-
+class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingPresenter.View {
 
     override fun inject() {
         (activity?.application as App).appComponent.inject(this)
@@ -44,25 +43,13 @@ class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingPresenter.Vi
         }
     }
 
-    override fun onClickShoppingProduct(position: Int) {
-        presenter.onClickProduct(position)
-    }
-
     override fun showShoppingProduct(product: ProductView, quantity: Int) {
-        ShoppingProductDialog.show(
-            fragmentManager!!,
-            product,
-            quantity
-        ) { productId: Long, quantity: Int ->
-            presenter.onAddProduct(productId, quantity)
+        fragmentManager?.let {
+            ShoppingProductDialog.show(it, product, quantity) { productId: Long, quantity: Int ->
+                presenter.onAddProduct(productId, quantity)
+            }
         }
     }
-
-    override fun wasPurchased(productId: Long) = presenter.wasPurchased(productId)
-
-    override fun getShoppingQuantity(productId: Long) = presenter.getShoppingQuantity(productId)
-
-    override fun getShoppingItems() = presenter.getShoppingItems()
 
     override fun updateShoppingItems() {
         (recycler.adapter as ShoppingAdapter).notifyDataSetChanged()
@@ -96,7 +83,12 @@ class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingPresenter.Vi
     private fun initRecyclerView() {
         recycler.run {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ShoppingAdapter(this@ShoppingFragment)
+            adapter = ShoppingAdapter(object : ShoppingAdapter.Callback {
+                override fun wasPurchased(productId: Long) = presenter.wasPurchased(productId)
+                override fun getShoppingQuantity(productId: Long) = presenter.getShoppingQuantity(productId)
+                override fun getShoppingItems() = presenter.getShoppingItems()
+                override fun onClickShoppingProduct(position: Int) = presenter.onClickProduct(position)
+            })
         }
     }
 

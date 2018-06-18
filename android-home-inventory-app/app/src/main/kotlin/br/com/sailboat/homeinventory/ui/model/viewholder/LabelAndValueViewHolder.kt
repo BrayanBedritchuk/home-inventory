@@ -7,12 +7,7 @@ import br.com.sailboat.homeinventory.ui.model.LabelAndValueModel
 import kotlinx.android.synthetic.main.vh_label_value.view.*
 
 class LabelAndValueViewHolder(parent: ViewGroup) :
-    BaseViewHolder<LabelAndValueModel>(
-        inflate(
-            parent,
-            R.layout.vh_label_value
-        )
-    ) {
+    BaseViewHolder<LabelAndValueModel>(inflate(parent, R.layout.vh_label_value)) {
 
     override fun bindItem(item: LabelAndValueModel) {
         itemView.tvLabel.text = item.label

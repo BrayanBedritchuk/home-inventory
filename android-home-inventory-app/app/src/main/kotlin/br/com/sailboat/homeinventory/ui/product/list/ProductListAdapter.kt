@@ -11,7 +11,7 @@ class ProductListAdapter(val callback: ProductListAdapter.Callback) : RecyclerVi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return when (viewType) {
-            ViewType.PRODUCT.ordinal -> ProductViewHolder.newInstance(parent, callback)
+            ViewType.PRODUCT.ordinal -> ProductViewHolder(parent, callback)
             else -> throw RuntimeException("ViewHolder not found")
         }
     }

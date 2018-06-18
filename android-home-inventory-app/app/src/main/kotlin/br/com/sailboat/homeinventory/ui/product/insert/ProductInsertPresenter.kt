@@ -9,8 +9,8 @@ import br.com.sailboat.homeinventory.domain.entity.Product
 import br.com.sailboat.homeinventory.domain.usecase.GetProduct
 import br.com.sailboat.homeinventory.domain.usecase.SaveProduct
 import br.com.sailboat.homeinventory.domain.usecase.ValidateProduct
-import br.com.sailboat.homeinventory.ui.helper.Extras
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
+import br.com.sailboat.homeinventory.ui.helper.Extras
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -19,14 +19,11 @@ import javax.inject.Inject
 
 
 class ProductInsertPresenter @Inject constructor(
-    val getProduct: GetProduct,
-    val saveProduct: SaveProduct,
-    val validateProduct: ValidateProduct
+    private val viewModel: ProductInsertViewModel,
+    private val getProduct: GetProduct,
+    private val saveProduct: SaveProduct,
+    private val validateProduct: ValidateProduct
 ) : BasePresenter<ProductInsertPresenter.View>() {
-
-    val viewModel = ProductInsertViewModel()
-
-    private val TAG = "ProductInsertPresenter"
 
     override fun extractArgs(intent: Intent?) {
         intent?.let {
@@ -56,7 +53,7 @@ class ProductInsertPresenter @Inject constructor(
             val product = buildProductFromViewModel()
             save(product)
         } catch (e: Exception) {
-            Log.e(TAG, "Error onClickSave()", e)
+            view?.logError(e)
             view?.showErrorMessage(R.string.msg_error)
         }
     }

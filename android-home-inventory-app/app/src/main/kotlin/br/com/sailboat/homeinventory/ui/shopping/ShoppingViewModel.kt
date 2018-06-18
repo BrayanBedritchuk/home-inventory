@@ -7,4 +7,5 @@ class ShoppingViewModel @Inject constructor() {
 
     val shoppingItems = mutableListOf<RecyclerViewItem>()
     val shoppingCart = HashMap<Long, Int>()
+
 }

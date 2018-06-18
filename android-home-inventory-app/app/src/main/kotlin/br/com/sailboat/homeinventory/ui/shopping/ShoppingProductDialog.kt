@@ -21,9 +21,7 @@ class ShoppingProductDialog : BaseDialogFragment() {
 
     companion object {
         fun show(
-            manager: FragmentManager,
-            product: ProductView,
-            quantity: Int,
+            manager: FragmentManager, product: ProductView, quantity: Int,
             onClickOk: (productId: Long, quantity: Int) -> Unit
         ) {
             val dialog = ShoppingProductDialog()
@@ -38,10 +36,10 @@ class ShoppingProductDialog : BaseDialogFragment() {
         val view = View.inflate(activity, R.layout.dlg_shop_product, null)
         initViews(view)
 
-        val alert = buildDialog(view)
-        alert.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        val dialog = buildDialog(view)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
-        return alert
+        return dialog
     }
 
     private fun initViews(view: View) {

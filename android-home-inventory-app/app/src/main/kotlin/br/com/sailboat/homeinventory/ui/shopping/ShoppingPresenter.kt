@@ -22,7 +22,6 @@ class ShoppingPresenter @Inject constructor(
     private val saveProduct: SaveProduct
 ) : BasePresenter<ShoppingPresenter.View>() {
 
-
     override fun create() {
         loadProducts()
     }

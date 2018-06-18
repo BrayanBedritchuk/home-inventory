@@ -2,10 +2,10 @@ package br.com.sailboat.homeinventory.ui.product.details
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import br.com.sailboat.homeinventory.ui.model.ViewType
 import br.com.sailboat.homeinventory.ui.model.LabelAndValueModel
 import br.com.sailboat.homeinventory.ui.model.RecyclerViewItem
 import br.com.sailboat.homeinventory.ui.model.TitleModel
+import br.com.sailboat.homeinventory.ui.model.ViewType
 import br.com.sailboat.homeinventory.ui.model.viewholder.LabelAndValueViewHolder
 import br.com.sailboat.homeinventory.ui.model.viewholder.TitleViewHolder
 
@@ -39,6 +39,7 @@ class ProductDetailsAdapter(var callback: Callback) : RecyclerView.Adapter<Recyc
     }
 
     override fun getItemViewType(position: Int) = callback.getProductDetails()[position].viewType
+
 
     interface Callback {
         fun getProductDetails(): List<RecyclerViewItem>

@@ -1,16 +1,21 @@
 package br.com.sailboat.homeinventory.ui.product.details
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v4.app.Fragment
+import br.com.sailboat.homeinventory.ui.base.BaseActivity
 import br.com.sailboat.homeinventory.ui.helper.Extras
 import br.com.sailboat.homeinventory.ui.helper.RequestCode
-import br.com.sailboat.homeinventory.ui.base.BaseActivity
 
 class ProductDetailsActivity : BaseActivity() {
 
     companion object {
         fun startFrom(fragment: Fragment, productId: Long) {
             val intent = Intent(fragment.activity, ProductDetailsActivity::class.java)
+            val args = Bundle()
+
+            Extras.putBundle(intent, args)
+
             Extras.putProductId(intent, productId)
             fragment.startActivityForResult(intent, RequestCode.PRODUCT_DETAILS.ordinal)
         }

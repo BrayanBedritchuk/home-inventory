@@ -4,7 +4,6 @@ import android.content.Intent
 import android.util.Log
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
 import br.com.sailboat.homeinventory.ui.helper.Extras
-import br.com.sailboat.homeinventory.ui.model.viewholder.ProductDetailsViewModel
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -12,10 +11,10 @@ import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 
-class ProductDetailsPresenter @Inject constructor(private val getProductDetails: GetProductDetails) :
-    BasePresenter<ProductDetailsPresenter.View>() {
-
-    val viewModel = ProductDetailsViewModel()
+class ProductDetailsPresenter @Inject constructor(
+    private val viewModel: ProductDetailsViewModel,
+    private val getProductDetails: GetProductDetails
+) : BasePresenter<ProductDetailsPresenter.View>() {
 
     override fun extractArgs(intent: Intent?) {
         intent?.let {
@@ -48,10 +47,10 @@ class ProductDetailsPresenter @Inject constructor(private val getProductDetails:
                 view?.hideProgress()
             }
         }
-
     }
 
     override fun postResult(requestCode: Int, data: Intent?) {
+        super.postResult(requestCode, data)
         loadProductDetails()
     }
 
@@ -63,11 +62,12 @@ class ProductDetailsPresenter @Inject constructor(private val getProductDetails:
 
     }
 
+    fun getProductDetails() = viewModel.productDetails
+
 
     interface View : BasePresenter.View {
         fun showEditProduct(productId: Long)
         fun updateDetails()
     }
-
 
 }

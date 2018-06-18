@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.fab.*
 import kotlinx.android.synthetic.main.recycler.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductDetailsPresenter.View, ProductDetailsAdapter.Callback {
-
+class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductDetailsPresenter.View {
 
     override fun inject() {
         (activity?.application as App).appComponent.inject(this)
@@ -44,8 +43,6 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductD
         initFab()
     }
 
-    override fun getProductDetails() = presenter.viewModel.productDetails
-
     override fun showEditProduct(productId: Long) {
         ProductInsertActivity.startEdit(this, productId)
     }
@@ -68,7 +65,9 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductD
     private fun initRecyclerView() {
         recycler.run {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ProductDetailsAdapter(this@ProductDetailsFragment)
+            adapter = ProductDetailsAdapter(object : ProductDetailsAdapter.Callback {
+                override fun getProductDetails() = presenter.getProductDetails()
+            })
         }
     }
 

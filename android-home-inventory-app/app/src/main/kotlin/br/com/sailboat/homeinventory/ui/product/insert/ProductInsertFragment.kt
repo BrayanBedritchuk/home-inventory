@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductInsertPresenter.View {
 
-
     override fun inject() {
         (activity?.application as App).appComponent.inject(this)
     }

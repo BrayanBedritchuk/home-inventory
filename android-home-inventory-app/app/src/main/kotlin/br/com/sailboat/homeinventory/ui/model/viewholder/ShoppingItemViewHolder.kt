@@ -3,20 +3,15 @@ package br.com.sailboat.homeinventory.ui.model.viewholder
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
-import br.com.sailboat.canoe.base.BaseViewHolder
 import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.ui.base.BaseViewHolder
 import br.com.sailboat.homeinventory.ui.model.ProductView
 import kotlinx.android.synthetic.main.vh_shopping_product.view.*
 
 
-class ShoppingItemViewHolder(itemView: View, val callback: Callback) : BaseViewHolder(itemView) {
+class ShoppingItemViewHolder(parent: ViewGroup, val callback: Callback) :
+    BaseViewHolder<ProductView>(inflate(parent, R.layout.vh_shopping_product)) {
 
-    companion object {
-        fun newInstance(parent: ViewGroup?, callback: Callback): ShoppingItemViewHolder {
-            val view = inflateLayout(parent, R.layout.vh_shopping_product)
-            return ShoppingItemViewHolder(view, callback)
-        }
-    }
 
     init {
         itemView.setOnClickListener {
@@ -24,7 +19,7 @@ class ShoppingItemViewHolder(itemView: View, val callback: Callback) : BaseViewH
         }
     }
 
-    fun bindItem(item: ProductView) {
+    override fun bindItem(item: ProductView) {
         itemView.tvName.text = item.name
         itemView.tvQuantityInStock.text = item.quantity.toString()
         initColorOfQuantity(item)

@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.fab.*
 import kotlinx.android.synthetic.main.recycler.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPresenter.View, ProductListAdapter.Callback {
-
+class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPresenter.View {
 
     override fun inject() {
         (activity?.application as App).appComponent.inject(this)
@@ -39,12 +38,6 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
 
     override fun showInsertProduct() {
         ProductInsertActivity.startFrom(this)
-    }
-
-    override fun getProducts() = presenter.getProducts()
-
-    override fun onClickProduct(position: Int) {
-        presenter.onClickProduct(position)
     }
 
     override fun showProducts() {
@@ -73,7 +66,10 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
     private fun initRecyclerView() {
         recycler.run {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ProductListAdapter(this@ProductListFragment)
+            adapter = ProductListAdapter(object : ProductListAdapter.Callback {
+                override fun getProducts() = presenter.getProducts()
+                override fun onClickProduct(position: Int) = presenter.onClickProduct(position)
+            })
         }
     }
 
@@ -82,7 +78,7 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
     }
 
     private fun initEmptyView() {
-
+        // TODO
     }
 
 }

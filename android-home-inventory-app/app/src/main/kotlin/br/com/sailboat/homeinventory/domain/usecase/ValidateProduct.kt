@@ -3,7 +3,7 @@ package br.com.sailboat.homeinventory.domain.usecase
 import br.com.sailboat.homeinventory.domain.entity.Product
 import javax.inject.Inject
 
-class ValidateProduct @Inject constructor() : UseCase2<Product, List<ValidateProduct.InvalidFields>>() {
+class ValidateProduct @Inject constructor() : UseCase<Product, List<ValidateProduct.InvalidFields>>() {
 
     override fun execute(product: Product): List<InvalidFields> {
         val invalidFields = mutableListOf<InvalidFields>()

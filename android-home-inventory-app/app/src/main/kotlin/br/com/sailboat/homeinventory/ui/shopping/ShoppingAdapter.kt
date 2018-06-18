@@ -12,7 +12,7 @@ class ShoppingAdapter(val callback: ShoppingAdapter.Callback) : RecyclerView.Ada
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ViewType.PRODUCT.ordinal -> ShoppingItemViewHolder.newInstance(parent, callback)
+            ViewType.PRODUCT.ordinal -> ShoppingItemViewHolder(parent, callback)
             else -> throw RuntimeException("ViewHolder not found")
         }
     }

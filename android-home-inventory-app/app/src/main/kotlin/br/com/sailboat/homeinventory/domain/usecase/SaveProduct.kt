@@ -6,7 +6,7 @@ import br.com.sailboat.homeinventory.domain.entity.Product
 import br.com.sailboat.homeinventory.domain.repository.ProductRepository
 import javax.inject.Inject
 
-class SaveProduct @Inject constructor(private val productRepository: ProductRepository) : UseCase2<Product, None>() {
+class SaveProduct @Inject constructor(private val productRepository: ProductRepository) : UseCase<Product, None>() {
 
     override fun execute(product: Product): None {
         if (product.id == EntityHelper.NO_ID) {

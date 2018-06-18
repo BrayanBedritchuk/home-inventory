@@ -1,6 +1,6 @@
 package br.com.sailboat.homeinventory.ui.dashboard
 
-import android.support.v7.app.AppCompatActivity
+import android.app.Activity
 import br.com.sailboat.homeinventory.ui.product.ProductDashboardItem
 
 enum class DashboardItem(val callback: Callback) {
@@ -10,7 +10,7 @@ enum class DashboardItem(val callback: Callback) {
 
     interface Callback {
         val iconId: Int
-        fun onClickItem(activity: AppCompatActivity)
+        fun onClickItem(activity: Activity)
     }
 
 }
