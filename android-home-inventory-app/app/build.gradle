@@ -57,6 +57,4 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "com.android.support.test:runner:$runner_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
-    implementation project(':canoe')
-    implementation project(':java-home-inventory-core')
 }

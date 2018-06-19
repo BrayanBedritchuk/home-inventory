@@ -2,11 +2,11 @@ package br.com.sailboat.homeinventory.ui.product.insert
 
 import android.content.Intent
 import android.support.v4.app.Fragment
-import br.com.sailboat.canoe.base.BaseActivitySingleFragment
+import br.com.sailboat.homeinventory.ui.base.BaseActivity
 import br.com.sailboat.homeinventory.ui.helper.Extras
 import br.com.sailboat.homeinventory.ui.helper.RequestCode
 
-class ProductInsertActivity : BaseActivitySingleFragment<ProductInsertFragment>() {
+class ProductInsertActivity : BaseActivity() {
 
     companion object {
         fun startFrom(fragment: Fragment) {

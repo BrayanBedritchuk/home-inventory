@@ -3,7 +3,6 @@ package br.com.sailboat.homeinventory.ui.product.insert
 import android.content.Intent
 import android.util.Log
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.core.interactor.product.ProductValidator
 import br.com.sailboat.homeinventory.domain.entity.EntityHelper
 import br.com.sailboat.homeinventory.domain.entity.Product
 import br.com.sailboat.homeinventory.domain.usecase.GetProduct
@@ -143,10 +142,10 @@ class ProductInsertPresenter @Inject constructor(
             if (size > 0) {
 
                 when (get(0)) {
-                    ProductValidator.InvalidProductFields.NAME_NOT_FILLED -> {
+                    ValidateProduct.InvalidFields.NAME_NOT_FILLED -> {
                         view?.showErrorMessage(R.string.error_msg_product_name_not_filled)
                     }
-                    ProductValidator.InvalidProductFields.QUANTITY_NEGATIVE -> {
+                    ValidateProduct.InvalidFields.QUANTITY_NEGATIVE -> {
                         view?.showErrorMessage(R.string.product_quantity_cant_be_negative)
                     }
                 }
