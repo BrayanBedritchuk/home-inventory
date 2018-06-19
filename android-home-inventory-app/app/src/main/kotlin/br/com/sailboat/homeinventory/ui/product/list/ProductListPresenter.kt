@@ -52,7 +52,7 @@ class ProductListPresenter @Inject constructor(
                 updateProducts()
             } catch (e: Exception) {
                 view?.logError(e)
-                view?.showErrorMessage(R.string.error_msg_product_name_not_filled)
+                view?.showErrorMessage(R.string.msg_error_list)
             } finally {
                 view?.hideProgress()
             }

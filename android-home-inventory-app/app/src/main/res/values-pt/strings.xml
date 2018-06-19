@@ -22,7 +22,8 @@
     <string name="next_days">Próximos dias</string>
     <string name="cancel">Cancelar</string>
     <string name="default_string">---</string>
-    <string name="error_list">Ocorreu um erro ao carregar a lista</string>
+    <string name="msg_error_list">Ocorreu um erro ao carregar a lista</string>
+    <string name="msg_error_details">Ocorreu um erro ao carregar os detalhes</string>
     <string name="not_repeat">Não repetir</string>
     <string name="every_second">Todos os segundos</string>
     <string name="every_minute">Todos os minutos</string>

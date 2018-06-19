@@ -34,7 +34,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         inject();
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        presenter.extractArgs(getActivity().getIntent());
     }
 
     protected void inject() {}
@@ -86,7 +85,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public void showFeedbackMessage(int msgId) {
         if (getView() instanceof CoordinatorLayout) {
-            Snackbar.make(getView(), msgId, 5000).show();
+            Snackbar.make(getView(), msgId, 4000).show();
         } else {
             Toast.makeText(getActivity(), msgId, Toast.LENGTH_LONG).show();
         }
@@ -135,6 +134,15 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     @Override
     public void closeWithFailure() {
+        getActivity().setResult(Activity.RESULT_CANCELED);
+        getActivity().finish();
+    }
+
+    @Override
+    public void closeWithFailure(int msgId) {
+        Intent intent = new Intent();
+        Extras.INSTANCE.putFeedbackMessage(intent, msgId);
+
         getActivity().setResult(Activity.RESULT_CANCELED);
         getActivity().finish();
     }

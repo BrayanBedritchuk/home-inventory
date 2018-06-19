@@ -24,8 +24,6 @@ public abstract class BasePresenter<V extends BasePresenter.View> {
         setView(null);
     }
 
-    public void extractArgs(@Nullable Intent intent) {}
-
     protected void create() {}
     protected void restart() {}
 
@@ -44,7 +42,11 @@ public abstract class BasePresenter<V extends BasePresenter.View> {
         }
     }
 
-    protected void onResultCanceled(int requestCode, Intent data) {}
+    protected void onResultCanceled(int requestCode, Intent data) {
+        if (Extras.INSTANCE.hasErrorMessage(data) && view != null) {
+            view.showErrorMessage(Extras.INSTANCE.getErrorMessage(data));
+        }
+    }
 
     protected void postResult(int requestCode, Intent data) {}
 
@@ -59,6 +61,7 @@ public abstract class BasePresenter<V extends BasePresenter.View> {
         void closeWithSuccess();
         void closeWithSuccess(int msgId);
         void closeWithFailure();
+        void closeWithFailure(int msgId);
         void logError(@Nullable Exception e);
     }
 

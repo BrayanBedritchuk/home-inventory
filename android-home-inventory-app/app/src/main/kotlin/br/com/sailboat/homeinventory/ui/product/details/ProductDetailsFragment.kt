@@ -8,6 +8,7 @@ import android.view.MenuItem
 import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
+import br.com.sailboat.homeinventory.ui.helper.Extras
 import br.com.sailboat.homeinventory.ui.product.insert.ProductInsertActivity
 import kotlinx.android.synthetic.main.fab.*
 import kotlinx.android.synthetic.main.recycler.*
@@ -42,6 +43,8 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductD
         initRecyclerView()
         initFab()
     }
+
+    override fun extractProductId() = Extras.getProductId(arguments)
 
     override fun showEditProduct(productId: Long) {
         ProductInsertActivity.startEdit(this, productId)

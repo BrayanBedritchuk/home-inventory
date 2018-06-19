@@ -7,6 +7,7 @@ import android.view.MenuItem
 import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
+import br.com.sailboat.homeinventory.ui.helper.Extras
 import kotlinx.android.synthetic.main.frg_product_insert.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -33,6 +34,8 @@ class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductIns
             }
         }
     }
+
+    override fun extractProductId() = Extras.getProductId(arguments)
 
     override fun initViews() {
         initToolbar()

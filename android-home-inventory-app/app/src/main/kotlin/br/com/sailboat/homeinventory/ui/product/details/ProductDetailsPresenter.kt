@@ -1,9 +1,9 @@
 package br.com.sailboat.homeinventory.ui.product.details
 
 import android.content.Intent
-import android.util.Log
+import br.com.sailboat.homeinventory.R
+import br.com.sailboat.homeinventory.domain.entity.EntityHelper
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
-import br.com.sailboat.homeinventory.ui.helper.Extras
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -16,33 +16,32 @@ class ProductDetailsPresenter @Inject constructor(
     private val getProductDetails: GetProductDetails
 ) : BasePresenter<ProductDetailsPresenter.View>() {
 
-    override fun extractArgs(intent: Intent?) {
-        intent?.let {
-            val productId = Extras.getProductId(it)
-            viewModel.productId = productId
-        }
-    }
-
     override fun create() {
-        loadProductDetails()
+        extractArgs()
+        loadDetails()
     }
 
     override fun restart() {
         view?.updateDetails()
     }
 
-    private fun loadProductDetails() {
+    private fun extractArgs() {
+        viewModel.productId = view?.extractProductId() ?: EntityHelper.NO_ID
+    }
+
+    private fun loadDetails() {
         launch(UI) {
             try {
                 view?.showProgress()
-                val details =
-                    async(CommonPool) { getProductDetails.execute(viewModel.productId) }.await()
+                val details = async(CommonPool) { getProductDetails.execute(viewModel.productId) }.await()
+
                 viewModel.productDetails.clear()
                 viewModel.productDetails.addAll(details)
-                view?.updateDetails()
 
+                view?.updateDetails()
             } catch (e: Exception) {
-                Log.e("ProductDetailsPresenter", "Error on load product details", e)
+                view?.logError(e)
+                view?.closeWithFailure(R.string.msg_error_details)
             } finally {
                 view?.hideProgress()
             }
@@ -51,7 +50,7 @@ class ProductDetailsPresenter @Inject constructor(
 
     override fun postResult(requestCode: Int, data: Intent?) {
         super.postResult(requestCode, data)
-        loadProductDetails()
+        loadDetails()
     }
 
     fun onClickEdit() {
@@ -66,6 +65,7 @@ class ProductDetailsPresenter @Inject constructor(
 
 
     interface View : BasePresenter.View {
+        fun extractProductId(): Long
         fun showEditProduct(productId: Long)
         fun updateDetails()
     }

@@ -1,6 +1,7 @@
 package br.com.sailboat.homeinventory.ui.product.insert
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import br.com.sailboat.homeinventory.ui.base.BaseActivity
 import br.com.sailboat.homeinventory.ui.helper.Extras
@@ -16,12 +17,15 @@ class ProductInsertActivity : BaseActivity() {
 
         fun startEdit(fragment: Fragment, productId: Long) {
             val intent = Intent(fragment.activity, ProductInsertActivity::class.java)
-            Extras.putProductId(intent, productId)
+            val args = Bundle()
+            Extras.putProductId(args, productId)
+            Extras.putBundle(intent, args)
+
             fragment.startActivityForResult(intent, RequestCode.PRODUCT_INSERT.ordinal)
         }
     }
 
-    override fun newFragmentInstance() = ProductInsertFragment()
+    override fun newFragmentInstance() = ProductInsertFragment().also { it.arguments = Extras.getBundle(intent) }
 
 }
 

@@ -26,7 +26,8 @@
     <string name="previous_days">Previous days</string>
     <string name="next_days">Next days</string>
     <string name="default_string">---</string>
-    <string name="error_list">An error occurred while loading the list</string>
+    <string name="msg_error_list">An error occurred while loading the list</string>
+    <string name="msg_error_details">An error occurred while loading the details</string>
     <string name="not_repeat">Not repeat</string>
     <string name="every_second">Every second</string>
     <string name="every_minute">Every minute</string>

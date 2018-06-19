@@ -14,13 +14,13 @@ class ProductDetailsActivity : BaseActivity() {
             val intent = Intent(fragment.activity, ProductDetailsActivity::class.java)
             val args = Bundle()
 
+            Extras.putProductId(args, productId)
             Extras.putBundle(intent, args)
 
-            Extras.putProductId(intent, productId)
             fragment.startActivityForResult(intent, RequestCode.PRODUCT_DETAILS.ordinal)
         }
     }
 
-    override fun newFragmentInstance() = ProductDetailsFragment()
+    override fun newFragmentInstance() = ProductDetailsFragment().also { it.arguments = Extras.getBundle(intent) }
 
 }

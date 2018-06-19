@@ -1,7 +1,5 @@
 package br.com.sailboat.homeinventory.ui.product.insert
 
-import android.content.Intent
-import android.util.Log
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.domain.entity.EntityHelper
 import br.com.sailboat.homeinventory.domain.entity.Product
@@ -9,7 +7,6 @@ import br.com.sailboat.homeinventory.domain.usecase.GetProduct
 import br.com.sailboat.homeinventory.domain.usecase.SaveProduct
 import br.com.sailboat.homeinventory.domain.usecase.ValidateProduct
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
-import br.com.sailboat.homeinventory.ui.helper.Extras
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -24,16 +21,8 @@ class ProductInsertPresenter @Inject constructor(
     private val validateProduct: ValidateProduct
 ) : BasePresenter<ProductInsertPresenter.View>() {
 
-    override fun extractArgs(intent: Intent?) {
-        intent?.let {
-            if (Extras.hasProductId(it)) {
-                val cardId = Extras.getProductId(it)
-                viewModel.productId = cardId
-            }
-        }
-    }
-
     override fun create() {
+        extractArgs()
         if (hasProductToEdit()) {
             startEditingProduct()
         } else {
@@ -66,6 +55,10 @@ class ProductInsertPresenter @Inject constructor(
         return Product(viewModel.productId, viewModel.name, viewModel.quantity)
     }
 
+    private fun extractArgs() {
+        viewModel.productId = view?.extractProductId() ?: EntityHelper.NO_ID
+    }
+
     private fun startEditingProduct() {
         launch(UI) {
             try {
@@ -79,7 +72,7 @@ class ProductInsertPresenter @Inject constructor(
                 updateContentViews()
 
             } catch (e: Exception) {
-                Log.e("LOG", "Error on startEditingProduct", e)
+                view?.logError(e)
                 view?.showErrorMessage(R.string.msg_error)
             } finally {
                 view?.hideProgress()
@@ -108,7 +101,7 @@ class ProductInsertPresenter @Inject constructor(
 
                 view?.closeWithSuccess(msg)
             } catch (e: Exception) {
-                Log.e("LOG", "Error on startEditingProduct", e)
+                view?.logError(e)
                 view?.showErrorMessage(R.string.msg_error)
                 view?.closeWithFailure()
             } finally {
@@ -156,6 +149,7 @@ class ProductInsertPresenter @Inject constructor(
 
 
     interface View : BasePresenter.View {
+        fun extractProductId(): Long
         fun setTitle(title: Int)
         fun getName(): String
         fun getQuantity(): String
