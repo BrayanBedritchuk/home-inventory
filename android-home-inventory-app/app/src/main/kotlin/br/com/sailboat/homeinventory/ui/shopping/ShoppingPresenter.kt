@@ -32,7 +32,7 @@ class ShoppingPresenter @Inject constructor(
     override fun onClickProduct(position: Int) {
         val product = getShoppingItems()[position] as ProductView
         val quantity = viewModel.shoppingCart[product.id]
-        view?.showShoppingProduct(product, quantity ?: 0)
+        view?.navigateToShoppingProduct(product, quantity ?: 0)
     }
 
     override fun onClickCheckout() {

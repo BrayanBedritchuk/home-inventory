@@ -2,12 +2,16 @@ package br.com.sailboat.homeinventory.ui.product.list
 
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
 import br.com.sailboat.homeinventory.ui.product.details.ProductDetailsActivity
 import br.com.sailboat.homeinventory.ui.product.insert.ProductInsertActivity
+import br.com.sailboat.homeinventory.ui.shopping.ShoppingActivity
 import kotlinx.android.synthetic.main.ept_view.*
 import kotlinx.android.synthetic.main.fab.*
 import kotlinx.android.synthetic.main.recycler.*
@@ -21,6 +25,22 @@ class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), Produ
 
     override fun getLayoutId() = R.layout.frg_list
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_product_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.menu_new_product -> {
+                presenter.onClickNewProduct()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     override fun initViews() {
         initToolbar()
         initRecyclerView()
@@ -32,11 +52,11 @@ class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), Produ
         (recycler.adapter as ProductListAdapter).notifyDataSetChanged()
     }
 
-    override fun showProductDetails(productId: Long) {
+    override fun navigateToProductDetails(productId: Long) {
         ProductDetailsActivity.startFrom(this, productId)
     }
 
-    override fun showInsertProduct() {
+    override fun navigateToInsertProduct() {
         ProductInsertActivity.startFrom(this)
     }
 
@@ -60,10 +80,14 @@ class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), Produ
         showErrorMessage(R.string.error_msg_loading_products)
     }
 
+    override fun navigateToShopping() {
+        ShoppingActivity.startFrom(this)
+    }
+
     private fun initToolbar() {
         toolbar.run {
             (activity as AppCompatActivity).setSupportActionBar(this)
-            setTitle(R.string.title_products)
+            setTitle(R.string.app_name)
         }
     }
 
@@ -78,7 +102,8 @@ class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), Produ
     }
 
     private fun initFab() {
-        fab.setOnClickListener { presenter.onClickNewProduct() }
+        fab.setImageResource(R.drawable.ic_cart)
+        fab.setOnClickListener { presenter.onClickShopping() }
     }
 
     private fun initEmptyView() {

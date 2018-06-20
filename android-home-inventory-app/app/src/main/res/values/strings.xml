@@ -98,6 +98,9 @@
     <string name="exception_product_quantity">You must enter the quantity</string>
     <string name="msg_delete">Do you really want to delete?</string>
 
+    <!-- Menus -->
+    <string name="menu_new_product">New product</string>
+
     <!-- Titles -->
     <string name="title_products">Products</string>
     <string name="title_new_product">New Product</string>

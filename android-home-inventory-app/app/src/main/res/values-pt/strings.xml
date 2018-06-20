@@ -94,7 +94,7 @@
     <string name="msg_delete">Deseja realmente excluir?</string>
 
     <!-- Menus -->
-
+    <string name="menu_new_product">Novo produto</string>
 
     <!-- Títulos -->
     <string name="title_products">Produtos</string>

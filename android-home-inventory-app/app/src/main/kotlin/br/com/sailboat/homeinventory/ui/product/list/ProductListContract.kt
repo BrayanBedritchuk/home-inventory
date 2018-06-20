@@ -7,19 +7,21 @@ interface ProductListContract {
 
     interface View : BaseMvpContract.View {
         fun updateProducts()
-        fun showProductDetails(productId: Long)
-        fun showInsertProduct()
         fun showProducts()
-        fun hideProducts()
         fun showEmptyView()
-        fun hideEmptyView()
         fun showErrorLoadingProducts()
+        fun hideProducts()
+        fun hideEmptyView()
+        fun navigateToProductDetails(productId: Long)
+        fun navigateToInsertProduct()
+        fun navigateToShopping()
     }
 
     interface Presenter : BaseMvpContract.Presenter {
         fun onClickNewProduct()
         fun onClickProduct(position: Int)
         fun getProducts(): List<ProductView>
+        fun onClickShopping()
     }
 
 }

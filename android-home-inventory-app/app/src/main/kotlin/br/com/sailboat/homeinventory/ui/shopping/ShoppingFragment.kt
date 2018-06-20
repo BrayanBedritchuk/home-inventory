@@ -43,7 +43,7 @@ class ShoppingFragment : BaseFragment<ShoppingContract.Presenter>(), ShoppingCon
         }
     }
 
-    override fun showShoppingProduct(product: ProductView, quantity: Int) {
+    override fun navigateToShoppingProduct(product: ProductView, quantity: Int) {
         fragmentManager?.let {
             ShoppingProductDialog.show(it, product, quantity) { productId: Long, quantity: Int ->
                 presenter.onAddProduct(productId, quantity)

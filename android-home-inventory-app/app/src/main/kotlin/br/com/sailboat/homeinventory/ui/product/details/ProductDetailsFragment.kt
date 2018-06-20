@@ -46,7 +46,7 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsContract.Presenter>(),
 
     override fun extractProductId() = Extras.getProductId(arguments)
 
-    override fun showEditProduct(productId: Long) {
+    override fun navigateToEditProduct(productId: Long) {
         ProductInsertActivity.startEdit(this, productId)
     }
 

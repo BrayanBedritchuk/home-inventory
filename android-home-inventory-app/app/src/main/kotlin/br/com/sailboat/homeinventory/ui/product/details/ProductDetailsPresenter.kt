@@ -52,7 +52,7 @@ class ProductDetailsPresenter @Inject constructor(
     }
 
     override fun onClickEdit() {
-        view?.showEditProduct(viewModel.productId)
+        view?.navigateToEditProduct(viewModel.productId)
     }
 
     override fun onClickDelete() {

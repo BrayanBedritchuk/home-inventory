@@ -7,12 +7,12 @@ import br.com.sailboat.homeinventory.ui.model.RecyclerViewItem
 interface ShoppingContract {
 
     interface View : BaseMvpContract.View {
-        fun showShoppingProduct(product: ProductView, quantity: Int)
+        fun navigateToShoppingProduct(product: ProductView, quantity: Int)
         fun updateShoppingItems()
-        fun showShoppingItems()
         fun hideShoppingItems()
-        fun showEmptyView()
         fun hideEmptyView()
+        fun showShoppingItems()
+        fun showEmptyView()
         fun showErrorLoadingProducts()
         fun showErrorCheckout()
     }

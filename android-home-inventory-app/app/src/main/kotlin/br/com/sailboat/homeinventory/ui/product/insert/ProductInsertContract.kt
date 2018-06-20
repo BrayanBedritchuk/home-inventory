@@ -10,13 +10,13 @@ interface ProductInsertContract {
         fun getQuantity(): String
         fun setName(name: String)
         fun setQuantity(quantity: String)
-        fun showErrorOnSaveProduct()
-        fun closeWithSuccessOnEditProduct()
-        fun closeWithSuccessOnInsertProduct()
         fun setTitleNewProduct()
         fun setTitleEditProduct()
+        fun showErrorOnSaveProduct()
         fun showErrorNameNotFilled()
         fun showErrorQuantityNegative()
+        fun closeWithSuccessOnEditProduct()
+        fun closeWithSuccessOnInsertProduct()
     }
 
     interface Presenter : BaseMvpContract.Presenter {

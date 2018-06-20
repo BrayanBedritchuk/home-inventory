@@ -7,7 +7,7 @@ interface ProductDetailsContract {
 
     interface View : BaseMvpContract.View {
         fun extractProductId(): Long
-        fun showEditProduct(productId: Long)
+        fun navigateToEditProduct(productId: Long)
         fun updateDetails()
         fun closeWithFailureOnLoadDetails()
     }

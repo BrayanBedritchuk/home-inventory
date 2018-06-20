@@ -11,8 +11,8 @@ import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 class ProductListPresenter @Inject constructor(
-    private val viewModel: ProductListViewModel,
-    private val getProducts: GetProducts
+        private val viewModel: ProductListViewModel,
+        private val getProducts: GetProducts
 ) : BasePresenter<ProductListContract.View>(), ProductListContract.Presenter {
 
     override fun create() {
@@ -30,14 +30,18 @@ class ProductListPresenter @Inject constructor(
 
     override fun onClickProduct(position: Int) {
         val product = viewModel.products[position]
-        view?.showProductDetails(product.id)
+        view?.navigateToProductDetails(product.id)
     }
 
     override fun onClickNewProduct() {
-        view?.showInsertProduct()
+        view?.navigateToInsertProduct()
     }
 
     override fun getProducts() = viewModel.products
+
+    override fun onClickShopping() {
+        view?.navigateToShopping()
+    }
 
     private fun loadProducts() {
         launch(UI) {

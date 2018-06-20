@@ -6,10 +6,10 @@ interface BaseMvpContract {
         fun showProgress()
         fun hideProgress()
         fun closeKeyboard()
-        fun disableKeyboardOnStart()
         fun closeWithSuccess()
         fun closeWithFailure()
         fun closeWithFailureDefaultMessage()
+        fun disableKeyboardOnStart()
         fun logError(e: Exception)
     }
 
