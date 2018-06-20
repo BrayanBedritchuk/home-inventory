@@ -8,11 +8,12 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, RepositoryModule::class])
+@Component(modules = [AppModule::class, UIModule::class, RepositoryModule::class])
 interface AppComponent {
 
     fun inject(fragment: ShoppingFragment)
     fun inject(fragment: ProductListFragment)
     fun inject(fragment: ProductDetailsFragment)
     fun inject(fragment: ProductInsertFragment)
+
 }

@@ -1,6 +1,5 @@
 package br.com.sailboat.homeinventory.ui.shopping
 
-import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.domain.None
 import br.com.sailboat.homeinventory.domain.entity.Product
 import br.com.sailboat.homeinventory.domain.usecase.GetProduct
@@ -20,7 +19,7 @@ class ShoppingPresenter @Inject constructor(
     private val getProducts: GetProducts,
     private val getProduct: GetProduct,
     private val saveProduct: SaveProduct
-) : BasePresenter<ShoppingPresenter.View>() {
+) : BasePresenter<ShoppingContract.View>(), ShoppingContract.Presenter {
 
     override fun create() {
         loadProducts()
@@ -30,13 +29,13 @@ class ShoppingPresenter @Inject constructor(
         updateShoppingItems()
     }
 
-    fun onClickProduct(position: Int) {
+    override fun onClickProduct(position: Int) {
         val product = getShoppingItems()[position] as ProductView
         val quantity = viewModel.shoppingCart[product.id]
         view?.showShoppingProduct(product, quantity ?: 0)
     }
 
-    fun onClickCheckout() {
+    override fun onClickCheckout() {
         launch(UI) {
             try {
                 view?.showProgress()
@@ -52,18 +51,18 @@ class ShoppingPresenter @Inject constructor(
                 view?.closeWithSuccess()
             } catch (e: Exception) {
                 view?.logError(e)
-                view?.showErrorMessage(R.string.msg_error)
+                view?.showErrorCheckout()
             } finally {
                 view?.hideProgress()
             }
         }
     }
 
-    fun wasPurchased(productId: Long) = viewModel.shoppingCart.containsKey(productId)
+    override fun wasPurchased(productId: Long) = viewModel.shoppingCart.containsKey(productId)
 
-    fun getShoppingQuantity(productId: Long) = viewModel.shoppingCart[productId].toString()
+    override fun getShoppingQuantity(productId: Long) = viewModel.shoppingCart[productId].toString()
 
-    fun onAddProduct(productId: Long, quantity: Int) {
+    override fun onAddProduct(productId: Long, quantity: Int) {
         if (viewModel.shoppingCart.containsKey(productId)) {
             viewModel.shoppingCart.remove(productId)
         }
@@ -75,7 +74,7 @@ class ShoppingPresenter @Inject constructor(
         view?.updateShoppingItems()
     }
 
-    fun getShoppingItems() = viewModel.shoppingItems
+    override fun getShoppingItems() = viewModel.shoppingItems
 
     private fun loadProducts() {
         launch(UI) {
@@ -85,7 +84,7 @@ class ShoppingPresenter @Inject constructor(
                 updateProducts(products)
             } catch (e: Exception) {
                 view?.logError(e)
-                view?.showErrorMessage(R.string.msg_error)
+                view?.showErrorLoadingProducts()
             } finally {
                 view?.hideProgress()
             }
@@ -108,16 +107,6 @@ class ShoppingPresenter @Inject constructor(
             view?.showShoppingItems()
             view?.hideEmptyView()
         }
-    }
-
-
-    interface View : BasePresenter.View {
-        fun showShoppingProduct(product: ProductView, quantity: Int)
-        fun updateShoppingItems()
-        fun showShoppingItems()
-        fun hideShoppingItems()
-        fun showEmptyView()
-        fun hideEmptyView()
     }
 
 }

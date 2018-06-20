@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fab.*
 import kotlinx.android.synthetic.main.recycler.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPresenter.View {
+class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), ProductListContract.View {
 
     override fun inject() {
         (activity?.application as App).appComponent.inject(this)
@@ -54,6 +54,10 @@ class ProductListFragment : BaseFragment<ProductListPresenter>(), ProductListPre
 
     override fun hideEmptyView() {
         llEptView.visibility = View.GONE
+    }
+
+    override fun showErrorLoadingProducts() {
+        showErrorMessage(R.string.error_msg_loading_products)
     }
 
     private fun initToolbar() {

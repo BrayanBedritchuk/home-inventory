@@ -1,10 +1,7 @@
 package br.com.sailboat.homeinventory
 
 import android.app.Application
-import br.com.sailboat.homeinventory.di.AppComponent
-import br.com.sailboat.homeinventory.di.AppModule
-import br.com.sailboat.homeinventory.di.DaggerAppComponent
-import br.com.sailboat.homeinventory.di.RepositoryModule
+import br.com.sailboat.homeinventory.di.*
 
 class App : Application() {
 
@@ -15,6 +12,7 @@ class App : Application() {
 
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this))
+            .uIModule(UIModule())
             .repositoryModule(RepositoryModule())
             .build()
 

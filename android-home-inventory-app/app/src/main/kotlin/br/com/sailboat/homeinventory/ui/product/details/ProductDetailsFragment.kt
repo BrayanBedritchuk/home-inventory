@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fab.*
 import kotlinx.android.synthetic.main.recycler.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductDetailsPresenter.View {
+class ProductDetailsFragment : BaseFragment<ProductDetailsContract.Presenter>(), ProductDetailsContract.View {
 
     override fun inject() {
         (activity?.application as App).appComponent.inject(this)
@@ -52,6 +52,10 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsPresenter>(), ProductD
 
     override fun updateDetails() {
         recycler.adapter.notifyDataSetChanged()
+    }
+
+    override fun closeWithFailureOnLoadDetails() {
+        closeWithFailure(R.string.error_msg_details)
     }
 
     private fun initToolbar() {

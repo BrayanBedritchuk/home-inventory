@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_product_details">Detalhes do Produto</string>
 
     <string name="product_quantity_cant_be_negative">Quantidade não pode ser negativa</string>
 
-    <string name="empty_view_msg_no_products_found">Nenhum produto encontrado</string>
-
-    <string name="error_msg_product_details">Ocorreu um erro ao carregar os detalhes do produto</string>
-    <string name="error_msg_product_name_not_filled">É necessário preencher o nome do produto</string>
-    <string name="msg_feedback_product_edited_successfully">Produto editado com sucesso!</string>
-    <string name="msg_feedback_product_inserted_successfully">Produto inserido com sucesso!</string>
-    <string name="msg_error">Ocorreu um erro ao efetuar a operação</string>
     <string name="previous_days">Dias anteriores</string>
     <string name="today">Hoje</string>
     <string name="tomorrow">Amanhã</string>
@@ -22,8 +14,6 @@
     <string name="next_days">Próximos dias</string>
     <string name="cancel">Cancelar</string>
     <string name="default_string">---</string>
-    <string name="msg_error_list">Ocorreu um erro ao carregar a lista</string>
-    <string name="msg_error_details">Ocorreu um erro ao carregar os detalhes</string>
     <string name="not_repeat">Não repetir</string>
     <string name="every_second">Todos os segundos</string>
     <string name="every_minute">Todos os minutos</string>
@@ -97,13 +87,36 @@
     <string name="hint_enter_product_name">Insira o nome do produto</string>
     <string name="hint_enter_current_quantity">Insira a quantidade atual</string>
     <string name="msg_exception_start_editing">Não foi possível iniciar a edição. Por favor, tente novamente</string>
-    <string name="title_edit_product">Editar Produto</string>
-    <string name="title_new_product">Novo Produto</string>
+
     <string name="msg_exception_saving">Não foi possível salvar. Por favor, tente novamente</string>
-    <string name="product_added">Produto adicionado!</string>
     <string name="exception_product_name">É necessário inserir o nome do produto</string>
     <string name="exception_product_quantity">É necessário inserir a quantidade do produto</string>
     <string name="msg_delete">Deseja realmente excluir?</string>
+
+    <!-- Menus -->
+
+
+    <!-- Títulos -->
     <string name="title_products">Produtos</string>
+    <string name="title_new_product">Novo Produto</string>
+    <string name="title_edit_product">Editar Produto</string>
+    <string name="title_product_details">Detalhes do Produto</string>
     <string name="title_shopping">Shopping</string>
+
+    <!-- Empty Views -->
+    <string name="empty_view_msg_no_products_found">Nenhum produto encontrado</string>
+
+    <!-- Mensagens de Feedback -->
+    <string name="feedback_msg_product_edited_successfully">Produto editado com sucesso!</string>
+    <string name="feedback_msg_product_inserted_successfully">Produto inserido com sucesso!</string>
+
+    <!-- Mensagens de Erro -->
+    <string name="error_msg">Ocorreu um erro ao efetuar a operação</string>
+    <string name="error_msg_list">Ocorreu um erro ao carregar a lista</string>
+    <string name="error_msg_details">Ocorreu um erro ao carregar os detalhes</string>
+    <string name="error_msg_loading_products">Ocorreu um erro ao carregar os produtos</string>
+    <string name="error_msg_product_details">Ocorreu um erro ao carregar os detalhes do produto</string>
+    <string name="error_msg_product_name_not_filled">É necessário preencher o nome do produto</string>
+    <string name="error_msg_checkout">Ocorreu um erro ao finalizar a compra</string>
+
 </resources>

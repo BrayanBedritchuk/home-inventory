@@ -1,6 +1,5 @@
 package br.com.sailboat.homeinventory.ui.product.insert
 
-import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.domain.entity.EntityHelper
 import br.com.sailboat.homeinventory.domain.entity.Product
 import br.com.sailboat.homeinventory.domain.usecase.GetProduct
@@ -19,7 +18,7 @@ class ProductInsertPresenter @Inject constructor(
     private val getProduct: GetProduct,
     private val saveProduct: SaveProduct,
     private val validateProduct: ValidateProduct
-) : BasePresenter<ProductInsertPresenter.View>() {
+) : BasePresenter<ProductInsertContract.View>(), ProductInsertContract.Presenter {
 
     override fun create() {
         extractArgs()
@@ -34,7 +33,7 @@ class ProductInsertPresenter @Inject constructor(
         updateContentViews()
     }
 
-    fun onClickSave() {
+    override fun onClickSave() {
         try {
             view?.closeKeyboard()
             extractInfoFromViews()
@@ -42,7 +41,7 @@ class ProductInsertPresenter @Inject constructor(
             save(product)
         } catch (e: Exception) {
             view?.logError(e)
-            view?.showErrorMessage(R.string.msg_error)
+            view?.showErrorOnSaveProduct()
         }
     }
 
@@ -73,7 +72,7 @@ class ProductInsertPresenter @Inject constructor(
 
             } catch (e: Exception) {
                 view?.logError(e)
-                view?.showErrorMessage(R.string.msg_error)
+                view?.closeWithFailureDefaultMessage()
             } finally {
                 view?.hideProgress()
             }
@@ -93,17 +92,14 @@ class ProductInsertPresenter @Inject constructor(
 
                 async(CommonPool) { saveProduct.execute(product) }.await()
 
-                val msg = if (hasProductToEdit()) {
-                    R.string.msg_feedback_product_edited_successfully
+                if (hasProductToEdit()) {
+                    view?.closeWithSuccessOnEditProduct()
                 } else {
-                    R.string.msg_feedback_product_inserted_successfully
+                    view?.closeWithSuccessOnInsertProduct()
                 }
-
-                view?.closeWithSuccess(msg)
             } catch (e: Exception) {
                 view?.logError(e)
-                view?.showErrorMessage(R.string.msg_error)
-                view?.closeWithFailure()
+                view?.showErrorOnSaveProduct()
             } finally {
                 view?.hideProgress()
             }
@@ -117,9 +113,9 @@ class ProductInsertPresenter @Inject constructor(
 
     private fun updateTitle() {
         if (hasProductToEdit()) {
-            view?.setTitle(R.string.title_edit_product)
+            view?.setTitleEditProduct()
         } else {
-            view?.setTitle(R.string.title_new_product)
+            view?.setTitleNewProduct()
         }
     }
 
@@ -131,30 +127,16 @@ class ProductInsertPresenter @Inject constructor(
     }
 
     private fun handleInvalidProducFields(invalidFields: List<ValidateProduct.InvalidFields>) {
-        invalidFields?.run() {
-            if (size > 0) {
-
-                when (get(0)) {
-                    ValidateProduct.InvalidFields.NAME_NOT_FILLED -> {
-                        view?.showErrorMessage(R.string.error_msg_product_name_not_filled)
-                    }
-                    ValidateProduct.InvalidFields.QUANTITY_NEGATIVE -> {
-                        view?.showErrorMessage(R.string.product_quantity_cant_be_negative)
-                    }
+        invalidFields.takeIf { it.isNotEmpty() }?.run {
+            when (get(0)) {
+                ValidateProduct.InvalidFields.NAME_NOT_FILLED -> {
+                    view?.showErrorNameNotFilled()
                 }
-
+                ValidateProduct.InvalidFields.QUANTITY_NEGATIVE -> {
+                    view?.showErrorQuantityNegative()
+                }
             }
         }
-    }
-
-
-    interface View : BasePresenter.View {
-        fun extractProductId(): Long
-        fun setTitle(title: Int)
-        fun getName(): String
-        fun getQuantity(): String
-        fun setName(name: String)
-        fun setQuantity(quantity: String)
     }
 
 }

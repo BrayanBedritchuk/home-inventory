@@ -1,7 +1,5 @@
 package br.com.sailboat.homeinventory.ui.product.details
 
-import android.content.Intent
-import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.domain.entity.EntityHelper
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
 import kotlinx.coroutines.experimental.CommonPool
@@ -14,7 +12,7 @@ import javax.inject.Inject
 class ProductDetailsPresenter @Inject constructor(
     private val viewModel: ProductDetailsViewModel,
     private val getProductDetails: GetProductDetails
-) : BasePresenter<ProductDetailsPresenter.View>() {
+) : BasePresenter<ProductDetailsContract.View>(), ProductDetailsContract.Presenter {
 
     override fun create() {
         extractArgs()
@@ -41,33 +39,26 @@ class ProductDetailsPresenter @Inject constructor(
                 view?.updateDetails()
             } catch (e: Exception) {
                 view?.logError(e)
-                view?.closeWithFailure(R.string.msg_error_details)
+                view?.closeWithFailureOnLoadDetails()
             } finally {
                 view?.hideProgress()
             }
         }
     }
 
-    override fun postResult(requestCode: Int, data: Intent?) {
-        super.postResult(requestCode, data)
+    override fun postResult() {
+        super.postResult()
         loadDetails()
     }
 
-    fun onClickEdit() {
+    override fun onClickEdit() {
         view?.showEditProduct(viewModel.productId)
     }
 
-    fun onClickDelete() {
+    override fun onClickDelete() {
 
     }
 
-    fun getProductDetails() = viewModel.productDetails
-
-
-    interface View : BasePresenter.View {
-        fun extractProductId(): Long
-        fun showEditProduct(productId: Long)
-        fun updateDetails()
-    }
+    override fun getProductDetails() = viewModel.productDetails
 
 }

@@ -1,22 +1,13 @@
 <resources>
-    <string name="app_name" translatable="false">Home Inventory</string>
 
-    <string name="title_product_details">Product Details</string>
+    <string name="app_name" translatable="false">Home Inventory</string>
 
     <string name="product_quantity_cant_be_negative">Quantity can\'t be negative</string>
 
-    <string name="empty_view_msg_no_products_found">No products found</string>
-
-    <string name="error_msg_product_name_not_filled">It\'s necessary to fill in the name of the product</string>
-    <string name="error_msg_product_details">An error occurred while loading the product details</string>
-
-
     <string name="loading">Loading...</string>
-    <string name="msg_feedback_product_edited_successfully">Product edited successfully!</string>
-    <string name="msg_feedback_product_inserted_successfully">Product inserted successfully!</string>
     <string name="oops">Oops</string>
     <string name="cancel">Cancel</string>
-    <string name="msg_error">An error occurred while performing the operation</string>
+
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="pattern_month_day_short">MMM dd</string>
@@ -26,8 +17,7 @@
     <string name="previous_days">Previous days</string>
     <string name="next_days">Next days</string>
     <string name="default_string">---</string>
-    <string name="msg_error_list">An error occurred while loading the list</string>
-    <string name="msg_error_details">An error occurred while loading the details</string>
+
     <string name="not_repeat">Not repeat</string>
     <string name="every_second">Every second</string>
     <string name="every_minute">Every minute</string>
@@ -102,14 +92,33 @@
     <string name="hint_enter_product_name">Enter the product name</string>
     <string name="hint_enter_current_quantity">Enter the current quantity</string>
     <string name="msg_exception_start_editing">An error occurred when start editing. Try again</string>
-    <string name="title_edit_product">Edit Product</string>
-    <string name="title_new_product">New Product</string>
+
     <string name="msg_exception_saving">An error occurred while saving. Please, try again</string>
-    <string name="product_added">Product added!</string>
     <string name="exception_product_name">You must enter a product name</string>
     <string name="exception_product_quantity">You must enter the quantity</string>
     <string name="msg_delete">Do you really want to delete?</string>
+
+    <!-- Titles -->
     <string name="title_products">Products</string>
+    <string name="title_new_product">New Product</string>
+    <string name="title_edit_product">Edit Product</string>
+    <string name="title_product_details">Product Details</string>
     <string name="title_shopping">Shopping</string>
+
+    <!-- Empty Views -->
+    <string name="empty_view_msg_no_products_found">No products found</string>
+
+    <!-- Feedback Messages -->
+    <string name="feedback_msg_product_edited_successfully">Product edited successfully!</string>
+    <string name="feedback_msg_product_inserted_successfully">Product inserted successfully!</string>
+
+    <!-- Error Messages -->
+    <string name="error_msg">An error occurred while performing the operation</string>
+    <string name="error_msg_list">An error occurred while loading the list</string>
+    <string name="error_msg_details">An error occurred while loading the details</string>
+    <string name="error_msg_loading_products">An error occurred while loading the list</string>
+    <string name="error_msg_product_details">An error occurred while loading the product details</string>
+    <string name="error_msg_product_name_not_filled">It\'s necessary to fill in the name of the product</string>
+    <string name="error_msg_checkout">An error occurred while checking out</string>
 
 </resources>

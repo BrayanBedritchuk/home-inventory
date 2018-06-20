@@ -11,7 +11,7 @@ import br.com.sailboat.homeinventory.ui.helper.Extras
 import kotlinx.android.synthetic.main.frg_product_insert.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductInsertPresenter.View {
+class ProductInsertFragment : BaseFragment<ProductInsertContract.Presenter>(), ProductInsertContract.View {
 
     override fun inject() {
         (activity?.application as App).appComponent.inject(this)
@@ -54,8 +54,32 @@ class ProductInsertFragment : BaseFragment<ProductInsertPresenter>(), ProductIns
         etQuantity.setText(quantity)
     }
 
-    override fun setTitle(title: Int) {
-        toolbar.setTitle(title)
+    override fun showErrorOnSaveProduct() {
+        showErrorMessage(R.string.error_msg)
+    }
+
+    override fun closeWithSuccessOnEditProduct() {
+        closeWithSuccess(R.string.feedback_msg_product_edited_successfully)
+    }
+
+    override fun closeWithSuccessOnInsertProduct() {
+        closeWithSuccess(R.string.feedback_msg_product_inserted_successfully)
+    }
+
+    override fun setTitleNewProduct() {
+        toolbar.setTitle(R.string.title_new_product)
+    }
+
+    override fun setTitleEditProduct() {
+        toolbar.setTitle(R.string.title_edit_product)
+    }
+
+    override fun showErrorNameNotFilled() {
+        showErrorMessage(R.string.error_msg_product_name_not_filled)
+    }
+
+    override fun showErrorQuantityNegative() {
+        showErrorMessage(R.string.product_quantity_cant_be_negative)
     }
 
     private fun initToolbar() {

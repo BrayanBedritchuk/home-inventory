@@ -1,7 +1,5 @@
 package br.com.sailboat.homeinventory.ui.product.list
 
-import android.content.Intent
-import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.domain.None
 import br.com.sailboat.homeinventory.domain.usecase.GetProducts
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
@@ -15,7 +13,7 @@ import javax.inject.Inject
 class ProductListPresenter @Inject constructor(
     private val viewModel: ProductListViewModel,
     private val getProducts: GetProducts
-) : BasePresenter<ProductListPresenter.View>() {
+) : BasePresenter<ProductListContract.View>(), ProductListContract.Presenter {
 
     override fun create() {
         loadProducts()
@@ -25,20 +23,21 @@ class ProductListPresenter @Inject constructor(
         updateProducts()
     }
 
-    override fun postResult(requestCode: Int, data: Intent?) {
+    override fun postResult() {
+        super.postResult()
         loadProducts()
     }
 
-    fun onClickProduct(position: Int) {
+    override fun onClickProduct(position: Int) {
         val product = viewModel.products[position]
         view?.showProductDetails(product.id)
     }
 
-    fun onClickNewProduct() {
+    override fun onClickNewProduct() {
         view?.showInsertProduct()
     }
 
-    fun getProducts() = viewModel.products
+    override fun getProducts() = viewModel.products
 
     private fun loadProducts() {
         launch(UI) {
@@ -52,7 +51,7 @@ class ProductListPresenter @Inject constructor(
                 updateProducts()
             } catch (e: Exception) {
                 view?.logError(e)
-                view?.showErrorMessage(R.string.msg_error_list)
+                view?.showErrorLoadingProducts()
             } finally {
                 view?.hideProgress()
             }
@@ -69,17 +68,6 @@ class ProductListPresenter @Inject constructor(
             view?.showProducts()
             view?.hideEmptyView()
         }
-    }
-
-
-    interface View : BasePresenter.View {
-        fun updateProducts()
-        fun showProductDetails(productId: Long)
-        fun showInsertProduct()
-        fun showProducts()
-        fun hideProducts()
-        fun showEmptyView()
-        fun hideEmptyView()
     }
 
 }

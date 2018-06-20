@@ -22,7 +22,7 @@ import br.com.sailboat.homeinventory.ui.dialog.MessageDialog;
 import br.com.sailboat.homeinventory.ui.dialog.ProgressDialog;
 import br.com.sailboat.homeinventory.ui.helper.UIHelper;
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BasePresenter.View {
+public abstract class BaseFragment<P extends BaseMvpContract.Presenter> extends Fragment implements BaseMvpContract.View {
 
     @Inject
     P presenter;
@@ -36,7 +36,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         setRetainInstance(true);
     }
 
-    protected void inject() {}
+    protected void inject() {
+    }
 
     @Nullable
     @Override
@@ -53,9 +54,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         presenter.onViewCreated();
     }
 
-    protected void initViews() {}
+    protected void initViews() {
+    }
 
-    protected void initListeners() {}
+    protected void initListeners() {
+    }
 
     @Override
     public void onDestroyView() {
@@ -77,12 +80,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
     }
 
-    @Override
     public void showErrorMessage(int msgId) {
         MessageDialog.Companion.show(getFragmentManager(), R.string.oops, msgId);
     }
 
-    @Override
     public void showFeedbackMessage(int msgId) {
         if (getView() instanceof CoordinatorLayout) {
             Snackbar.make(getView(), msgId, 4000).show();
@@ -95,16 +96,32 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case Activity.RESULT_OK: {
-                presenter.onResultOk(requestCode, data);
+                onResultOk(requestCode, data);
                 break;
             }
             case Activity.RESULT_CANCELED: {
-                presenter.onResultCanceled(requestCode, data);
+                onResultCanceled(requestCode, data);
                 break;
             }
         }
 
-        presenter.postResult(requestCode, data);
+        postResult(requestCode, data);
+    }
+
+    protected void onResultOk(int requestCode, Intent data) {
+        if (Extras.INSTANCE.hasFeedbackMessage(data)) {
+            showFeedbackMessage(Extras.INSTANCE.getFeedbackMessage(data));
+        }
+    }
+
+    protected void onResultCanceled(int requestCode, Intent data) {
+        if (Extras.INSTANCE.hasErrorMessage(data)) {
+            showErrorMessage(Extras.INSTANCE.getErrorMessage(data));
+        }
+    }
+
+    protected void postResult(int requestCode, Intent data) {
+        presenter.postResult();
     }
 
     @Override
@@ -123,7 +140,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         getActivity().finish();
     }
 
-    @Override
     public void closeWithSuccess(int msgId) {
         Intent intent = new Intent();
         Extras.INSTANCE.putFeedbackMessage(intent, msgId);
@@ -138,7 +154,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         getActivity().finish();
     }
 
-    @Override
     public void closeWithFailure(int msgId) {
         Intent intent = new Intent();
         Extras.INSTANCE.putFeedbackMessage(intent, msgId);
@@ -148,7 +163,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     @Override
-    public void logError(Exception e) {
+    public void closeWithFailureDefaultMessage() {
+        closeWithFailure(R.string.error_msg);
+    }
+
+    @Override
+    public void logError(@NonNull Exception e) {
         String msg = "An error occurred while performing the operation";
 
         if (e.getMessage() != null) {

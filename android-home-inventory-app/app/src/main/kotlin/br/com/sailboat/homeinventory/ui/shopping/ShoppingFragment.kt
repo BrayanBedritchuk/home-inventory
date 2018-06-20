@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.ept_view.*
 import kotlinx.android.synthetic.main.recycler.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingPresenter.View {
+class ShoppingFragment : BaseFragment<ShoppingContract.Presenter>(), ShoppingContract.View {
 
     override fun inject() {
         (activity?.application as App).appComponent.inject(this)
@@ -69,6 +69,14 @@ class ShoppingFragment : BaseFragment<ShoppingPresenter>(), ShoppingPresenter.Vi
 
     override fun hideEmptyView() {
         llEptView.visibility = View.GONE
+    }
+
+    override fun showErrorLoadingProducts() {
+        showErrorMessage(R.string.error_msg_loading_products)
+    }
+
+    override fun showErrorCheckout() {
+        showErrorMessage(R.string.error_msg_checkout)
     }
 
     private fun initToolbar() {
