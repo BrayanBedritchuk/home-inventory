@@ -11,10 +11,10 @@ class App : Application() {
         super.onCreate()
 
         appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(this))
-            .uIModule(UIModule())
-            .repositoryModule(RepositoryModule())
-            .build()
+                .appModule(AppModule(this))
+                .uIModule(UIModule())
+                .repositoryModule(RepositoryModule())
+                .build()
 
 
         // add LeakCanary

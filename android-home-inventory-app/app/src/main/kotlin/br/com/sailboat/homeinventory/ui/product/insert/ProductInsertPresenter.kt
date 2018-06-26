@@ -2,9 +2,9 @@ package br.com.sailboat.homeinventory.ui.product.insert
 
 import br.com.sailboat.homeinventory.domain.entity.EntityHelper
 import br.com.sailboat.homeinventory.domain.entity.Product
-import br.com.sailboat.homeinventory.domain.usecase.GetProduct
-import br.com.sailboat.homeinventory.domain.usecase.SaveProduct
-import br.com.sailboat.homeinventory.domain.usecase.ValidateProduct
+import br.com.sailboat.homeinventory.domain.usecase.product.GetProduct
+import br.com.sailboat.homeinventory.domain.usecase.product.SaveProduct
+import br.com.sailboat.homeinventory.domain.usecase.product.ValidateProduct
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 
 class ProductInsertPresenter @Inject constructor(
-    private val viewModel: ProductInsertViewModel,
-    private val getProduct: GetProduct,
-    private val saveProduct: SaveProduct,
-    private val validateProduct: ValidateProduct
+        private val viewModel: ProductInsertViewModel,
+        private val getProduct: GetProduct,
+        private val saveProduct: SaveProduct,
+        private val validateProduct: ValidateProduct
 ) : BasePresenter<ProductInsertContract.View>(), ProductInsertContract.Presenter {
 
     override fun create() {

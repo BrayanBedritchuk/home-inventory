@@ -2,9 +2,9 @@ package br.com.sailboat.homeinventory.ui.shopping
 
 import br.com.sailboat.homeinventory.domain.None
 import br.com.sailboat.homeinventory.domain.entity.Product
-import br.com.sailboat.homeinventory.domain.usecase.GetProduct
-import br.com.sailboat.homeinventory.domain.usecase.GetProducts
-import br.com.sailboat.homeinventory.domain.usecase.SaveProduct
+import br.com.sailboat.homeinventory.domain.usecase.product.GetProduct
+import br.com.sailboat.homeinventory.domain.usecase.product.GetProducts
+import br.com.sailboat.homeinventory.domain.usecase.product.SaveProduct
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
 import br.com.sailboat.homeinventory.ui.model.ProductView
 import br.com.sailboat.homeinventory.ui.model.ProductViewMapper
@@ -15,10 +15,10 @@ import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 class ShoppingPresenter @Inject constructor(
-    private val viewModel: ShoppingViewModel,
-    private val getProducts: GetProducts,
-    private val getProduct: GetProduct,
-    private val saveProduct: SaveProduct
+        private val viewModel: ShoppingViewModel,
+        private val getProducts: GetProducts,
+        private val getProduct: GetProduct,
+        private val saveProduct: SaveProduct
 ) : BasePresenter<ShoppingContract.View>(), ShoppingContract.Presenter {
 
     override fun create() {
