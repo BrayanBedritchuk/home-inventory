@@ -23,15 +23,13 @@ class ProductInsertFragment : BaseFragment<ProductInsertContract.Presenter>(), P
         inflater?.inflate(R.menu.menu_save, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.getItemId()) {
-            R.id.menu_save -> {
-                presenter.onClickSave()
-                return true
-            }
-            else -> {
-                return super.onOptionsItemSelected(item)
-            }
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
+        R.id.menu_save -> {
+            presenter.onClickSave()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 

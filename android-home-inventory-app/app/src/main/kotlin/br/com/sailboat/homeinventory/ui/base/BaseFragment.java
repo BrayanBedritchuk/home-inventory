@@ -81,7 +81,7 @@ public abstract class BaseFragment<P extends BaseMvpContract.Presenter> extends 
     }
 
     public void showErrorMessage(int msgId) {
-        MessageDialog.Companion.show(getFragmentManager(), R.string.oops, msgId);
+        MessageDialog.Companion.show(getFragmentManager(), R.string.error_title_ops, msgId);
     }
 
     public void showFeedbackMessage(int msgId) {

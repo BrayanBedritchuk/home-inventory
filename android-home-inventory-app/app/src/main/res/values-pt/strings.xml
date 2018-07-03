@@ -91,7 +91,6 @@
     <string name="msg_exception_saving">Não foi possível salvar. Por favor, tente novamente</string>
     <string name="exception_product_name">É necessário inserir o nome do produto</string>
     <string name="exception_product_quantity">É necessário inserir a quantidade do produto</string>
-    <string name="msg_delete">Deseja realmente excluir?</string>
 
     <!-- Menus -->
     <string name="menu_new_product">Novo produto</string>
@@ -109,6 +108,10 @@
     <!-- Mensagens de Feedback -->
     <string name="feedback_msg_product_edited_successfully">Produto editado com sucesso!</string>
     <string name="feedback_msg_product_inserted_successfully">Produto inserido com sucesso!</string>
+    <string name="feedback_msg_product_deleted_successfully">Produto excluído com sucesso!</string>
+
+    <!-- Títulos de Erro -->
+
 
     <!-- Mensagens de Erro -->
     <string name="error_msg">Ocorreu um erro ao efetuar a operação</string>
@@ -118,5 +121,10 @@
     <string name="error_msg_product_details">Ocorreu um erro ao carregar os detalhes do produto</string>
     <string name="error_msg_product_name_not_filled">É necessário preencher o nome do produto</string>
     <string name="error_msg_checkout">Ocorreu um erro ao finalizar a compra</string>
+    <string name="error_msg_delete_product">Ocorreu um erro ao excluir o produto. Por favor, tente novamente.</string>
+
+    <!-- Dialog Messages -->
+    <string name="msg_delete_product">Deseja realmente excluir o produto?</string>
+    <string name="msg_delete">Deseja realmente excluir?</string>
 
 </resources>

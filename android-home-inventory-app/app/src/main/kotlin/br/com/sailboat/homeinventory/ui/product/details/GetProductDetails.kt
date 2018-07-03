@@ -2,8 +2,8 @@ package br.com.sailboat.homeinventory.ui.product.details
 
 import android.content.Context
 import br.com.sailboat.homeinventory.R
-import br.com.sailboat.homeinventory.domain.usecase.product.GetProduct
 import br.com.sailboat.homeinventory.domain.usecase.UseCase
+import br.com.sailboat.homeinventory.domain.usecase.product.GetProduct
 import br.com.sailboat.homeinventory.ui.model.LabelAndValueModel
 import br.com.sailboat.homeinventory.ui.model.RecyclerViewItem
 import br.com.sailboat.homeinventory.ui.model.TitleModel
@@ -20,15 +20,12 @@ class GetProductDetails @Inject constructor(
 
         val productDetails = mutableListOf<RecyclerViewItem>()
 
-        var title = TitleModel(
-            ViewType.TITLE.ordinal,
-            product.name
-        )
+        var title = TitleModel(ViewType.TITLE.ordinal, product.name)
 
         var label = LabelAndValueModel(
-            ViewType.LABEL_VALUE.ordinal,
-            context.getString(R.string.label_quantity),
-            product.quantity.toString()
+                ViewType.LABEL_VALUE.ordinal,
+                context.getString(R.string.label_quantity),
+                product.quantity.toString()
         )
 
         productDetails.add(title)

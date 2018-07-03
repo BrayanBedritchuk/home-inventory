@@ -12,10 +12,10 @@ import br.com.sailboat.homeinventory.ui.base.BaseFragment
 import br.com.sailboat.homeinventory.ui.product.details.ProductDetailsActivity
 import br.com.sailboat.homeinventory.ui.product.insert.ProductInsertActivity
 import br.com.sailboat.homeinventory.ui.shopping.ShoppingActivity
+import kotlinx.android.synthetic.main.appbar_product_list.*
 import kotlinx.android.synthetic.main.ept_view.*
 import kotlinx.android.synthetic.main.fab.*
 import kotlinx.android.synthetic.main.recycler.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), ProductListContract.View {
 
@@ -29,15 +29,13 @@ class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), Produ
         inflater?.inflate(R.menu.menu_product_list, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.menu_new_product -> {
-                presenter.onClickNewProduct()
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
+        R.id.menu_new_product -> {
+            presenter.onClickNewProduct()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -87,7 +85,6 @@ class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), Produ
     private fun initToolbar() {
         toolbar.run {
             (activity as AppCompatActivity).setSupportActionBar(this)
-            setTitle(R.string.app_name)
         }
     }
 

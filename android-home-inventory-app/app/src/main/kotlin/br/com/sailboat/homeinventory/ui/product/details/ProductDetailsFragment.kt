@@ -1,5 +1,6 @@
 package br.com.sailboat.homeinventory.ui.product.details
 
+import android.content.DialogInterface
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
+import br.com.sailboat.homeinventory.ui.dialog.OptionDialog
 import br.com.sailboat.homeinventory.ui.helper.Extras
 import br.com.sailboat.homeinventory.ui.product.insert.ProductInsertActivity
 import kotlinx.android.synthetic.main.fab.*
@@ -26,15 +28,13 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsContract.Presenter>(),
         inflater?.inflate(R.menu.menu_delete, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.getItemId()) {
-            R.id.menu_save -> {
-                presenter.onClickDelete()
-                return true
-            }
-            else -> {
-                return super.onOptionsItemSelected(item)
-            }
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
+        R.id.menu_delete -> {
+            presenter.onClickDelete()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -56,6 +56,24 @@ class ProductDetailsFragment : BaseFragment<ProductDetailsContract.Presenter>(),
 
     override fun closeWithFailureOnLoadDetails() {
         closeWithFailure(R.string.error_msg_details)
+    }
+
+    override fun showDeleteMessage() {
+        val dialog = OptionDialog()
+        dialog.message = R.string.msg_delete_product
+        dialog.yesOption = R.string.delete
+        dialog.onClickPositive = DialogInterface.OnClickListener { _, _ ->
+            presenter.onClickYesOnDeleteProduct()
+        }
+        dialog.show(fragmentManager, "DELETE_DIALOG")
+    }
+
+    override fun closeWithSuccessOnDeleteProduct() {
+        closeWithSuccess(R.string.feedback_msg_product_deleted_successfully)
+    }
+
+    override fun showErrorMessageOnDeleteProduct() {
+        showErrorMessage(R.string.error_msg_delete_product)
     }
 
     private fun initToolbar() {

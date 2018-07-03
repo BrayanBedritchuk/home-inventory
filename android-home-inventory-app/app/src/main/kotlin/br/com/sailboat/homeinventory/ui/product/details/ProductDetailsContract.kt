@@ -10,12 +10,16 @@ interface ProductDetailsContract {
         fun navigateToEditProduct(productId: Long)
         fun updateDetails()
         fun closeWithFailureOnLoadDetails()
+        fun showDeleteMessage()
+        fun closeWithSuccessOnDeleteProduct()
+        fun showErrorMessageOnDeleteProduct()
     }
 
     interface Presenter : BaseMvpContract.Presenter {
         fun onClickDelete()
         fun getProductDetails(): List<RecyclerViewItem>
         fun onClickEdit()
+        fun onClickYesOnDeleteProduct()
     }
 
 }

@@ -1,6 +1,7 @@
 package br.com.sailboat.homeinventory.ui.product.details
 
 import br.com.sailboat.homeinventory.domain.entity.EntityHelper
+import br.com.sailboat.homeinventory.domain.usecase.product.DeleteProduct
 import br.com.sailboat.homeinventory.ui.base.BasePresenter
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
@@ -10,8 +11,9 @@ import javax.inject.Inject
 
 
 class ProductDetailsPresenter @Inject constructor(
-    private val viewModel: ProductDetailsViewModel,
-    private val getProductDetails: GetProductDetails
+        private val viewModel: ProductDetailsViewModel,
+        private val getProductDetails: GetProductDetails,
+        private val deleteProduct: DeleteProduct
 ) : BasePresenter<ProductDetailsContract.View>(), ProductDetailsContract.Presenter {
 
     override fun create() {
@@ -56,9 +58,25 @@ class ProductDetailsPresenter @Inject constructor(
     }
 
     override fun onClickDelete() {
-
+        view?.showDeleteMessage()
     }
 
     override fun getProductDetails() = viewModel.productDetails
+
+    override fun onClickYesOnDeleteProduct() {
+        launch(UI) {
+            try {
+                view?.showProgress()
+                async(CommonPool) { deleteProduct.execute(viewModel.productId) }.await()
+
+                view?.closeWithSuccessOnDeleteProduct()
+            } catch (e: Exception) {
+                view?.logError(e)
+                view?.showErrorMessageOnDeleteProduct()
+            } finally {
+                view?.hideProgress()
+            }
+        }
+    }
 
 }
