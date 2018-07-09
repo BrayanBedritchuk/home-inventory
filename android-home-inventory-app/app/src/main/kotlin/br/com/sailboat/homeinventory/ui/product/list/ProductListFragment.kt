@@ -1,7 +1,6 @@
 package br.com.sailboat.homeinventory.ui.product.list
 
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -90,7 +89,6 @@ class ProductListFragment : BaseFragment<ProductListContract.Presenter>(), Produ
 
     private fun initRecyclerView() {
         recycler.run {
-            layoutManager = LinearLayoutManager(activity)
             adapter = ProductListAdapter(object : ProductListAdapter.Callback {
                 override fun getProducts() = presenter.getProducts()
                 override fun onClickProduct(position: Int) = presenter.onClickProduct(position)

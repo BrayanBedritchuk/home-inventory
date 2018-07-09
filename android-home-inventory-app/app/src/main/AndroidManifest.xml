@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.LaunchActivity"
+            android:name=".ui.LauncherActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />

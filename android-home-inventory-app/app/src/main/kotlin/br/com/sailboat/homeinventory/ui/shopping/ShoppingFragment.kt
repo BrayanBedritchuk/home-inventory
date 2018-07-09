@@ -1,7 +1,6 @@
 package br.com.sailboat.homeinventory.ui.shopping
 
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -90,7 +89,6 @@ class ShoppingFragment : BaseFragment<ShoppingContract.Presenter>(), ShoppingCon
 
     private fun initRecyclerView() {
         recycler.run {
-            layoutManager = LinearLayoutManager(activity)
             adapter = ShoppingAdapter(object : ShoppingAdapter.Callback {
                 override fun wasPurchased(productId: Long) = presenter.wasPurchased(productId)
                 override fun getShoppingQuantity(productId: Long) = presenter.getShoppingQuantity(productId)

@@ -4,3 +4,4 @@ java-home-inventory-core/bin/
 java-home-inventory-core/.settings/
 *.iml
 android-home-inventory-app/.idea/
+android-home-inventory-app/app/google-services.json
