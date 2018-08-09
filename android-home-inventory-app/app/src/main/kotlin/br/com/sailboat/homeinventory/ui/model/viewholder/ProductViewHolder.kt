@@ -15,8 +15,8 @@ class ProductViewHolder(parent: ViewGroup, callback: ProductViewHolder.Callback)
     }
 
     override fun bindItem(item: ProductView) {
-        itemView.tvName.text = item.name
-        itemView.tvQuantity.text = item.quantity.toString()
+        itemView.txtName.text = item.name
+        itemView.txtQuantity.text = item.quantity.toString()
         initColorOfQuantity(item)
     }
 
@@ -27,7 +27,7 @@ class ProductViewHolder(parent: ViewGroup, callback: ProductViewHolder.Callback)
             R.color.md_teal_300
         }
 
-        itemView.tvQuantity.setTextColor(ContextCompat.getColor(itemView.context, color))
+        itemView.txtQuantity.setTextColor(ContextCompat.getColor(itemView.context, color))
     }
 
 

@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tvLabel"
-        style="@style/TextViewLabel"
+        style="@style/AppStyle.TextView.Label"
         android:layout_marginLeft="16dp"
         tools:text="Label"/>
 

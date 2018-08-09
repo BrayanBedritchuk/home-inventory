@@ -4,28 +4,79 @@
         <item name="colorPrimary">@color/md_teal_500</item>
         <item name="colorPrimaryDark">@color/md_teal_700</item>
         <item name="colorAccent">@color/md_deep_orange_A100</item>
+        <item name="android:navigationBarColor">@color/grey_80</item>
     </style>
 
     <style name="SplashScreenTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <style name="AppStyle.Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?android:attr/colorPrimary</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:minHeight">?android:attr/actionBarSize</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="subtitleTextAppearance">@style/AppStyle.Toolbar.Subtitle</item>
+        <item name="titleTextAppearance">@style/AppStyle.Toolbar.Title</item>
+    </style>
+
+    <style name="AppStyle.Toolbar.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="ToolbarSubtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+    <style name="AppStyle.Toolbar.Subtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textSize">@dimen/text_size_xxsmall</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextViewLabel">
+    <style name="AppStyle" />
+
+    <style name="AppStyle.TextView" />
+
+    <style name="AppStyle.TextView.Label">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">?android:attr/colorAccent</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_size_xxsmall</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="AppStyle.ListItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="AppStyle.ListItem.TextView" />
+
+    <style name="AppStyle.ListItem.TextView.Primary">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textColor">@color/md_blue_grey_700</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="AppStyle.ListItem.TextView.Side">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/md_teal_300</item>
+        <item name="android:textSize">@dimen/text_size_xxlarge</item>
     </style>
 
 </resources>

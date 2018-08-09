@@ -9,9 +9,9 @@ import br.com.sailboat.homeinventory.App
 import br.com.sailboat.homeinventory.R
 import br.com.sailboat.homeinventory.ui.base.BaseFragment
 import br.com.sailboat.homeinventory.ui.model.ProductView
+import kotlinx.android.synthetic.main.appbar.*
 import kotlinx.android.synthetic.main.ept_view.*
 import kotlinx.android.synthetic.main.recycler.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class ShoppingFragment : BaseFragment<ShoppingContract.Presenter>(), ShoppingContract.View {
 

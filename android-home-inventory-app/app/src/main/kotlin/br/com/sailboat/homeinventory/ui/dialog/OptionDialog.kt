@@ -16,6 +16,7 @@ class OptionDialog : BaseDialogFragment() {
     var noOption = android.R.string.no
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         activity?.let {
             val builder = AlertDialog.Builder(it)
             title?.let { builder.setTitle(it) }

@@ -20,7 +20,7 @@ class ShoppingItemViewHolder(parent: ViewGroup, val callback: Callback) :
     }
 
     override fun bindItem(item: ProductView) {
-        itemView.tvName.text = item.name
+        itemView.txtName.text = item.name
         itemView.tvQuantityInStock.text = item.quantity.toString()
         initColorOfQuantity(item)
 

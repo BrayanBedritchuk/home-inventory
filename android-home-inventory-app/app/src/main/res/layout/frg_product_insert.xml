@@ -34,7 +34,7 @@
                     app:cardCornerRadius="2dp">
 
                     <TextView
-                        style="@style/TextViewLabel"
+                        style="@style/AppStyle.TextView.Label"
                         android:paddingLeft="8dp"
                         android:paddingTop="4dp"
                         android:text="@string/label_name" />
@@ -70,7 +70,7 @@
                     app:cardCornerRadius="2dp">
 
                     <TextView
-                        style="@style/TextViewLabel"
+                        style="@style/AppStyle.TextView.Label"
                         android:paddingLeft="8dp"
                         android:paddingTop="4dp"
                         android:text="@string/label_quantity" />

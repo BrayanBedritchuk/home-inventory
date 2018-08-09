@@ -11,9 +11,9 @@ import br.com.sailboat.homeinventory.ui.base.BaseFragment
 import br.com.sailboat.homeinventory.ui.dialog.OptionDialog
 import br.com.sailboat.homeinventory.ui.helper.Extras
 import br.com.sailboat.homeinventory.ui.product.insert.ProductInsertActivity
+import kotlinx.android.synthetic.main.appbar_scroll.*
 import kotlinx.android.synthetic.main.fab.*
 import kotlinx.android.synthetic.main.recycler.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class ProductDetailsFragment : BaseFragment<ProductDetailsContract.Presenter>(), ProductDetailsContract.View {
 
