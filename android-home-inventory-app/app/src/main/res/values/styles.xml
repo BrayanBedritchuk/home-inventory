@@ -11,6 +11,8 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
+    <style name="AppStyle" />
+
     <style name="AppStyle.Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -32,8 +34,6 @@
         <item name="android:textSize">@dimen/text_size_xxsmall</item>
         <item name="android:textStyle">bold</item>
     </style>
-
-    <style name="AppStyle" />
 
     <style name="AppStyle.TextView" />
 

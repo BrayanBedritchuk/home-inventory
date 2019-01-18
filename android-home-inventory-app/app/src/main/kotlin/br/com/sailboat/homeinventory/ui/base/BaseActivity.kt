@@ -17,9 +17,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
         if (fragment == null) {
             supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frame_layout, newFragmentInstance(), TAG)
-                .commit()
+                    .beginTransaction()
+                    .replace(R.id.frame_layout, newFragmentInstance(), TAG)
+                    .commit()
         }
     }
 
